@@ -25,7 +25,7 @@ geom=calculate_geometry(geom);
 % Calculate loading variables
 %==================================================================
 
-  [loads,soln]=initialize_loading(loads,geom);      %%%**** ----> Reached this point 14/9/2011 <--- **** &&&
+  [loads,soln,stepload]=initialize_loading(loads,geom);      %%%**** ----> Reached this point 14/9/2011 <--- **** &&&
 
 % Solution variables (sk, sigma_p and eps_int) are all stored in the soln structure
 
@@ -41,50 +41,24 @@ geom=calculate_geometry(geom);
     %initialised/reset properly here! ****
         
     
+    % FIXME: *** These should really be using the previous timestep value as a first guess
+
     % First guess for Sigma_p
 	   % Sigma_p has the same shape as the imposed macroscopic stress,
            % sigma_p_11 is scaled by the imposed macroscopic strain
 
-    soln.Sigma_p(tt,1) = loads.MacroStrain(tt,1)*material.E_m;
-    soln.Sigma_p(tt,2) = soln.Sigma_p(tt,1)*loads.StressRatio_22;
-    soln.Sigma_p(tt,3) = soln.Sigma_p(tt,1)*loads.StressRatio_12;
-
-    %First guess for soln.Eps_int
-           % Eps_int has the same shape as the imposed macroscopic stress,
-           % eps_int_11  is the same as the imposed macroscopic strain
-
-    soln.Eps_int(tt,1) = loads.MacroStrain(tt,1);
-    soln.Eps_int(tt,2) = soln.Eps_int(tt,1)*loads.StressRatio_22;
-    soln.Eps_int(tt,3) = soln.Eps_int(tt,1)*loads.StressRatio_12;   
+    if tt>1
+      [soln, stepload] = incorporate_previous_timestep(soln, material, loads, tt);
+    end
     
-    % Initialise loading data for timesteps
-    stepload.MacroStrain=loads.MacroStrain(tt,:);
-    stepload.MacroStress=loads.MacroStress(tt,:);
-    stepload.Sigma_m=loads.Sigma_m(tt,:);
-    
-    % ***  I want to make sure to use the previous converged lambda_max as the starting point for the new timestep 
-    %           - so copy from tt-1 I think? ***
-    stepload.lambda_max=loads.lambda_max(tt,:);
-
-
     % The complex fourier terms are  split into real and imaginary 
     % parts before going into the solution loop.  
 
-    % Stacked input vector
-    input=zeros(1,2*loads.NumModes+8);
-    for kk=1:loads.NumModes+1
-        input(kk)=real(soln.sk(tt,kk));
-        input(loads.NumModes+1+kk) = imag(soln.sk(tt,kk));
-    end
-    for kk=1:3
-        input(2*loads.NumModes+2+kk) = soln.Sigma_p(tt,kk);
-        input(2*loads.NumModes+5+kk) = soln.Eps_int(tt,kk);
-    end
-
-    %****** Should the above be in a subroutine?****
+    input=stack(loads, soln);
+    
 
     %%%**** ----> Reached this point 29/9/2011 <--- **** &&&
-    
+    % ---> fixed stuff here 5/7/2012 <---- 
     
     exitflag=0;
     counter=0;
