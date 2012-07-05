@@ -1,0 +1,42 @@
+To do:
+
+* TODO Check definition of beta
+* TODO Should SigmaBar1 be an input or should it just always be 1?  Since we don't control the magnitude of loading but only the shape?
+
+* TODO Test principal.m and unprincipal.m functions - especially calculation
+of alpha in principal.m
+
+* TODO Can't cope with zero stress in 11 direction at the moment.
+
+* TODO Write steploads quantities to loads quantities at end of timestep. 
+Also, use loads quantities from previous timestep as first guess for steploads quantities?
+
+* TODO Check eq 4.80 - have we accounted for plane stress/plane strain?
+
+* TODO Run checks on macrostress subroutine - many many typos may introduce errors.
+
+* TODO Check that A_1 and A_2 are calculated correctly
+
+* TODO Calculate phiprime2 and psiprime only when necessary - two phi functions? 
+Do I ever actually need to calculate the stress?
+
+* DONE 3/7/12: Correct calculation of cohesive law - I think this needs to be rationalised and reworked.  
+** Is there any reason to have separate subroutines?  
+** DONE Why are we not keeping track of the previous value of lambda?  No attempt to handle unloading. 
+        --- derivation 4/7/2012,
+        --- implemented 4/7/2012, still need to watch for updating
+        global values
+
+
+* TODO 4/7/12: Need very strict rules about updating - can't update anything inside
+residual.m, I think - ask Carl?  Develop good rules for all variables
+which must be updated, when it happens, how it happens.  These
+changing variables I should have maps for when they are accessed and
+changed. e.g. steploads quantities, disp quantities.
+
+* DONE 5/7/12: put input file name as parameter in read_input.m
+done immediately by Carl
+
+* TODO get code into Github
+
+

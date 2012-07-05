@@ -1,0 +1,17 @@
+
+
+List of variables that need to be replaced
+macstrain -> loads.MacroStrain
+macstress -> loads.MacroStress
+sigmam -> loads.Sigma_m
+sigmap -> loads.Sigma_p
+epsint -> loads.Eps_int
+
+sigbarvect -> loads.SigBar_xy
+
+alpha1 -> loads.StressRatio_22
+alpha2 -> loads.StressRatio_12
+
+
+
+

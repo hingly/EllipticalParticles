@@ -1,0 +1,39 @@
+% Total number of input lines after this one, not counting comments
+18 
+%       a: Ellipse major axis [mm]
+10.0 
+%       b: Ellipse minor axis [mm]
+.1 
+%       f: Particle volume fraction [-]
+0.4 
+%       E_m: matrix Young's modulus [MPa]
+3.e3 
+%       nu_m: matrix Poisson's ratio [-]
+0.2 
+%       sigmax: maximum cohesive strength [MPa]
+20.0 
+%       delopen: critical normal opening displacement [mm]
+1 
+%       cohscale: cohesive scaling parameter [-]
+1 
+%       plstrain: = 1 for plane strain, = 0 for plane stress
+1 
+%       NumPoints: number of points around the ellipse
+10
+%       NumModes: number of modes in the Fourier sum (must be even)
+30 
+%       SigmaBar1: principal applied macroscopic stress
+100.0 
+%       SigmaBarRatio: ratio of SigmaBar2 to SigmaBar1
+0.0 
+%       AppliedLoadAngle: angle of SigmaBar1 relative to major axis of ellipse 
+0.0 
+%       timesteps: number of timesteps
+10 
+%       MinimumStrain: minimum applied strain [-]
+1.e-4 
+%       LoadFactor: fraction of maxstrain/minstrain
+10.0 
+%	ScalingParameter: scaling for displaced shape [-]
+1
+
