@@ -37,6 +37,15 @@ changed. e.g. steploads quantities, disp quantities.
 * DONE 5/7/12: put input file name as parameter in read_input.m
 done immediately by Carl
 
-* TODO get code into Github
+* DONE get code into Github
+  CLOCK: [2012-07-05 Thu 10:49]--[2012-07-05 Thu 12:12] =>  1:23
+
+* DONE subroutine to copy current timestep versions of load
+
+* TODO subroutine to copy final timestep version back into load
+
+* TODO common features of residual.m and final.m in a new subroutine
 
 
+* TODO Timestep shouldn't be needed in stack or unstack Carl has ideas 
+load should be an array of structures rather than a structure containing arrays

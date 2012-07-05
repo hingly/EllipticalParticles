@@ -89,14 +89,8 @@ geom=calculate_geometry(geom);
         
     end
     
-    % Unstack output vector
-    for kk=1:loads.NumModes+1
-        soln.sk(kk)=output(kk) + i * output(loads.NumModes+1+kk);
-    end
-    for kk=1:3
-        soln.Sigma_p(tt,kk) = output(2*loads.NumModes+2+kk) ;
-        soln.Eps_int(tt,kk) = output(2*loads.NumModes+5+kk) ;
-    end
+    soln=unstack(output,loads,tt);
+    
 
     % Write lambda_max_temp to lambda_max
     loads.lambda_max(tt,:) = lambda_max_temp;             %  Should this overwriting happen in final.m?  Should I do a comparison check or just copy over?  Not sure lambda_max_temp is actually available as a variable in this routine

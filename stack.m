@@ -1,4 +1,4 @@
-function input=stack(soln, loads)
+function input=stack(soln, loads,tt)
 
 % Stacked input vector
 input=zeros(1,2*loads.NumModes+8);
