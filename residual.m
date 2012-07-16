@@ -35,18 +35,6 @@ for kk=1:3
     Eps_int(kk) = input(2*loads.NumModes+5+kk) ;
 end
 
-%-----------------------------
-% initialise arrays
-%==============================
-
-dispcoh=zeros(1,geom.NumPoints+1);
-dispff=zeros(1,geom.NumPoints+1);
-dispcohxy=zeros(1,geom.NumPoints+1);
-dispffxy=zeros(1,geom.NumPoints+1);
-T_cohxy=zeros(1,geom.NumPoints+1);
-
-% FIXME : **** Note I want to think about a structure for these guys too***
-
 
 
 
@@ -54,96 +42,26 @@ T_cohxy=zeros(1,geom.NumPoints+1);
 % Compute macroscopic stresses and strains
 %===============================================
 
-  % Macroscopic stresses and strains for the current timestep are computed from the given macroscopic strain eps_11
-  % Note that these depend on Sigma_p and Eps_int, so will be updated at every convergence step
+% Macroscopic stresses and strains for the current timestep are computed from the given macroscopic strain eps_11
+% Note that these depend on Sigma_p and Eps_int, so will be updated at every convergence step
 
-  [steploads.MacroStress, steploads.MacroStrain, steploads.Sigma_m]= macrostress(steploads.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
+[steploads.MacroStress, steploads.MacroStrain, steploads.Sigma_m]= macrostress(steploads.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
 
 
+%-----------------------------------------------
+% Compute farfield loading
+%===============================================
 
-% Compute N1, N2 and omega for use as farfield stresses
-  [N1, N2, omega] = principal(steploads.Sigma_m(1), steploads.Sigma_m(2),steploads.Sigma_m(3));
-
+[N1, N2, omega] = principal(steploads.Sigma_m(1), steploads.Sigma_m(2),steploads.Sigma_m(3));
+  
 %-------------------> Completed to here Apr 10 6:27
 
 
-%----------------------------------------
-% Begin loop over integration points
-%========================================
+%-----------------------------------------------
+% Compute displacements and cohesive tractions
+%===============================================
 
-for kk=1:geom.NumPoints+1   
-  % loop over all integration points
-    
-  %------------------------------------------------------
-  % Compute potential functions from far-field loading 
-  %======================================================
- 
-  [phi,phiprime,phiprime2,psi,psiprime]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
-    
-% FIXME : Only need to calculate phiprime2, psiprime when we are
-  % calculating stress - i.e. in final.   Separate these subroutines
-  
-  
-  %-------------------> Completed to here Oct 13 2011 but not fully
-  %                     documented in xls file
-    
-  %-----------------------------------------------------
-  % Compute displacements from far-field loading 
-  %=====================================================
- 
-  dispff(kk)=calculatedisplacement(phi, phiprime, psi, geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
-  dispffxy(kk)=dispff(kk)*exp(i*geom.beta(kk));
-    
-  %-------------------> Completed to here Dec 2 2011 but not fully
-  %                     documented in xls file
-  
-  %-------------------------------------------------------
-  % Compute potential functions due to cohesive tractions
-  %=======================================================
-
-  [phicoh, phiprimecoh, psicoh]=modes(geom.theta(kk),geom.rho,geom.R, geom.m, loads.NumModes, sk);
-  
-  
-  %-------------------------------------------------------
-  % Compute cohesive displacements 
-  %=======================================================
-  
-  dispcoh(kk)=calculatedisplacement(phicoh, phiprimecoh, psicoh, geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
-  dispcohxy(kk)=dispff(kk)*exp(i*geom.beta(kk));
-  
-end         
-% end loop over integration points
-
-%-------------------> Completed to here March 12 2012 but not fully
-%                     documented in xls file
-
-
-
-%----------------------------------------------
-% Compute total displacement
-%==============================================
-
-
-disp=dispff+dispcoh;
-dispxy=dispffxy+dispcohxy;
-
-
-
-%------------------------------------------------------
-%Compute cohesive tractions resulting from displacement
-%======================================================
-
-T_coh=Cohesive_Law(disp,geom.NumPoints,material,stepload.lambda_max);
-
-% *** Not sure that we're storing previous value of lambda or
-% *** calculating unloading correctly!!!
-
-for kk=1:geom.NumPoints+1
-    T_cohxy(kk)=T_coh(kk)*exp(i*beta(kk));
-end
-
-% -----------------> Updated cohesive law subroutine 4/7/2012, not
-%                              fully documented in xls file
+[T_coh, T_cohxy, disp, dispxy]=common(N1, N2, omega, geom, material,loads, sk)
 
 
 % Compute Fourier modes corresponding to cohesive tractions
@@ -161,11 +79,15 @@ skc=fouriertransform(T_coh,geom.theta,geom.NumPoints,loads.NumModes);
 errorskreal = real(skc-sk);
 errorskimag = imag(skc-sk);                    
 % error in sk (1,geom.NumPoints+1)
+
 errorsig=Sigma_p_new - Sigma_p;      
 % error in Sigma_p (1,3)
+
 erroreps=Eps_int_new - Eps_int;      
 % error in Eps_int (1,3)
 
+
+% FIXME : use stack subroutine
 
 % Stacked residual vector
 Rk=zeros(1,2*loads.NumModes+8); 

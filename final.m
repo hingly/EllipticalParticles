@@ -12,18 +12,10 @@ function [dispxy, dispffxy, dispcohxy, T_cohxy, lambda,lambdaxy, xy1, macstress,
 % initialise arrays
 %==============================
 
-% FIXME : **** Note I want to think about a structure for these guys too***
-dispcoh=zeros(1,geom.NumPoints+1);
-dispff=zeros(1,geom.NumPoints+1);
-dispcohxy=zeros(1,geom.NumPoints+1);
-dispffxy=zeros(1,geom.NumPoints+1);
-T_cohxy=zeros(1,geom.NumPoints+1);
-
-
 % FIXME : I don't know what xy1 is, lambda needs to be handled more systematically
 lambda=zeros(1,geom.NumPoints+1);
 lambdaxy=zeros(1,geom.NumPoints+1);
-xy1=zeros(1,geom.NumPoints+1);
+%xy1=zeros(1,geom.NumPoints+1);
 
 
         
@@ -36,73 +28,27 @@ xy1=zeros(1,geom.NumPoints+1);
 
 [loads.MacroStress, loads.MacroStrain, loads.Sigma_m]= macrostress(loads.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
 
+
+%-----------------------------------------------
+% Compute farfield loading
+%===============================================
+
+
 % Compute N1, N2 and omega for use as farfield stresses
   [N1, N2, omega] = principal(loads.Sigma_m(1), loads.Sigma_m(2),loads.Sigma_m(3));
 
 
 
-%-------------------------------------
-% Begin loop over integration points
-%=====================================
+%-----------------------------------------------
+% Compute displacements and cohesive tractions
+%===============================================
 
-for kk=1:n+1    
-  % loop over all integration points
-
-  %------------------------------------------------------
-  % Compute potential functions from far-field loading
-  %======================================================
-  
-  [phi,phiprime,phiprime2,psi,psiprime]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
-  
-% FIXME : Only need to calculate phiprime2, psiprime when we are
-  % calculating stress - i.e. in final.   Separate these subroutines
-  
+[T_coh, T_cohxy, disp, dispxy]=common(N1, N2, omega, geom, material,loads, sk)
 
 
-    %-----------------------------------------------------
-    % Compute displacements from far-field loading
-    %=====================================================
-
-    dispff(kk)=calculatedisplacement(phi, phiprime, psi, theta1(kk), mu_m, kappa_m, m);
-    dispffxy(kk)=dispff(kk)*exp(i*beta(kk));
-
-
-
-    %-------------------------------------------------------
-    % Compute potential functions due to cohesive tractions
-    %=======================================================
-
-    [phicoh, phiprimecoh, psicoh]=modes(theta1(kk),rho,R, m, nmodes, sk);
-
-
-    %-------------------------------------------------------
-    % Compute cohesive displacements
-    %=======================================================
-
-    dispcoh(kk)=calculatedisplacement(phicoh, phiprimecoh, psicoh, theta1(kk), mu_m, kappa_m, m);
-    dispcohxy(kk)=dispcoh(kk)*exp(i*beta(kk));
-
-end         % end loop over integration points
-
-
-%----------------------------------------------
-% Compute total displacement
-%==============================================
-
-
-disp=dispff+dispcoh;
-dispxy=dispffxy+dispcohxy;
-
-
-
-%------------------------------------------------------
-%Compute cohesive tractions resulting from displacement
-%======================================================
-
-T_coh=cohesivetractions(disp,n,delopen,delslide,gint,lambda_e);
+% *** Completed to here 16/7/2012 - still need to deal with lambda in a sensible way
 
 for kk=1:n+1
-    T_cohxy(kk)=T_coh(kk)*exp(i*beta(kk));
     lambda(kk)=Compute_lambda(real(disp(kk)), imag(disp(kk)),delopen,delslide);
     if real(disp(kk))<0
         lambda(kk)=0;

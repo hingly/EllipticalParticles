@@ -1,6 +1,7 @@
 To do:
 
 * TODO Check definition of beta
+
 * TODO Should SigmaBar1 be an input or should it just always be 1?  Since we don't control the magnitude of loading but only the shape?
   
 * TODO Test principal.m and unprincipal.m functions - especially calculation
@@ -17,7 +18,8 @@ Also, use loads quantities from previous timestep as first guess for steploads q
 * TODO Check that A_1 and A_2 are calculated correctly
 
 * TODO Calculate phiprime2 and psiprime only when necessary - two phi functions? 
-Do I ever actually need to calculate the stress?
+** TODO Do I ever actually need to calculate the stress?  Why am I not calculating stress?
+       ---Removed from subroutine farfieldstress 16/7/2012 but still need to check reasoning
 
 * DONE 3/7/12: Correct calculation of cohesive law - I think this needs to be rationalised and reworked.  
 ** Is there any reason to have separate subroutines?  
