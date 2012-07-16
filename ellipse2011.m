@@ -64,7 +64,9 @@ for tt=1:loads.timesteps  % Loop through loading steps
   exitflag=0;
   counter=0;
   
-  while exitflag<=0                    % Convergence loop
+  while exitflag<=0                    
+    % Convergence loop
+    
     counter=counter+1;
     
     %****  Notice: need to check that everything is getting
@@ -87,17 +89,115 @@ for tt=1:loads.timesteps  % Loop through loading steps
         end
       end
     end
-    
+  
   end
+  % end convergence loop
   
   soln=unstack(output,loads,tt);
   
+  % | | | |
+  % v v v v
+  
+  % FIXME : write steploads to loads and generally tidy up at the end of converged step *** This includes all the following!!!
   
   % Write lambda_max_temp to lambda_max
   loads.lambda_max(tt,:) = lambda_max_temp;             
+
   % FIXME: Should this overwriting happen in final.m?  Should I do a comparison check or just copy over?  Not sure lambda_max_temp is actually available as a variable in this routine
   
+  % ^ ^ ^ ^
+  % | | | |
   
-  
-end              % End loop through loading steps
+
+    [dispxy, dispffxy, dispcohxy, T_cohxy, lambda,lambdaxy, xy1, macstress(tt,:), macstrain(tt,:), sigmam(tt,:)]=...
+        final(sk, sigmap(tt,:), epsint(tt,:), macstrain(tt,:), E_m, nu_m, mu_m, kappa_m, f, alpha1, alpha2, rho, ...
+        R, m, n, nmodes,theta1, beta, delopen, delslide, gint, lambda_e);
+
+
+
+%     figure(1)
+%     hold on;
+%     plot(macstrain(tt,1), macstress(tt,1), 'rx')
+
+% $$$ outputstep=1;   % how often to output displaced shape
+% $$$ 
+% $$$     if mod(tt,outputstep)==0
+% $$$         figure2
+% $$$         axis equal;
+% $$$         hold on;
+% $$$         plot(ellipse(1,:),ellipse(2,:), 'LineWidth', 2);
+% $$$         plot(ellipse(1,:)+scale*real(dispxy), ellipse(2,:)+scale*imag(dispxy),'r', 'Linewidth', 2)
+% $$$         plot(ellipse(1,:)+scale*real(dispffxy), ellipse(2,:)+scale*imag(dispffxy),'k:')
+% $$$         legend('Undeformed shape', 'Total Deformed Shape','Deformed shape due to far-field loading','Location', 'NorthWest')
+% $$$         xlabel('x')
+% $$$         ylabel('y')
+% $$$ 
+% $$$ 
+% $$$         figure2
+% $$$         axis equal;
+% $$$         hold on;
+% $$$         plot(ellipse(1,:),ellipse(2,:));
+% $$$         plot(ellipse(1,:)+real(lambdaxy), ellipse(2,:)+imag(lambdaxy),'r', 'Linewidth', 2)
+% $$$         plot(ellipse(1,:)+real(xy1), ellipse(2,:)+imag(xy1),'k')
+% $$$         title('Distribution of damage parameter lambda around the ellipse.')
+% $$$         legend('Lambda=0', 'Lambda','Lambda=1','Location', 'NorthWest')
+% $$$         xlabel('x')
+% $$$         ylabel('y')
+% $$$     end
+% $$$     
+% $$$     sprintf('Macroscopic strain is %12.5e  %12.5e %12.5e', macstrain(tt,:))
+% $$$     sprintf('Macroscopic stress is %12.5e  %12.5e %12.5e', macstress(tt,:))
+% $$$         
+% $$$     fprintf(stresstable, '%12.5e  %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e \n', macstrain(tt,:), macstress(tt,:), sigmap(tt,:), sigmam(tt,:), epsint(tt,:));
+% $$$   
+
+
+end      % end loop through loading steps
+
+
+
+% $$$ figure
+% $$$ axis equal;
+% $$$ hold on;
+% $$$ plot(ellipse(1,:),ellipse(2,:), 'LineWidth', 2);
+% $$$ plot(ellipse(1,:)+scale*real(dispxy), ellipse(2,:)+scale*imag(dispxy),'r', 'Linewidth', 2)
+% $$$ plot(ellipse(1,:)+scale*real(dispffxy), ellipse(2,:)+scale*imag(dispffxy),'k:')
+% $$$ legend('Undeformed shape', 'Total Deformed Shape','Deformed shape due to far-field loading','Location', 'NorthWest')
+% $$$ xlabel('x')
+% $$$ ylabel('y')
+% $$$ 
+% $$$ 
+% $$$ figure
+% $$$ axis equal;
+% $$$ hold on;
+% $$$ plot(ellipse(1,:),ellipse(2,:));
+% $$$ plot(ellipse(1,:)+real(lambdaxy), ellipse(2,:)+imag(lambdaxy),'r', 'Linewidth', 2)
+% $$$ plot(ellipse(1,:)+real(xy1), ellipse(2,:)+imag(xy1),'k')
+% $$$ title('Distribution of damage parameter lambda around the ellipse.  Lambda=0 indicates no damage (or compression), lambda=1 indicates complete failure')
+% $$$ legend('Lambda=0', 'Lambda','Lambda=1','Location', 'NorthWest')
+% $$$ xlabel('x')
+% $$$ ylabel('y')
+% 
+% figure2
+% hold on
+% plot(macstrain(:,1), macstress(:,1), 'bx-', 'LineWidth', 2)
+% title('Macroscopic constitutive response - 11')
+% xlabel('strain')
+% ylabel('stress')
+% 
+% figure2
+% hold on
+% plot(macstrain(:,2), macstress(:,2), 'rx-', 'LineWidth', 2)
+% title('Macroscopic constitutive response - 22')
+% xlabel('strain')
+% ylabel('stress')
+% 
+% figure2
+% hold on
+% plot(macstrain(:,3), macstress(:,3), 'kx-', 'LineWidth', 2)
+% title('Macroscopic constitutive response - 33')
+% xlabel('strain')
+% ylabel('stress')
+
+
 
