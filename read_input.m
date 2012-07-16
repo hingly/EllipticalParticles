@@ -2,15 +2,11 @@ function[material,geom,loads] = read_input(input_file)
 
 % This file reads data from an input deck and puts it into structures which will be used by the rest of the program
 
-
-
-
-
 %----------------------------------------------------
 % Read input data from file
 %====================================================
 
-%input_file=input('Enter the complete input filename: ','s');
+%input_file=inpu t('Enter the complete input filename: ','s');
 
 fid=fopen(input_file,'r');
 
