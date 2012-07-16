@@ -43,7 +43,7 @@ dispcohxy=zeros(1,geom.NumPoints+1);
 dispffxy=zeros(1,geom.NumPoints+1);
 T_cohxy=zeros(1,geom.NumPoints+1);
 
-%**** Note I want to think about a structure for these guys too***
+% FIXME: **** Note I want to think about a structure for these guys too***
 
 
 
@@ -69,42 +69,48 @@ T_cohxy=zeros(1,geom.NumPoints+1);
 % Begin loop over integration points
 %========================================
 
-for kk=1:geom.NumPoints+1    % loop over all integration points
+for kk=1:geom.NumPoints+1   
+  % loop over all integration points
     
-    %------------------------------------------------------
-    % Compute potential functions from far-field loading 
-    %======================================================
+  %------------------------------------------------------
+  % Compute potential functions from far-field loading 
+  %======================================================
  
-    [phi,phiprime,phiprime2,psi,psiprime]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
+  [phi,phiprime,phiprime2,psi,psiprime]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
     
-%-------------------> Completed to here Oct 13 2011 but not fully
-%                     documented in xls file
+  % FIXME: Only need to calculate phiprime2, psiprime when we are
+  % calculating stress - i.e. in final  separate these subroutines
+  
+  
+  %-------------------> Completed to here Oct 13 2011 but not fully
+  %                     documented in xls file
     
-    %-----------------------------------------------------
-    % Compute displacements from far-field loading 
-    %=====================================================
+  %-----------------------------------------------------
+  % Compute displacements from far-field loading 
+  %=====================================================
  
-    dispff(kk)=calculatedisplacement(phi, phiprime, psi, geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
-    dispffxy(kk)=dispff(kk)*exp(i*geom.beta(kk));
+  dispff(kk)=calculatedisplacement(phi, phiprime, psi, geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
+  dispffxy(kk)=dispff(kk)*exp(i*geom.beta(kk));
     
-%-------------------> Completed to here Dec 2 2011 but not fully
-%                     documented in xls file
-    
-    %-------------------------------------------------------
-    % Compute potential functions due to cohesive tractions
-    %=======================================================
+  %-------------------> Completed to here Dec 2 2011 but not fully
+  %                     documented in xls file
+  
+  %-------------------------------------------------------
+  % Compute potential functions due to cohesive tractions
+  %=======================================================
 
-    [phicoh, phiprimecoh, psicoh]=modes(geom.theta(kk),geom.rho,geom.R, geom.m, loads.NumModes, sk);
-
-    
-    %-------------------------------------------------------
-    % Compute cohesive displacements 
-    %=======================================================
-
-    dispcoh(kk)=calculatedisplacement(phicoh, phiprimecoh, psicoh, geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
-    dispcohxy(kk)=dispff(kk)*exp(i*geom.beta(kk));
-
-end         % end loop over integration points
+  [phicoh, phiprimecoh, psicoh]=modes(geom.theta(kk),geom.rho,geom.R, geom.m, loads.NumModes, sk);
+  
+  
+  %-------------------------------------------------------
+  % Compute cohesive displacements 
+  %=======================================================
+  
+  dispcoh(kk)=calculatedisplacement(phicoh, phiprimecoh, psicoh, geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
+  dispcohxy(kk)=dispff(kk)*exp(i*geom.beta(kk));
+  
+end         
+% end loop over integration points
 
 %-------------------> Completed to here March 12 2012 but not fully
 %                     documented in xls file
@@ -151,9 +157,12 @@ skc=fouriertransform(T_coh,geom.theta,geom.NumPoints,loads.NumModes);
 
 
 errorskreal = real(skc-sk);
-errorskimag = imag(skc-sk);                    % error in sk (1,geom.NumPoints+1)
-errorsig=Sigma_p_new - Sigma_p;      % error in Sigma_p (1,3)
-erroreps=Eps_int_new - Eps_int;      % error in Eps_int (1,3)
+errorskimag = imag(skc-sk);                    
+% error in sk (1,geom.NumPoints+1)
+errorsig=Sigma_p_new - Sigma_p;      
+% error in Sigma_p (1,3)
+erroreps=Eps_int_new - Eps_int;      
+% error in Eps_int (1,3)
 
 
 % Stacked residual vector

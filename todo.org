@@ -2,7 +2,7 @@ To do:
 
 * TODO Check definition of beta
 * TODO Should SigmaBar1 be an input or should it just always be 1?  Since we don't control the magnitude of loading but only the shape?
-
+  
 * TODO Test principal.m and unprincipal.m functions - especially calculation
 of alpha in principal.m
 
@@ -46,6 +46,27 @@ done immediately by Carl
 
 * TODO common features of residual.m and final.m in a new subroutine
 
-
 * TODO Timestep shouldn't be needed in stack or unstack Carl has ideas 
 load should be an array of structures rather than a structure containing arrays
+
+
+* TODO Code Revisions
+** TODO Changing Variables to minimise ambiguity and to Structure variables to allow structures to be passed rather than variables. -- Week 27 (July 2-6) and Week 29 (July 16-20)
+** TODO Rationalise subroutines -- Week 30 (July 23-27)
+
+* TODO Satisfy standard tests
+** TODO Write tests -- Weeks 31 and 32 (July 30-August 10)
+** TODO Debugging -- Weeks 33-34 (August 13-August 24)
+** TODO Run Results and compare with previous findings for validity -- Week 35 (August 27-31)
+
+* TODO Implement Optimisation Algorithms for Non-linear solver problem
+** TODO Optimisation Technique that doesn't rely on gradients -- Weeks 36-38 (September 3-21)
+** TODO Validate against Jay's code -- Weeks 39-40 (September 24-October 5)
+
+* TODO Get Results against test cases -- Weeks 41 (October 8-12)
+
+* TODO Write results into Dissertation (including conclusions) -- Weeks 42-43 (October 15-26)
+
+* TODO Distribute to the committee for approval -- Weeks 44-45 (October 29-November9) 
+
+* TODO Submit (Due November 16)
