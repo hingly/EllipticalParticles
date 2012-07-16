@@ -1,30 +1,43 @@
 function [dispxy, dispffxy, dispcohxy, T_cohxy, lambda,lambdaxy, xy1, macstress, macstrain, sigmam]=...
-    final(sk, sigmap, epsint, macstrain, E_m, nu_m, mu_m, kappa_m, f, alpha1, alpha2, rho, ...
-    R, m, n, nmodes,theta1, beta, delopen, delslide, gint, lambda_e)
+    final(soln, loads, material, geom)
 
 
-%initialise arrays
-dispcoh=zeros(1,n+1);
-dispff=zeros(1,n+1);
-dispcohxy=zeros(1,n+1);
-dispffxy=zeros(1,n+1);
-T_cohxy=zeros(1,n+1);
-lambda=zeros(1,n+1);
-lambdaxy=zeros(1,n+1);
-xy1=zeros(1,n+1);
+% Given converged solution, including Fourier coefficients sk, the average particle stress
+% Sigma_p and the interfacial strain Eps_int, this routine calculates displacements, stresses, 
+% strains, cohesive tractions and cohesive damage 
 
-            
-            
-% Compute macroscopic stresses corresponding to timestep in macroscopic
-% strain
-[macstress, macstrain(2), macstrain(3)]= macrostress(macstrain(1), sigmap, epsint, alpha1, alpha2, E_m, nu_m, f);
 
-% Compute matrix stresses
-sigmam = (macstress - f * sigmap)/(1-f);
 
-%Compute N1, N2 and omega for use as farfield stresses
-[N1, N2, omega] = principal(sigmam(1), sigmam(2),sigmam(3));
+%-----------------------------
+% initialise arrays
+%==============================
 
+% FIXME : **** Note I want to think about a structure for these guys too***
+dispcoh=zeros(1,geom.NumPoints+1);
+dispff=zeros(1,geom.NumPoints+1);
+dispcohxy=zeros(1,geom.NumPoints+1);
+dispffxy=zeros(1,geom.NumPoints+1);
+T_cohxy=zeros(1,geom.NumPoints+1);
+
+
+% FIXME : I don't know what xy1 is, lambda needs to be handled more systematically
+lambda=zeros(1,geom.NumPoints+1);
+lambdaxy=zeros(1,geom.NumPoints+1);
+xy1=zeros(1,geom.NumPoints+1);
+
+
+        
+%-----------------------------------------------
+% Compute macroscopic stresses and strains
+%===============================================
+
+% Macroscopic stresses and strains for the current timestep are computed from the given macroscopic strain eps_11
+% Note that these depend on Sigma_p and Eps_int, so must be re-calculated after convergence
+
+[loads.MacroStress, loads.MacroStrain, loads.Sigma_m]= macrostress(loads.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
+
+% Compute N1, N2 and omega for use as farfield stresses
+  [N1, N2, omega] = principal(loads.Sigma_m(1), loads.Sigma_m(2),loads.Sigma_m(3));
 
 
 
@@ -32,13 +45,18 @@ sigmam = (macstress - f * sigmap)/(1-f);
 % Begin loop over integration points
 %=====================================
 
-for kk=1:n+1    % loop over all integration points
+for kk=1:n+1    
+  % loop over all integration points
 
-    %------------------------------------------------------
-    % Compute potential functions from far-field loading
-    %======================================================
-
-    [phi,phiprime,phiprime2,psi,psiprime]=farfieldpotential(theta1(kk),rho,R, m, N1, N2, omega);
+  %------------------------------------------------------
+  % Compute potential functions from far-field loading
+  %======================================================
+  
+  [phi,phiprime,phiprime2,psi,psiprime]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
+  
+% FIXME : Only need to calculate phiprime2, psiprime when we are
+  % calculating stress - i.e. in final.   Separate these subroutines
+  
 
 
     %-----------------------------------------------------

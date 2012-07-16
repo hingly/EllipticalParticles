@@ -13,7 +13,6 @@ Also, use loads quantities from previous timestep as first guess for steploads q
 
 * TODO Check eq 4.80 - have we accounted for plane stress/plane strain?
 
-* TODO Run checks on macrostress subroutine - many many typos may introduce errors.
 
 * TODO Check that A_1 and A_2 are calculated correctly
 
@@ -45,12 +44,14 @@ done immediately by Carl
 * TODO subroutine to copy final timestep version back into load
 
 * TODO common features of residual.m and final.m in a new subroutine
-** TODO Macrostress needs to be more flexible so it can be called from final as well as residual
+** DONE Macrostress needs to be more flexible so it can be called from final as well as residual
+** TODO Run checks on macrostress subroutine - many many typos may introduce errors.
+
 
 * TODO Timestep shouldn't be needed in stack or unstack Carl has ideas 
 load should be an array of structures rather than a structure containing arrays
 
-
+* TODO Structure for displacements
 
 * TODO Code Revisions
 ** TODO Changing Variables to minimise ambiguity and to Structure variables to allow structures to be passed rather than variables. -- Week 27 (July 2-6) and Week 29 (July 16-20)

@@ -19,6 +19,8 @@ function Rk=residual(input,steploads,loads, material, geom)
 % Unstack input vector
 %==================================
 
+% FIXME : Use unstack subroutine
+
 % Initialise vectors
 Sigma_p=zeros(1,3);
 Eps_int=zeros(1,3);
@@ -43,7 +45,7 @@ dispcohxy=zeros(1,geom.NumPoints+1);
 dispffxy=zeros(1,geom.NumPoints+1);
 T_cohxy=zeros(1,geom.NumPoints+1);
 
-% FIXME: **** Note I want to think about a structure for these guys too***
+% FIXME : **** Note I want to think about a structure for these guys too***
 
 
 
@@ -55,7 +57,7 @@ T_cohxy=zeros(1,geom.NumPoints+1);
   % Macroscopic stresses and strains for the current timestep are computed from the given macroscopic strain eps_11
   % Note that these depend on Sigma_p and Eps_int, so will be updated at every convergence step
 
-  steploads= macrostress(steploads, Sigma_p, Eps_int, loads,geom);
+  [steploads.MacroStress, steploads.MacroStrain, steploads.Sigma_m]= macrostress(steploads.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
 
 
 
@@ -78,8 +80,8 @@ for kk=1:geom.NumPoints+1
  
   [phi,phiprime,phiprime2,psi,psiprime]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
     
-  % FIXME: Only need to calculate phiprime2, psiprime when we are
-  % calculating stress - i.e. in final  separate these subroutines
+% FIXME : Only need to calculate phiprime2, psiprime when we are
+  % calculating stress - i.e. in final.   Separate these subroutines
   
   
   %-------------------> Completed to here Oct 13 2011 but not fully
