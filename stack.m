@@ -1,12 +1,12 @@
-function input=stack(soln, loads,tt)
+function vector=stack(structure, NumModes, tt)
 
 % Stacked input vector
-input=zeros(1,2*loads.NumModes+8);
-for kk=1:loads.NumModes+1
-  input(kk)=real(soln.sk(tt,kk));
-  input(loads.NumModes+1+kk) = imag(soln.sk(tt,kk));
+vector=zeros(1,2*NumModes+8);
+for kk=1:NumModes+1
+  vector(kk)=real(structure.sk(tt,kk));
+  vector(NumModes+1+kk) = imag(structure.sk(tt,kk));
 end
 for kk=1:3
-  input(2*loads.NumModes+2+kk) = soln.Sigma_p(tt,kk);
-  input(2*loads.NumModes+5+kk) = soln.Eps_int(tt,kk);
+  vector(2*NumModes+2+kk) = structure.Sigma_p(tt,kk);
+  vector(2*NumModes+5+kk) = structure.Eps_int(tt,kk);
 end

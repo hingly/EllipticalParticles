@@ -1,4 +1,4 @@
-function T_Coh=Cohesive_Law(disp, NumPoints,material, lambda_max)
+function [cohesive]=Cohesive_Law(disp, NumPoints,material, lambda_max)
 
 % This is a new function to replace the functionality of
 % old_cohesivetractions.m and old_Cohesive_Law.m   ---4 July 2012
@@ -25,6 +25,12 @@ gint=material.gint;
 % --- lambda_e is the critical damage parameter
 lambda_e=material.lambda_e;
 
+%constants
+zero_intpoints=zeros(1,geom.NumPoints+1);
+
+
+
+
 
 % Structure of code:
    % Integration loop around particle
@@ -32,23 +38,23 @@ lambda_e=material.lambda_e;
           % Knowing displacements, compute lambda
           % Compare lambda with lambda_max, and determine loading or unloading
           % Determine which stage of loading we are in, compute dphi/dlambda
-          % Compute cohesive tractions T_Coh 
+          % Compute cohesive tractions cohesive.traction 
           % Do temporary store of new lambda_max where applicable.  After convergence, lambda_max gets updated
 
-%*** If this gets called inside residual, it can't write to any values.  If it gets called from final, it can.  
-% Perhaps nest inside another code which calls it with different parameters? ***
 
 
 % Initialise data
-T_Coh=zeros(1,NumPoints+1);
-lambda_max_temp=lambda_max;        % Use lambda_max_temp to avoid overwriting previous good lambda_max 
+cohesive.traction=zero_intpoints;
+lambda_max_temp=lambda_max;        
+% Use lambda_max_temp to avoid overwriting previous good lambda_max 
 
 
 % Integration loop around the particle to determine cohesive tractions
 
 for jj=1:NumPoints+1
     
-  loading=0;                      % Assume unloading until proven otherwise
+  loading=0;                      
+  % Assume unloading until proven otherwise
   
   % Displacement jump
   U=real(disp(jj));
@@ -58,9 +64,12 @@ for jj=1:NumPoints+1
   lambda=sqrt((U/delopen)^2+(V/delslide)^2);
   
   % Compare lambda with lambda_max to see whether we are loading or unloading
-  if lambda>lambda_max_temp(jj)                  % If loading
-    loading=1;                                   % set loading flag to 1
-    lambda_max_temp(jj)=lambda;                  % update lambda_max_temp
+  if lambda>lambda_max_temp(jj)                  
+    % If loading
+    loading=1;                                   
+    % set loading flag to 1
+    lambda_max_temp(jj)=lambda;                  
+    % update lambda_max_temp
   end                                                
     
   %----------------------------------------------------
@@ -90,26 +99,32 @@ for jj=1:NumPoints+1
   % Unloading only affects the slope in Stage II.
   
   % For nonlinear model
-  if lambda<=lambda_e                   % Check for Stage I
+  if lambda<=lambda_e                   
+    % Check for Stage I
     
     kn=klinear/delopen^2;
     kt=klinear/delslide^2;
     
-  elseif lambda>lambda_e && lambda<1    % Check for Stage II
+  elseif lambda>lambda_e && lambda<1    
+    % Check for Stage II
     
-    if loading=1                        % Check for loading
+    if loading=1                        
+      % Check for loading
       kn=ktilde*(lambda-1)/lambda/delopen^2;
       kt=ktilde*(lambda-1)/lambda/delslide^2;
     
-    else                                % unloading
+    else                                
+      % unloading
       kn=khat/delopen^2;
       kt=khat/delslide^2;
     end
   
-  elseif lambda>=1                      % Check for Stage III
+  elseif lambda>=1                      
+    % Check for Stage III
     kn=0;
     kt=0;
-  else                                  % Check for errors
+  else                                  
+    % Check for errors
     error('Incorrect value of lambda',lambda);   
   end
   
@@ -122,6 +137,6 @@ for jj=1:NumPoints+1
   S=kn*U;
   T=kt*V;
   
-  T_Coh(jj)=S+i*T;
+  cohesive.traction(jj)=S+i*T;
 end
 % end of the integration loop

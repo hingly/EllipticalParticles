@@ -19,22 +19,15 @@ function Rk=residual(input,steploads,loads, material, geom)
 % Unstack input vector
 %==================================
 
-% FIXME : Use unstack subroutine
+% FIXME : check that I'm passing things correctly (i.e. name
+% changes for structures)
 
-% Initialise vectors
-Sigma_p=zeros(1,3);
-Eps_int=zeros(1,3);
-sk = zeros(1,loads.NumModes+1);
+% Unstack input vector and separate into components
+dummy=unstack(input, loads.NumModes, 1)
 
-% Copy from input vector
-for kk=1:loads.NumModes+1
-    sk(kk)=input(kk)+ i* input(loads.NumModes+1+kk);
-end
-for kk=1:3
-    Sigma_p(kk) = input(2*loads.NumModes+2+kk) ;
-    Eps_int(kk) = input(2*loads.NumModes+5+kk) ;
-end
-
+Sigma_p=dummy.Sigma_p;
+Eps_int=dummy.Eps_int;
+sk = dummy.sk;
 
 
 
@@ -61,44 +54,31 @@ end
 % Compute displacements and cohesive tractions
 %===============================================
 
-[T_coh, T_cohxy, disp, dispxy]=common(N1, N2, omega, geom, material,loads, sk)
+[cohesive,disp]=common(N1, N2, omega, geom, material,loads, sk)
 
 
 % Compute Fourier modes corresponding to cohesive tractions
-
-% --- T_coh is a vector NumPoints+1 long, containing a cohesive  traction at each integration point.  
-skc=fouriertransform(T_coh,geom.theta,geom.NumPoints,loads.NumModes);
+skc=fouriertransform(cohesive.traction,geom.theta,geom.NumPoints,loads.NumModes);
 
 % Compute interfacial strain and average particle stress
-[Sigma_p_new, Eps_int_new] = averages(dispxy, T_cohxy, geom);
+[Sigma_p_new, Eps_int_new] = averages(disp.total_xy, cohesive.traction_xy, geom);
 
 %-------------------> Completed to here July 3 2012 but
 %                               not documented in xls file
 
 
-errorskreal = real(skc-sk);
-errorskimag = imag(skc-sk);                    
-% error in sk (1,geom.NumPoints+1)
+% CHECK : can I pass structures with name changes?
 
-errorsig=Sigma_p_new - Sigma_p;      
-% error in Sigma_p (1,3)
+% error in sk
+error.sk=skc-sk;
 
-erroreps=Eps_int_new - Eps_int;      
-% error in Eps_int (1,3)
+% error in Sigma_p 
+error.Sigma_p=Sigma_p_new - Sigma_p;      
 
+% error in Eps_int 
+error.Eps_int=Eps_int_new - Eps_int;      
 
-% FIXME : use stack subroutine
-
-% Stacked residual vector
-Rk=zeros(1,2*loads.NumModes+8); 
-for kk=1:loads.NumModes+1
-    Rk(kk)=errorskreal(kk);
-    Rk(loads.NumModes+1+kk) = errorskimag(kk);
-end
-for kk=1:3
-    Rk(2*loads.NumModes+2+kk) = errorsig(kk);
-    Rk(2*loads.NumModes+5+kk) = erroreps(kk);
-end
+Rk=stack(error, loads.NumModes, 1);
 
 Rk = real(Rk);
 

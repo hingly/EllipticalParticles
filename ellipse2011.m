@@ -55,7 +55,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   % The complex fourier terms are  split into real and imaginary 
   % parts before going into the solution loop.  
   
-  input=stack(loads, soln);
+  input=stack(soln,loads.NumModes,tt);
   
   
   %**** ----> Reached this point 29/9/2011 <--- **** 
@@ -93,17 +93,22 @@ for tt=1:loads.timesteps  % Loop through loading steps
   end
   % end convergence loop
   
-  soln=unstack(output,loads,tt);
+  soln=unstack(output,loads.NumModes,tt);
   
   % | | | |
   % v v v v
   
-  % FIXME : write steploads to loads and generally tidy up at the end of converged step *** This includes all the following!!!
+% FIXME : write steploads to loads and generally tidy up at the end of converged step *** This includes all the following!!!
   
   % Write lambda_max_temp to lambda_max
   loads.lambda_max(tt,:) = lambda_max_temp;             
 
-  % FIXME: Should this overwriting happen in final.m?  Should I do a comparison check or just copy over?  Not sure lambda_max_temp is actually available as a variable in this routine
+% FIXME : Should this overwriting happen in final.m?  Should I do
+  % a comparison check or just copy over?  Not sure lambda_max_temp
+  % is actually available as a variable in this routine
+  
+% THINK : decide whether to allow load/unload decision in cohesive
+% subroutine, or set at the end of previous step.  
   
   % ^ ^ ^ ^
   % | | | |

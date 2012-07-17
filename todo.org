@@ -1,65 +1,8 @@
-To do:
-
-* TODO Check definition of beta
-
-* TODO Should SigmaBar1 be an input or should it just always be 1?  Since we don't control the magnitude of loading but only the shape?
-  
-* TODO Test principal.m and unprincipal.m functions - especially calculation
-of alpha in principal.m
-
-* TODO Can't cope with zero stress in 11 direction at the moment.
-
-* TODO Write steploads quantities to loads quantities at end of timestep. 
-Also, use loads quantities from previous timestep as first guess for steploads quantities?
-
-* TODO Check eq 4.80 - have we accounted for plane stress/plane strain?
-
-
-* TODO Check that A_1 and A_2 are calculated correctly
-
-* TODO Calculate phiprime2 and psiprime only when necessary - two phi functions? 
-** TODO Do I ever actually need to calculate the stress?  Why am I not calculating stress?
-       ---Removed from subroutine farfieldstress 16/7/2012 but still need to check reasoning
-
-* DONE 3/7/12: Correct calculation of cohesive law - I think this needs to be rationalised and reworked.  
-** Is there any reason to have separate subroutines?  
-** DONE Why are we not keeping track of the previous value of lambda?  No attempt to handle unloading. 
-        --- derivation 4/7/2012,
-        --- implemented 4/7/2012, still need to watch for updating
-        global values
-
-
-* TODO 4/7/12: Need very strict rules about updating - can't update anything inside
-residual.m, I think - ask Carl?  Develop good rules for all variables
-which must be updated, when it happens, how it happens.  These
-changing variables I should have maps for when they are accessed and
-changed. e.g. steploads quantities, disp quantities.
-
-* DONE 5/7/12: put input file name as parameter in read_input.m
-done immediately by Carl
-
-* DONE get code into Github
-  CLOCK: [2012-07-05 Thu 10:49]--[2012-07-05 Thu 12:12] =>  1:23
-
-* DONE subroutine to copy current timestep versions of load
-
-* TODO subroutine to copy final timestep version back into load
-
-* TODO common features of residual.m and final.m in a new subroutine
-** DONE Macrostress needs to be more flexible so it can be called from final as well as residual
-** TODO Run checks on macrostress subroutine - many many typos may introduce errors.
-
-
-* TODO Timestep shouldn't be needed in stack or unstack Carl has ideas 
-load should be an array of structures rather than a structure containing arrays
-
-* TODO Structure for displacements
-
 * TODO Code Revisions
 ** TODO Changing Variables to minimise ambiguity and to Structure variables to allow structures to be passed rather than variables. -- Week 27 (July 2-6) and Week 29 (July 16-20)
 *** TODO final.m
-*** TODO calculatestress.m
-*** timoshenko files or test files
+*** DONE calculatestress.m --- not used
+*** TODO timoshenko files or test files
 
 ** TODO Rationalise subroutines -- Week 30 (July 23-27)
 
@@ -79,3 +22,81 @@ load should be an array of structures rather than a structure containing arrays
 * TODO Distribute to the committee for approval -- Weeks 44-45 (October 29-November9) 
 
 * TODO Submit (Due November 16)
+
+
+
+
+
+* TODO Check definition of beta
+
+* TODO Should SigmaBar1 be an input or should it just always be 1?  
+Since we don't control the magnitude of loading but only the shape?
+  
+* TODO Test principal.m and unprincipal.m functions - 
+especially calculation of alpha in principal.m
+
+* TODO Can't cope with zero stress in 11 direction at the moment.
+
+* TODO Write steploads quantities to loads quantities at end of timestep. 
+  Also, use loads quantities from previous timestep as first guess for steploads quantities?
+
+* TODO Check eq 4.80 - have we accounted for plane stress/plane strain?
+
+
+* TODO Check that A_1 and A_2 are calculated correctly
+  
+* TODO Calculate phiprime2 and psiprime only when necessary - two phi functions? 
+** TODO Do I ever actually need to calculate the stress?  Why am I not calculating stress?
+       ---Removed from subroutine farfieldstress 16/7/2012 but still need to check reasoning
+
+* DONE 3/7/12: Correct calculation of cohesive law - I think this needs to be rationalised and reworked.  
+** Is there any reason to have separate subroutines?  
+** DONE Why are we not keeping track of the previous value of lambda?  No attempt to handle unloading. 
+        --- derivation 4/7/2012,
+        --- implemented 4/7/2012, still need to watch for updating
+        global values
+
+* TODO lambda and lambda_max need to be tracked throughout  
+** TODO Should I loading/unloading decision be made on the fly or at the end of previous converged step?
+
+* TODO Sometimes I need to output phi, phiprime, psi
+
+* DONE put disp, t_coh etc into structures
+  CLOCK: [2012-07-17 Tue 10:38]--[2012-07-17 Tue 11:03] =>  0:25
+
+
+* TODO 4/7/12: Need very strict rules about updating - 
+can't update anything inside residual.m, I think - ask Carl?  Develop good rules for all variables
+which must be updated, when it happens, how it happens.  These
+changing variables I should have maps for when they are accessed and
+changed. e.g. steploads quantities, disp quantities.
+
+* DONE 5/7/12: put input file name as parameter in read_input.m
+done immediately by Carl
+
+* DONE get code into Github
+  CLOCK: [2012-07-05 Thu 10:49]--[2012-07-05 Thu 12:12] =>  1:23
+
+* DONE subroutine to copy current timestep versions of load
+
+* TODO subroutine to copy final timestep version back into load
+
+* DONE common features of residual.m and final.m in a new subroutine
+** DONE Macrostress needs to be more flexible so it can be called from final as well as residual
+
+* TODO Run checks on macrostress subroutine - many many typos may introduce errors.
+   
+
+* TODO Timestep shouldn't be needed in stack or unstack Carl has ideas 
+load should be an array of structures rather than a structure containing arrays
+
+* DONE use stack and unstack in residual.m  
+  CLOCK: [2012-07-17 Tue 11:03]--[2012-07-17 Tue 11:19] =>  0:16
+
+* TODO check that I can pass structures with name changes as I do from residual to stack and unstack
+
+
+* TODO Structure for displacements
+
+
+
