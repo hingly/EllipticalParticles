@@ -28,8 +28,6 @@ geom=calculate_geometry(geom);
 [loads,soln,stepload]=initialize_loading(loads,geom);      
 % Solution variables (sk, sigma_p and eps_int) are all stored in the soln structure
 
-%**** ----> Reached this point 14/9/2011 <--- **** 
-
 
 %-----------------------------------------
 % Begin loop through loadsteps
@@ -38,11 +36,11 @@ geom=calculate_geometry(geom);
 
 for tt=1:loads.timesteps  % Loop through loading steps
   
-  % FIXME: ****  Notice: need to check that everything is getting
+% FIXME : ****  Notice: need to check that everything is getting
   %initialised/reset properly here! ****
   
   
-  % FIXME: *** These should really be using the previous timestep value as a first guess
+% FIXME : *** These should really be using the previous timestep value as a first guess
   
   % First guess for Sigma_p
   % Sigma_p has the same shape as the imposed macroscopic stress,
@@ -56,10 +54,6 @@ for tt=1:loads.timesteps  % Loop through loading steps
   % parts before going into the solution loop.  
   
   input=stack(soln,loads.NumModes,tt);
-  
-  
-  %**** ----> Reached this point 29/9/2011 <--- **** 
-  % ---> fixed stuff here 5/7/2012 <---- 
   
   exitflag=0;
   counter=0;
@@ -114,16 +108,14 @@ for tt=1:loads.timesteps  % Loop through loading steps
   % | | | |
   
 
-    [dispxy, dispffxy, dispcohxy, T_cohxy, lambda,lambdaxy, xy1, macstress(tt,:), macstrain(tt,:), sigmam(tt,:)]=...
-        final(sk, sigmap(tt,:), epsint(tt,:), macstrain(tt,:), E_m, nu_m, mu_m, kappa_m, f, alpha1, alpha2, rho, ...
-        R, m, n, nmodes,theta1, beta, delopen, delslide, gint, lambda_e);
+  [cohesive,disp, loads]=final(soln, loads, material, geom);
 
 
 
-%     figure(1)
-%     hold on;
-%     plot(macstrain(tt,1), macstress(tt,1), 'rx')
-
+  %     figure(1)
+  %     hold on;
+  %     plot(macstrain(tt,1), macstress(tt,1), 'rx')
+  
 % $$$ outputstep=1;   % how often to output displaced shape
 % $$$ 
 % $$$     if mod(tt,outputstep)==0
@@ -155,7 +147,6 @@ for tt=1:loads.timesteps  % Loop through loading steps
 % $$$         
 % $$$     fprintf(stresstable, '%12.5e  %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e %12.5e \n', macstrain(tt,:), macstress(tt,:), sigmap(tt,:), sigmam(tt,:), epsint(tt,:));
 % $$$   
-
 
 end      % end loop through loading steps
 

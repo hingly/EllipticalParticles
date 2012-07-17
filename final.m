@@ -17,6 +17,9 @@ zero_intpoints=zeros(1,geom.NumPoints+1);
 % FIXME : lambda needs to be handled more systematically
 cohesive.lambda=zero_intpoints;
 cohesive.lambda_xy=zero_intpoints;
+%*** cohesive.lambda_xy is a display quantity 
+cohesive.coord=zero_intpoints; 
+
 
 
         
@@ -52,12 +55,12 @@ cohesive.lambda_xy=zero_intpoints;
 for kk=1:n+1
   U=real(disp.total(kk));
   V=imag(disp.total(kk));
-  lambda(kk)=sqrt((U/delopen)^2+(V/delslide)^2);
+  cohesive.lambda(kk)=sqrt((U/delopen)^2+(V/delslide)^2);
   if real(disp(kk))<0
-    lambda(kk)=0;
+    cohesive.lambda(kk)=0;
   end
-  lambdaxy(kk)=lambda(kk)*exp(i*beta(kk));
-  xy1(kk)=exp(i*beta(kk));
+  cohesive.coord(kk)=exp(i*beta(kk));
+  cohesive.lambda_xy(kk)=cohesive.lambda(kk)*cohesive.coord(kk));
 end
 
 

@@ -96,7 +96,7 @@ load should be an array of structures rather than a structure containing arrays
 * TODO check that I can pass structures with name changes as I do from residual to stack and unstack
 
 
-* TODO Structure for displacements
+* TODO temporary and permanent structures for disp and cohesive
 
 
 

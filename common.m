@@ -12,7 +12,6 @@ function [cohesive, disp]=common(N1, N2, omega, geom,  material,loads, sk)
 %constants
 zero_intpoints=zeros(1,geom.NumPoints+1);
 
-
 disp.farfield=zero_intpoints;
 disp.farfield_xy=zero_intpoints;
 disp.coh=zero_intpoints;
@@ -21,8 +20,6 @@ disp.total=zero_intpoints;
 disp.total_xy=zero_intpoints;
 
 cohesive.traction_xy=zero_intpoints;
-
-
 
 
 
@@ -38,21 +35,14 @@ for kk=1:geom.NumPoints+1
   %======================================================
  
   [phi,phiprime,psi]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
-    
-  
-  %-------------------> Completed to here Oct 13 2011 but not fully
-  %                     documented in xls file
-    
+        
   %-----------------------------------------------------
   % Compute displacements from far-field loading 
   %=====================================================
  
   disp.farfield(kk)=calculatedisplacement(phi, phiprime, psi, geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
-  disp.farfield_xy(kk)=disp.farfield(kk)*exp(i*geom.beta(kk));
-    
-  %-------------------> Completed to here Dec 2 2011 but not fully
-  %                     documented in xls file
-  
+  disp.farfield_xy(kk)=disp.farfield(kk)*exp(i*geom.beta(kk));    
+ 
   %-------------------------------------------------------
   % Compute potential functions due to cohesive tractions
   %=======================================================
@@ -69,9 +59,6 @@ for kk=1:geom.NumPoints+1
   
 end         
 % end loop over integration points
-
-%-------------------> Completed to here March 12 2012 but not fully
-%                     documented in xls file
 
 
 
@@ -100,5 +87,3 @@ end
 
 
 
-% -----------------> Updated cohesive law subroutine 4/7/2012, not
-%                              fully documented in xls file
