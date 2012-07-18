@@ -80,8 +80,9 @@ loads.lambda_max=zero_timestep_intpoints;          % Maximum value of lambda rea
   % Compute the new stress ratios, loads.StressRatio_22 and loads.StressRatio_12 
 
   if loads.SigBar_xy(1)==0
-    error(['Zero stress in the 11 direction.  The code cant accommodate ' ...
-           ']this right now');
+    %error(['Zero stress in the 11 direction.  The code cant accommodate this right now');
+    % Ratio of sigma_12 to sigma_22
+    loads.StressRatio_12_22 = loads.SigBar_xy(3)/loads.SigBar_xy(2);
   else
     % Ratio of sigma_22 to sigma_11
     loads.StressRatio_22 = loads.SigBar_xy(2)/loads.SigBar_xy(1);    
@@ -91,20 +92,35 @@ loads.lambda_max=zero_timestep_intpoints;          % Maximum value of lambda rea
   
   
   
+ 
   % Guesses FOR FIRST TIMESTEP soln
   tt = 1;
-  soln.Sigma_p(tt,1) = loads.MacroStrain(tt,1)*material.E_m;
-  soln.Sigma_p(tt,2) = soln.Sigma_p(tt,1)*loads.StressRatio_22;
-  soln.Sigma_p(tt,3) = soln.Sigma_p(tt,1)*loads.StressRatio_12;
+  if loads.SigBar_xy(1)==0
+    %Special case where we have to make a different assumption
+    
+    soln.Sigma_p(tt,1) = 0;
+    soln.Sigma_p(tt,2) = - loads.MacroStrain(tt,1)*material.E_m/((1+material.nu_m)*material.nu_m);
+    soln.Sigma_p(tt,3) = soln.Sigma_p(tt,2)*loads.StressRatio_12_22;
 
-  %First guess for soln.Eps_int
-  % Eps_int has the same shape as the imposed macroscopic stress,
-  % eps_int_11  is the same as the imposed macroscopic strain
+    soln.Eps_int(tt,1) = loads.MacroStrain(tt,1);
+    soln.Eps_int(tt,2) = - soln.Eps_int(tt,1)*(1-material.nu_m)/material.nu_m;
+    soln.Eps_int(tt,3) = soln.Eps_int(tt,2)*loads.StressRatio_12_22;  
+    
+  else
 
-  soln.Eps_int(tt,1) = loads.MacroStrain(tt,1);
-  soln.Eps_int(tt,2) = soln.Eps_int(tt,1)*loads.StressRatio_22;
-  soln.Eps_int(tt,3) = soln.Eps_int(tt,1)*loads.StressRatio_12;   
+    soln.Sigma_p(tt,1) = loads.MacroStrain(tt,1)*material.E_m;
+    soln.Sigma_p(tt,2) = soln.Sigma_p(tt,1)*loads.StressRatio_22;
+    soln.Sigma_p(tt,3) = soln.Sigma_p(tt,1)*loads.StressRatio_12;
 
+    %First guess for soln.Eps_int
+    % Eps_int has the same shape as the imposed macroscopic stress,
+    % eps_int_11  is the same as the imposed macroscopic strain
+
+    soln.Eps_int(tt,1) = loads.MacroStrain(tt,1);
+    soln.Eps_int(tt,2) = soln.Eps_int(tt,1)*loads.StressRatio_22;
+    soln.Eps_int(tt,3) = soln.Eps_int(tt,1)*loads.StressRatio_12;   
+  end
+    
   % Initialise loading data for timesteps
   stepload.MacroStrain=zero_matrix;
   stepload.MacroStress=zero_matrix;

@@ -1,7 +1,8 @@
 * TODO Code Revisions
 ** TODO Changing Variables to minimise ambiguity and to Structure variables to allow structures to be passed rather than variables. -- Week 27 (July 2-6) and Week 29 (July 16-20)
-*** TODO final.m
+*** DONE final.m
 *** DONE calculatestress.m --- not used
+*** TODO ellipse2011.m
 *** TODO timoshenko files or test files
 
 ** TODO Rationalise subroutines -- Week 30 (July 23-27)
@@ -34,13 +35,15 @@ Since we don't control the magnitude of loading but only the shape?
   
 * TODO Test principal.m and unprincipal.m functions - 
 especially calculation of alpha in principal.m
+Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 - see p.9 of Denel notebook
 
-* TODO Can't cope with zero stress in 11 direction at the moment.
+* DONE Can't cope with zero stress in 11 direction at the moment.
+        --- Derivation in Denel notebook pp 11-12, implemented in initialize_loading.m and macrostress.m 18/7/2012
 
 * TODO Write steploads quantities to loads quantities at end of timestep. 
   Also, use loads quantities from previous timestep as first guess for steploads quantities?
 
-* TODO Check eq 4.80 - have we accounted for plane stress/plane strain?
+* DONE Check eq 4.80 - have we accounted for plane stress/plane strain?
 
 
 * TODO Check that A_1 and A_2 are calculated correctly
@@ -95,8 +98,8 @@ load should be an array of structures rather than a structure containing arrays
 
 * TODO check that I can pass structures with name changes as I do from residual to stack and unstack
 
-
+  
 * TODO temporary and permanent structures for disp and cohesive
-
+  
 
 
