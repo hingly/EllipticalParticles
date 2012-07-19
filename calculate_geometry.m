@@ -14,6 +14,7 @@ theta=zeros(1,n+1);             % angle in zeta-plane
 ellipse=zeros(2,n+1);            % coordinates of points around the ellipse
 beta=zeros(1,n+1);               % normal angle
 alpha=zeros(1,n+1);              % polar angle
+normal=zeros(1,n+1);               % normal vector (complex)
 
 
 for kk=1:n+1    % Loop over integration points to calculate geometric quantities
@@ -22,6 +23,8 @@ for kk=1:n+1    % Loop over integration points to calculate geometric quantities
     theta(kk)=2*pi*(kk-1)/n;
     ellipse(1,kk)=a*cos(theta(kk));
     ellipse(2,kk)=b*sin(theta(kk));
+% FIXME : Why is ellipse not stored as a complex variable?
+
     beta(kk)=atan(a/b*tan(theta(kk)));           % angle of the normal to the surface
     alpha(kk)=atan(b/a*tan(theta(kk)));          % polar angle
 
@@ -39,9 +42,13 @@ for kk=1:n+1    % Loop over integration points to calculate geometric quantities
         theta(kk)
         error('what size is theta anyway?')
     end
+    normal(kk)=exp(i*beta(kk));
 end
+
+normal(kk)=exp(i*beta(kk));
 
 geom.theta=theta;
 geom.beta=beta;
 geom.alpha=alpha;
 geom.ellipse=ellipse;
+geom.normal=normal;

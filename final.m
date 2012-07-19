@@ -17,7 +17,6 @@ zero_intpoints=zeros(1,geom.NumPoints+1);
 % FIXME : lambda needs to be handled more systematically
 stepcoh.lambda=zero_intpoints;
 stepcoh.lambda_xy=zero_intpoints;
-stepcoh.normal=zero_intpoints; 
 
 
 
@@ -58,9 +57,7 @@ for kk=1:n+1
   if real(stepdisp(kk))<0
     stepcoh.lambda(kk)=0;
   end
-  stepcoh.normal(kk)=exp(i*beta(kk));
-% FIXME : this should be a geom variable
-  stepcoh.lambda_xy(kk)=stepcoh.lambda(kk)*stepcoh.normal(kk));
+  stepcoh.lambda_xy(kk)=stepcoh.lambda(kk)*geom.normal(kk));
 end
 
 
