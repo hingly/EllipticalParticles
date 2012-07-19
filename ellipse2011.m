@@ -103,10 +103,13 @@ for tt=1:loads.timesteps  % Loop through loading steps
   % | | | |
   
 
-  [cohesive,disp, loads]=final(soln, loads, material, geom);
+  [stepcoh, stepdisp, stepload]=final(soln, loads, material, geom);
 
+  [cohesive, disp, loads]=finalize_timestep(stepcoh, stepdisp, stepload, tt)
 
+% FIXME : finalize_timestep.m could be inside final.m
 
+  
   %     figure(1)
   %     hold on;
   %     plot(macstrain(tt,1), macstress(tt,1), 'rx')

@@ -54,14 +54,14 @@ sk = dummy.sk;
 % Compute displacements and cohesive tractions
 %===============================================
 
-[cohesive,disp]=common(N1, N2, omega, geom, material,loads, sk)
+[stepcoh,stepdisp]=common(N1, N2, omega, geom, material,loads, sk)
 
 
 % Compute Fourier modes corresponding to cohesive tractions
-skc=fouriertransform(cohesive.traction,geom.theta,geom.NumPoints,loads.NumModes);
+skc=fouriertransform(stepcoh.traction,geom.theta,geom.NumPoints,loads.NumModes);
 
 % Compute interfacial strain and average particle stress
-[Sigma_p_new, Eps_int_new] = averages(disp.total_xy, cohesive.traction_xy, geom);
+[Sigma_p_new, Eps_int_new] = averages(stepdisp.total_xy, stepcoh.traction_xy, geom);
 
 %-------------------> Completed to here July 3 2012 but
 %                               not documented in xls file

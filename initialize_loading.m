@@ -35,20 +35,43 @@ function [loads,soln,stepload]=initialize_loading(loads, geom)
 
 
   % Fourier coefficients
-  soln.sk=zero_timestep_modes;        % Even numbers only from -NumModes to NumModes
-  for kk=1:timesteps                                       % FIXME *** this is a stupid guess!!!***
-    soln.sk(kk,1)=geom.a/10;
-  end
-
+  soln.sk=zero_timestep_modes;        
+  % Even numbers only from -NumModes to NumModes
+  soln.sk(1,1)=geom.a/10;
+  % guess for first mode of first timestep of sk is based on size
+  % of particle
+  
   soln.Sigma_p=zero_timestep_matrix;                  % Initialise average particle stress matrix
   soln.Eps_int=zero_timestep_matrix;                  % Initialise interfacial strain matrix
 
+
 %---------------------------------------------
-% Initialize cohesive damage array
+% Initialize displacement array
 %=============================================  
-  
+
+disp.farfield=zero_timestep_intpoints;
+disp.farfield_xy=zero_timestep_intpoints;
+disp.coh=zero_timestep_intpoints;
+disp.coh_xy=zero_timestep_intpoints;
+disp.total=zero_timestep_intpoints;
+disp.total_xy=zero_timestep_intpoints;
+
+%---------------------------------------------
+% Initialize cohesive array
+%=============================================  
+
+coh.traction=zero_timestep_intpoints;
+coh.traction_xy=zero_timestep_intpoints;
+coh.lambda=zero_timestep_intpoints;
+coh.lambda_xy=zero_timestep_intpoints;
+coh.lambda_max=zero_timestep_intpoints;
+coh.loading=zero_timestep_intpoints;
+
+
 loads.lambda_max=zero_timestep_intpoints;          % Maximum value of lambda reached at each integration point
-  
+% FIXME : Need to deal with lambda and lambda_max throughout 
+
+
 
 %------------------------------------------------------------------
 % Compute imposed maximum macroscopic stress in local coordinates
@@ -137,3 +160,6 @@ loads.lambda_max=zero_timestep_intpoints;          % Maximum value of lambda rea
   stepload.MacroStress=zero_matrix;
   stepload.Sigma_m=zero_matrix;
     
+
+  
+  

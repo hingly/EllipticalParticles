@@ -1,4 +1,4 @@
-function [cohesive,disp, loads]=final(soln, loads, material, geom)
+function [stepcoh,stepdisp, stepload]=final(soln, loads, material, geom)
 
 
 % Given converged solution, including Fourier coefficients sk, the average particle stress
@@ -15,10 +15,9 @@ function [cohesive,disp, loads]=final(soln, loads, material, geom)
 zero_intpoints=zeros(1,geom.NumPoints+1);
 
 % FIXME : lambda needs to be handled more systematically
-cohesive.lambda=zero_intpoints;
-cohesive.lambda_xy=zero_intpoints;
-%*** cohesive.lambda_xy is a display quantity 
-cohesive.coord=zero_intpoints; 
+stepcoh.lambda=zero_intpoints;
+stepcoh.lambda_xy=zero_intpoints;
+stepcoh.normal=zero_intpoints; 
 
 
 
@@ -31,7 +30,7 @@ cohesive.coord=zero_intpoints;
 % from the given macroscopic strain eps_11.  Note that these depend on Sigma_p 
 % and Eps_int, so must be re-calculated after convergence
 
-[loads.MacroStress, loads.MacroStrain, loads.Sigma_m]= macrostress(loads.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
+[stepload.MacroStress, stepload.MacroStrain, stepload.Sigma_m]= macrostress(stepload.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
 
 
 %-----------------------------------------------
@@ -48,19 +47,20 @@ cohesive.coord=zero_intpoints;
 % Compute displacements and cohesive tractions
 %===============================================
 
-[cohesive,disp]=common(N1, N2, omega, geom, material,loads, sk)
+[stepcoh,stepdisp]=common(N1, N2, omega, geom, material,loads, sk)
 
 % *** Completed to here 16/7/2012 - still need to deal with lambda in a sensible way
 
 for kk=1:n+1
-  U=real(disp.total(kk));
-  V=imag(disp.total(kk));
-  cohesive.lambda(kk)=sqrt((U/delopen)^2+(V/delslide)^2);
-  if real(disp(kk))<0
-    cohesive.lambda(kk)=0;
+  U=real(stepdisp.total(kk));
+  V=imag(stepdisp.total(kk));
+  stepcoh.lambda(kk)=sqrt((U/delopen)^2+(V/delslide)^2);
+  if real(stepdisp(kk))<0
+    stepcoh.lambda(kk)=0;
   end
-  cohesive.coord(kk)=exp(i*beta(kk));
-  cohesive.lambda_xy(kk)=cohesive.lambda(kk)*cohesive.coord(kk));
+  stepcoh.normal(kk)=exp(i*beta(kk));
+% FIXME : this should be a geom variable
+  stepcoh.lambda_xy(kk)=stepcoh.lambda(kk)*stepcoh.normal(kk));
 end
 
 

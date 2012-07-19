@@ -9,17 +9,20 @@
 *** TODO timoshenko files or test files
 
 
-** TODO temporary and permanent structures for disp and cohesive
-** TODO Write steploads quantities to loads quantities at end of timestep. 
-  Also, use loads quantities from previous timestep as first guess for steploads quantities?
-** TODO subroutine to copy final timestep version back into load
-** TODO 4/7/12: Need very strict rules about updating - 
-can't update anything inside residual.m, I think - ask Carl?  
+** DONE temporary and permanent structures for disp and cohesive
+** DONE Write steploads quantities to loads quantities at end of timestep. 
+  Also, use loads quantities from previous timestep as first guess for steploads quantities? 
+  --- No, don't need to guess steploads quantities.
+** DONE subroutine to copy final timestep version back into load
+** DONE 4/7/12: Need very strict rules about updating - 
+can't update anything inside residual.m
+** DONE Develop good rules for all variables which must be updated, when it happens, how it happens.  
+   CLOCK: [2012-07-19 Thu 10:37]--[2012-07-19 Thu 12:20] =>  1:43
 
-** TODO Develop good rules for all variables which must be updated, when it happens, how it happens.  
-   CLOCK: [2012-07-19 Thu 10:37]
-   These changing variables I should have maps for when they are accessed and
-   changed. e.g. steploads quantities, disp quantities.
+
+** TODO lambda and lambda_max need to be tracked throughout 
+** TODO Should cohesive loading/unloading decision be made on the fly or at the end of previous converged step?
+** TODO Sometimes I need to output phi, phiprime, psi
 
 
     
@@ -90,10 +93,6 @@ can't update anything inside residual.m, I think - ask Carl?
         --- implemented 4/7/2012, still need to watch for updating
         global values
 
-* TODO lambda and lambda_max need to be tracked throughout  
-** TODO Should I loading/unloading decision be made on the fly or at the end of previous converged step?
-
-* TODO Sometimes I need to output phi, phiprime, psi
 
 * DONE put disp, t_coh etc into structures
   CLOCK: [2012-07-17 Tue 10:38]--[2012-07-17 Tue 11:03] =>  0:25
@@ -123,7 +122,5 @@ load should be an array of structures rather than a structure containing arrays
 
 * TODO check that I can pass structures with name changes as I do from residual to stack and unstack
 
-  
-
-
-
+* TODO Write iteration algorithm carefully for thesis
+   Maps for when variables are accessed and changed. e.g. steploads quantities, disp quantities.
