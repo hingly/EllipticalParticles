@@ -1,54 +1,85 @@
+
 * TODO Code Revisions
-** TODO Changing Variables to minimise ambiguity and to Structure variables to allow structures to be passed rather than variables. -- Week 27 (July 2-6) and Week 29 (July 16-20)
+** TODO Changing Variables 
+   To minimise ambiguity and to Structure variables to allow structures to be passed rather than variables.    
+   -- Week 27 (July 2-6) and Week 29 (July 16-20)
 *** DONE final.m
 *** DONE calculatestress.m --- not used
 *** TODO ellipse2011.m
 *** TODO timoshenko files or test files
 
-** TODO Rationalise subroutines -- Week 30 (July 23-27)
+
+** TODO temporary and permanent structures for disp and cohesive
+** TODO Write steploads quantities to loads quantities at end of timestep. 
+  Also, use loads quantities from previous timestep as first guess for steploads quantities?
+** TODO subroutine to copy final timestep version back into load
+** TODO 4/7/12: Need very strict rules about updating - 
+can't update anything inside residual.m, I think - ask Carl?  
+
+** TODO Develop good rules for all variables which must be updated, when it happens, how it happens.  
+   CLOCK: [2012-07-19 Thu 10:37]
+   These changing variables I should have maps for when they are accessed and
+   changed. e.g. steploads quantities, disp quantities.
+
+
+    
+* TODO Rationalise subroutines 
+  -- Week 30 (July 23-27)
+   
+
+
+
 
 * TODO Satisfy standard tests
-** TODO Write tests -- Weeks 31 and 32 (July 30-August 10)
-** TODO Debugging -- Weeks 33-34 (August 13-August 24)
-** TODO Run Results and compare with previous findings for validity -- Week 35 (August 27-31)
+** TODO Write tests 
+   -- Weeks 31 and 32 (July 30-August 10)
+** TODO Debugging 
+   -- Weeks 33-34 (August 13-August 24)
+** TODO Run Results and compare with previous findings for validity 
+   -- Week 35 (August 27-31)
 
 * TODO Implement Optimisation Algorithms for Non-linear solver problem
-** TODO Optimisation Technique that doesn't rely on gradients -- Weeks 36-38 (September 3-21)
-** TODO Validate against Jay's code -- Weeks 39-40 (September 24-October 5)
+** TODO Optimisation Technique that doesn't rely on gradients 
+   -- Weeks 36-38 (September 3-21)
+** TODO Validate against Jay's code 
+   -- Weeks 39-40 (September 24-October 5)
+   
+* TODO Get Results against test cases 
+  -- Weeks 41 (October 8-12)
 
-* TODO Get Results against test cases -- Weeks 41 (October 8-12)
+* TODO Write results into Dissertation (including conclusions) 
+  -- Weeks 42-43 (October 15-26)
+  
+* TODO Distribute to the committee for approval 
+-- Weeks 44-45 (October 29-November9) 
 
-* TODO Write results into Dissertation (including conclusions) -- Weeks 42-43 (October 15-26)
-
-* TODO Distribute to the committee for approval -- Weeks 44-45 (October 29-November9) 
-
-* TODO Submit (Due November 16)
-
-
-
+* TODO Submit 
+-- (Due November 16)
 
 
-* TODO Check definition of beta
+
+  
+
+* DONE Check definition of beta
 
 * TODO Should SigmaBar1 be an input or should it just always be 1?  
-Since we don't control the magnitude of loading but only the shape?
+  We don't control the magnitude of loading but only the shape, so this should not be a variable
   
 * TODO Test principal.m and unprincipal.m functions - 
-especially calculation of alpha in principal.m
-Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 - see p.9 of Denel notebook
+  especially calculation of alpha in principal.m
+  Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
+  - see p.9 of Denel notebook
 
 * DONE Can't cope with zero stress in 11 direction at the moment.
         --- Derivation in Denel notebook pp 11-12, implemented in initialize_loading.m and macrostress.m 18/7/2012
-
-* TODO Write steploads quantities to loads quantities at end of timestep. 
-  Also, use loads quantities from previous timestep as first guess for steploads quantities?
+* TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
 
 * DONE Check eq 4.80 - have we accounted for plane stress/plane strain?
 
 
 * TODO Check that A_1 and A_2 are calculated correctly
   
-* TODO Calculate phiprime2 and psiprime only when necessary - two phi functions? 
+* DONE Calculate phiprime2 and psiprime only when necessary - two phi functions? 
 ** TODO Do I ever actually need to calculate the stress?  Why am I not calculating stress?
        ---Removed from subroutine farfieldstress 16/7/2012 but still need to check reasoning
 
@@ -68,11 +99,6 @@ Also check that the sign of alpha is handled correctly when calculating alpha_1 
   CLOCK: [2012-07-17 Tue 10:38]--[2012-07-17 Tue 11:03] =>  0:25
 
 
-* TODO 4/7/12: Need very strict rules about updating - 
-can't update anything inside residual.m, I think - ask Carl?  Develop good rules for all variables
-which must be updated, when it happens, how it happens.  These
-changing variables I should have maps for when they are accessed and
-changed. e.g. steploads quantities, disp quantities.
 
 * DONE 5/7/12: put input file name as parameter in read_input.m
 done immediately by Carl
@@ -82,7 +108,6 @@ done immediately by Carl
 
 * DONE subroutine to copy current timestep versions of load
 
-* TODO subroutine to copy final timestep version back into load
 
 * DONE common features of residual.m and final.m in a new subroutine
 ** DONE Macrostress needs to be more flexible so it can be called from final as well as residual
@@ -99,7 +124,6 @@ load should be an array of structures rather than a structure containing arrays
 * TODO check that I can pass structures with name changes as I do from residual to stack and unstack
 
   
-* TODO temporary and permanent structures for disp and cohesive
-  
+
 
 

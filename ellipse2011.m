@@ -38,13 +38,8 @@ for tt=1:loads.timesteps  % Loop through loading steps
   
 % FIXME : ****  Notice: need to check that everything is getting
   %initialised/reset properly here! ****
-  
-  
+
 % FIXME : *** These should really be using the previous timestep value as a first guess
-  
-  % First guess for Sigma_p
-  % Sigma_p has the same shape as the imposed macroscopic stress,
-  % sigma_p_11 is scaled by the imposed macroscopic strain
   
   if tt>1
     [soln, stepload] = incorporate_previous_timestep(soln, material, loads, tt);
