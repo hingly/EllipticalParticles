@@ -1,4 +1,4 @@
-function [stepcoh,stepdisp, stepload]=final(soln, loads, material, geom)
+function [stepcoh,stepdisp, stepload,steppot]=final(soln, loads, material, geom)
 
 
 % Given converged solution, including Fourier coefficients sk, the average particle stress
@@ -46,7 +46,7 @@ stepcoh.lambda_xy=zero_intpoints;
 % Compute displacements and cohesive tractions
 %===============================================
 
-[stepcoh,stepdisp]=common(N1, N2, omega, geom, material,loads, sk)
+[stepcoh,stepdisp,steppot]=common(N1, N2, omega, geom, material,loads, sk)
 
 % *** Completed to here 16/7/2012 - still need to deal with lambda in a sensible way
 

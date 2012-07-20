@@ -54,7 +54,7 @@ sk = dummy.sk;
 % Compute displacements and cohesive tractions
 %===============================================
 
-[stepcoh,stepdisp]=common(N1, N2, omega, geom, material,loads, sk)
+[stepcoh,stepdisp,steppot]=common(N1, N2, omega, geom, material,loads, sk)
 
 
 % Compute Fourier modes corresponding to cohesive tractions

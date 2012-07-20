@@ -1,4 +1,4 @@
-function [stepcoh, stepdisp]=common(N1, N2, omega, geom,  material,loads, sk)
+function [stepcoh, stepdisp,steppot]=common(N1, N2, omega, geom,  material,loads, sk)
 
 % Given far-field loading and Fourier modes, compute cohesive tractions and displacements
 % Created from residual.m 16/7/2012
@@ -21,6 +21,14 @@ stepdisp.total_xy=zero_intpoints;
 
 stepcoh.traction_xy=zero_intpoints;
 
+steppot.phi=zero_intpoints;
+steppot.phiprime=zero_intpoints;
+steppot.psi=zero_intpoints;
+steppot.phicoh=zero_intpoints;
+steppot.phiprimecoh=zero_intpoints;
+steppot.psicoh=zero_intpoints;
+
+
 
 
 %----------------------------------------
@@ -34,27 +42,27 @@ for kk=1:geom.NumPoints+1
   % Compute potential functions from far-field loading 
   %======================================================
  
-  [phi,phiprime,psi]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
+  [steppot.phi(kk),steppot.phiprime(kk),steppot.psi(kk)]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
         
   %-----------------------------------------------------
   % Compute displacements from far-field loading 
   %=====================================================
  
-  stepdisp.farfield(kk)=calculatedisplacement(phi, phiprime, psi, geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
+  stepdisp.farfield(kk)=calculatedisplacement(steppot.phi(kk), steppot.phiprime(kk), steppot.psi(kk), geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
   stepdisp.farfield_xy(kk)=stepdisp.farfield(kk)*exp(i*geom.beta(kk));    
  
   %-------------------------------------------------------
   % Compute potential functions due to cohesive tractions
   %=======================================================
 
-  [phicoh, phiprimecoh, psicoh]=modes(geom.theta(kk),geom.rho,geom.R, geom.m, loads.NumModes, sk);
+  [steppot.phicoh(kk), steppot.phiprimecoh(kk), steppot.psicoh(kk)]=modes(geom.theta(kk),geom.rho,geom.R, geom.m, loads.NumModes, sk);
   
   
   %-------------------------------------------------------
   % Compute cohesive displacements 
   %=======================================================
   
-  stepdisp.coh(kk)=calculatedisplacement(phicoh, phiprimecoh, psicoh, geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
+  stepdisp.coh(kk)=calculatedisplacement(steppot.phicoh(kk), steppot.phiprimecoh(kk), steppot.psicoh(kk), geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
   stepdisp.coh_xy(kk)=stepdisp.coh(kk)*exp(i*geom.beta(kk));
   
 end         

@@ -103,9 +103,9 @@ for tt=1:loads.timesteps  % Loop through loading steps
   % | | | |
   
 
-  [stepcoh, stepdisp, stepload]=final(soln, loads, material, geom);
+  [stepcoh, stepdisp, stepload, steppot]=final(soln, loads, material, geom);
 
-  [cohesive, disp, loads]=finalize_timestep(stepcoh, stepdisp, stepload, tt)
+  [cohesive, disp, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, tt);
 
 % FIXME : finalize_timestep.m could be inside final.m
 

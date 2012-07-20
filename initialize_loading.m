@@ -71,6 +71,16 @@ coh.loading=zero_timestep_intpoints;
 loads.lambda_max=zero_timestep_intpoints;          % Maximum value of lambda reached at each integration point
 % FIXME : Need to deal with lambda and lambda_max throughout 
 
+%---------------------------------------------
+% Initialize potential functions
+%=============================================  
+
+potential.phi=zero_timestep_intpoints;
+potential.phiprime=zero_timestep_intpoints;
+potential.psi=zero_timestep_intpoints;
+potential.phicoh=zero_timestep_intpoints;
+potential.phiprimecoh=zero_timestep_intpoints;
+potential.psicoh=zero_timestep_intpoints;
 
 
 %------------------------------------------------------------------

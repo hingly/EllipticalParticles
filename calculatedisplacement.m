@@ -13,9 +13,3 @@ disp2=A1*exp(-i*theta)/(2*mu);
 disp=disp1*disp2;
 
 
-
-%*** I don't think these are called from anywhere else so they
-%might as well sit in this subroutine
-
-%A1=A1func(theta,m);
-%A2=A2func(theta,m);
