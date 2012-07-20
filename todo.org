@@ -22,7 +22,7 @@ can't update anything inside residual.m
 ** TODO lambda and lambda_max need to be tracked throughout 
 ** TODO Should cohesive loading/unloading decision be made on the fly or at the end of previous converged step?
 ** TODO Sometimes I need to output phi, phiprime, psi
-   CLOCK: [2012-07-20 Fri 10:28]
+   CLOCK: [2012-07-20 Fri 10:28]--[2012-07-20 Fri 10:51] =>  0:23
 
 ** TODO Should SigmaBar1 be an input or should it just always be 1?  
   We don't control the magnitude of loading but only the shape, so this should not be a variable
