@@ -84,10 +84,7 @@ stepdisp.total_xy=stepdisp.farfield_xy+stepdisp.coh_xy;
 %Compute cohesive tractions resulting from displacement
 %======================================================
 
-stepcoh=Cohesive_Law(stepdisp.total,geom.NumPoints,material,stepcoh.lambda_max);
-
-% *** Not sure that we're storing previous value of lambda or
-% *** calculating unloading correctly!!!
+stepcoh=Cohesive_Law(stepdisp.total,geom.NumPoints,material,stepcoh);
 
 for kk=1:geom.NumPoints+1
     stepcoh.traction_xy(kk)=stepcoh.traction(kk)*exp(i*beta(kk));

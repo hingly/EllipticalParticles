@@ -14,8 +14,6 @@ function [stepcoh,stepdisp, stepload,steppot]=final(soln, loads, material, geom)
 %constants
 zero_intpoints=zeros(1,geom.NumPoints+1);
 
-% FIXME : lambda needs to be handled more systematically
-stepcoh.lambda=zero_intpoints;
 stepcoh.lambda_xy=zero_intpoints;
 
 
@@ -50,14 +48,18 @@ stepcoh.lambda_xy=zero_intpoints;
 
 % *** Completed to here 16/7/2012 - still need to deal with lambda in a sensible way
 
-for kk=1:n+1
-  U=real(stepdisp.total(kk));
-  V=imag(stepdisp.total(kk));
-  stepcoh.lambda(kk)=sqrt((U/delopen)^2+(V/delslide)^2);
+for kk=1:geom.NumPoints+1
   if real(stepdisp(kk))<0
     stepcoh.lambda(kk)=0;
+% CHECK : This is for display purposes - not sure it's right to be doing
   end
   stepcoh.lambda_xy(kk)=stepcoh.lambda(kk)*geom.normal(kk));
+  
+  % Write lambda_max_temp and loading_temp to lambda_max and
+  % loading at end of convergence loop
+  stepcoh.lambda_max=stepcoh.lambda_max_temp;
+  stepcoh.loading=stepcoh.loading_temp;
+  
 end
 
 

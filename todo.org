@@ -23,10 +23,11 @@ can't update anything inside residual.m
 ** DONE Should SigmaBar1 be an input or should it just always be 1?  
    CLOCK: [2012-07-20 Fri 10:56]--[2012-07-20 Fri 11:03] =>  0:07
   We don't control the magnitude of loading but only the shape, so this should not be a variable
+** DONE lambda and lambda_max need to be tracked throughout 
+   CLOCK: [2012-07-20 Fri 11:10]--[2012-07-20 Fri 11:46] =>  0:36
+** DONE Should cohesive loading/unloading decision be made on the fly or at the end of previous converged step?
+   --- I think, from past experience, it's safer to use the end of previous converged step - we get convergence issues otherwise with switching back and forth
 
-
-** TODO lambda and lambda_max need to be tracked throughout 
-** TODO Should cohesive loading/unloading decision be made on the fly or at the end of previous converged step?
 
 
 
@@ -37,6 +38,13 @@ can't update anything inside residual.m
 
 ** TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
 ** TODO problem with loading angles (I don't accept omega=pi/2) see p.67
+** TODO How do I want to handle damage under normal compression?  
+   -- At the moment I accumulate damage, but compensate for slope in normal mode.  
+      But large normal compression and no shear could still result in substantial damage - this is wrong
+** TODO Check eq 4.80 - have we accounted for plane stress/plane strain?
+       --- I calculate kappa for plane stress and plane strain, and in fact have a parameter for plane stress or plane strain in the input file, but eq 4.80 in the derivation is only for plane strain.  
+       --- Remove option or do alternative derivation?
+
 
 
 * TODO Write standard tests 
@@ -101,12 +109,11 @@ can't update anything inside residual.m
        --- Do I have storage/speed issues?
        --- Perhaps I could only save them in final.m - that would mean sacrificing common.m? or setting an option?
        --- If I am saving them at each timestep it might be possible to loop more efficiently?
-** TODO Check eq 4.80 - have we accounted for plane stress/plane strain?
-       --- I calculate kappa for plane stress and plane strain, and in fact have a parameter for plane stress or plane strain in the input file, but eq 4.80 in the derivation is only for plane strain.  
-       --- Remove option or do alternative derivation?
 ** TODO Get Carl to help me write a better input reader/input deck (i.e. more robust)
-** TODO Can I have a structure of structures? i.e. step.disp.etc and final.disp.etc?
-  
+** TODO Can I have a structure of structures? i.e. step.disp.etc and final.disp.etc? or steppot.coh.phi, steppot.ff.phi?
+
+
+
 * Completed
 ** DONE Check definition of beta
 ** DONE Can't cope with zero stress in 11 direction at the moment.

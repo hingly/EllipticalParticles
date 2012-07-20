@@ -4,9 +4,7 @@ if ~exist('filename', 'var')
   filename=input('Enter the complete input filename: ','s');
 end
 
-% This is going to be the main driver code in the new improved 2011
-% version of the ellipse code.  
-% Hoorah!
+% This is the main driver code in the new improved 2011 version of the ellipse code.  
 
 
 %------------------------------------------------------------------
@@ -38,8 +36,6 @@ for tt=1:loads.timesteps  % Loop through loading steps
   
 % FIXME : ****  Notice: need to check that everything is getting
   %initialised/reset properly here! ****
-
-% FIXME : *** These should really be using the previous timestep value as a first guess
   
   if tt>1
     [soln, stepload] = incorporate_previous_timestep(soln, material, loads, tt);
@@ -83,33 +79,18 @@ for tt=1:loads.timesteps  % Loop through loading steps
   % end convergence loop
   
   soln=unstack(output,loads.NumModes,tt);
-  
-  % | | | |
-  % v v v v
-  
-% FIXME : write steploads to loads and generally tidy up at the end of converged step *** This includes all the following!!!
-  
-  % Write lambda_max_temp to lambda_max
-  loads.lambda_max(tt,:) = lambda_max_temp;             
 
-% FIXME : Should this overwriting happen in final.m?  Should I do
-  % a comparison check or just copy over?  Not sure lambda_max_temp
-  % is actually available as a variable in this routine
-  
-% THINK : decide whether to allow load/unload decision in cohesive
-% subroutine, or set at the end of previous step.  
-  
-  % ^ ^ ^ ^
-  % | | | |
-  
-
+  % Calculate final values based on converged sk, sigma_p and eps_int
   [stepcoh, stepdisp, stepload, steppot]=final(soln, loads, material, geom);
 
+  % Write final step values to global values
   [cohesive, disp, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, tt);
 
 % FIXME : finalize_timestep.m could be inside final.m
 
   
+
+
   %     figure(1)
   %     hold on;
   %     plot(macstrain(tt,1), macstress(tt,1), 'rx')
