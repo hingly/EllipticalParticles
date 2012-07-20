@@ -1,5 +1,5 @@
 % Total number of input lines after this one, not counting comments
-18 
+17
 %       a: Ellipse major axis [mm]
 10.0 
 %       b: Ellipse minor axis [mm]
@@ -22,9 +22,7 @@
 10
 %       NumModes: number of modes in the Fourier sum (must be even)
 30 
-%       SigmaBar1: principal applied macroscopic stress
-100.0 
-%       SigmaBarRatio: ratio of SigmaBar2 to SigmaBar1
+%       SigmaBarRatio: ratio of SigmaBar2 to SigmaBar1 (i.e. shape of loading.  SigmaBar1=1)
 0.0 
 %       AppliedLoadAngle: angle of SigmaBar1 relative to major axis of ellipse 
 0.0 
