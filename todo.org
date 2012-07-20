@@ -18,14 +18,15 @@ can't update anything inside residual.m
 ** DONE Develop good rules for all variables which must be updated, when it happens, how it happens.  
    CLOCK: [2012-07-19 Thu 10:37]--[2012-07-19 Thu 12:20] =>  1:43
 
+** DONE Sometimes I need to output phi, phiprime, psi
+   CLOCK: [2012-07-20 Fri 10:28]--[2012-07-20 Fri 10:51] =>  0:23
+** DONE Should SigmaBar1 be an input or should it just always be 1?  
+   CLOCK: [2012-07-20 Fri 10:56]--[2012-07-20 Fri 11:03] =>  0:07
+  We don't control the magnitude of loading but only the shape, so this should not be a variable
+
 
 ** TODO lambda and lambda_max need to be tracked throughout 
 ** TODO Should cohesive loading/unloading decision be made on the fly or at the end of previous converged step?
-** TODO Sometimes I need to output phi, phiprime, psi
-   CLOCK: [2012-07-20 Fri 10:28]--[2012-07-20 Fri 10:51] =>  0:23
-** TODO Should SigmaBar1 be an input or should it just always be 1?  
-   CLOCK: [2012-07-20 Fri 10:56]--[2012-07-20 Fri 11:03] =>  0:07
-  We don't control the magnitude of loading but only the shape, so this should not be a variable
 
 
 
@@ -100,14 +101,16 @@ can't update anything inside residual.m
        --- Do I have storage/speed issues?
        --- Perhaps I could only save them in final.m - that would mean sacrificing common.m? or setting an option?
        --- If I am saving them at each timestep it might be possible to loop more efficiently?
-** TODO I calculate kappa for plane stress and plane strain, and in fact have a parameter for plane stress or plane strain in the input file, but eq 4.80 in the derivation is only for plane strain.  Remove option or do alternative derivation?
+** TODO Check eq 4.80 - have we accounted for plane stress/plane strain?
+       --- I calculate kappa for plane stress and plane strain, and in fact have a parameter for plane stress or plane strain in the input file, but eq 4.80 in the derivation is only for plane strain.  
+       --- Remove option or do alternative derivation?
 ** TODO Get Carl to help me write a better input reader/input deck (i.e. more robust)
+** TODO Can I have a structure of structures? i.e. step.disp.etc and final.disp.etc?
   
 * Completed
 ** DONE Check definition of beta
 ** DONE Can't cope with zero stress in 11 direction at the moment.
         --- Derivation in Denel notebook pp 11-12, implemented in initialize_loading.m and macrostress.m 18/7/2012
-** DONE Check eq 4.80 - have we accounted for plane stress/plane strain?
 ** DONE Calculate phiprime2 and psiprime only when necessary - two phi functions? 
 ** DONE 3/7/12: Correct calculation of cohesive law - I think this needs to be rationalised and reworked.  
    Is there any reason to have separate subroutines?  
