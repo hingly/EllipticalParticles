@@ -111,6 +111,7 @@ can't update anything inside residual.m
        --- If I am saving them at each timestep it might be possible to loop more efficiently?
 ** TODO Get Carl to help me write a better input reader/input deck (i.e. more robust)
 ** TODO Can I have a structure of structures? i.e. step.disp.etc and final.disp.etc? or steppot.coh.phi, steppot.ff.phi?
+** TODO Do I want stepsoln?
 
 
 
