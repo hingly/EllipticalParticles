@@ -83,7 +83,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   soln=unstack(output,loads.NumModes,tt);
 
   % Calculate final values based on converged sk, sigma_p and eps_int
-  [stepcoh, stepdisp, stepload, steppot]=final(soln, stepload,loads, material, geom,stepcoh);
+  [stepcoh, stepdisp, stepload, steppot]=final(soln(tt,:), stepload,loads, material, geom,stepcoh);
 
   % Write final step values to global values
   [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, loads,tt);
