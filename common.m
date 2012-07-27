@@ -4,6 +4,8 @@ function [stepcoh, stepdisp,steppot]=common(N1, N2, omega, geom,  material,loads
 % Created from residual.m 16/7/2012
 % Put displacements and tractions in structures 17/7/2012
 
+%disp('Entering common...');
+
 
 %-----------------------------
 % Initialise arrays

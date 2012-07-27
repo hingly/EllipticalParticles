@@ -1,9 +1,10 @@
-function [loads,soln,disp,cohesive,potential,stepload,stepcoh]=initialize_loading(loads, geom, material)
+function [loads,soln,displacement,cohesive,potential,stepload,stepcoh]=initialize_loading(loads, geom, material)
 
   % This subroutine initializes all the loading, stress and strain arrays, and computes the 
   % imposed macroscopic stress in local rather than principal coordinates.
-
-  % Edited 4/7/2012 added loads.lambda_max
+ 
+  disp('Initializing loading...');
+  
   
   % constants
   zero_matrix = zeros(1,3);
@@ -50,12 +51,12 @@ function [loads,soln,disp,cohesive,potential,stepload,stepcoh]=initialize_loadin
 % Initialize displacement array
 %=============================================  
 
-disp.farfield=zero_timestep_intpoints;
-disp.farfield_xy=zero_timestep_intpoints;
-disp.coh=zero_timestep_intpoints;
-disp.coh_xy=zero_timestep_intpoints;
-disp.total=zero_timestep_intpoints;
-disp.total_xy=zero_timestep_intpoints;
+displacement.farfield=zero_timestep_intpoints;
+displacement.farfield_xy=zero_timestep_intpoints;
+displacement.coh=zero_timestep_intpoints;
+displacement.coh_xy=zero_timestep_intpoints;
+displacement.total=zero_timestep_intpoints;
+displacement.total_xy=zero_timestep_intpoints;
 
 %---------------------------------------------
 % Initialize cohesive array

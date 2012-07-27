@@ -12,7 +12,7 @@ function Rk=residual(input_guess,stepload,loads, material, geom,stepcoh)
   % passed as vector 'input'
 
 
-
+%disp('Entering residual...');
 
 
 %----------------------------------

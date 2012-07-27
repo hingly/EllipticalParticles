@@ -23,7 +23,7 @@ geom=calculate_geometry(geom);
 % Calculate loading variables
 %==================================================================
 
-[loads,soln,disp,cohesive,potential,stepload,stepcoh]=initialize_loading(loads,geom,material);      
+[loads,soln,displacement,cohesive,potential,stepload,stepcoh]=initialize_loading(loads,geom,material);      
 % Solution variables (sk, sigma_p and eps_int) are all stored in the soln structure
 
 
@@ -37,6 +37,8 @@ for tt=1:loads.timesteps  % Loop through loading steps
 % FIXME : ****  Notice: need to check that everything is getting
   %initialised/reset properly here! ****
   
+  disp('Beginning timestep...');
+
   if tt>1
     [soln, stepload,stepcoh] = incorporate_previous_timestep(soln, material, loads, cohesive,tt);
   end
@@ -84,7 +86,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   [stepcoh, stepdisp, stepload, steppot]=final(soln, loads, material, geom);
 
   % Write final step values to global values
-  [cohesive, disp, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, tt);
+  [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, tt);
 
 % FIXME : finalize_timestep.m could be inside final.m
 
