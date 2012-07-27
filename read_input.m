@@ -19,8 +19,8 @@ num_input_lines=sscanf(fgets(fid),'%i');
 
 input_list=zeros(num_input_lines,1);
 for i=1:num_input_lines
-  dummy=sscanf(fgets(fid),'%s');
-  input_list(i)=sscanf(fgets(fid),'%f');
+    dummy=sscanf(fgets(fid),'%s');
+    input_list(i)=sscanf(fgets(fid),'%f');
 end
 
 geom.a=input_list(1);                    

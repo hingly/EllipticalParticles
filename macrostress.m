@@ -6,10 +6,10 @@ function [MacroStress, MacroStrain,Sigma_m]= macrostress(MacroStrain,Sigma_p, Ep
 
 
 
+
 %Define mu and nu for convenience
 mu=material.mu_m;
-nu=material.nu_m
-
+nu=material.nu_m;
   if loads.SigBar_xy(1)==0
     % Special case that we have to handle differently
     materialterm22 = -2*mu/nu;
@@ -34,4 +34,3 @@ MacroStrain(3) = 2*mu*MacroStress(3) + geom.f*(-2*mu*Sigma_p(3) + Eps_int(3));
 
 % Compute matrix stresses (eq 4.68)
 Sigma_m = (MacroStress - geom.f * Sigma_p)/(1-geom.f);
-

@@ -1,14 +1,14 @@
-function [stepcoh]=Cohesive_Law(disp, NumPoints,material, stepcoh)
+function [stepcoh]=Cohesive_Law(displacement, NumPoints,material, stepcoh)
 
 % This is a new function to replace the functionality of
 % old_cohesivetractions.m and old_Cohesive_Law.m   ---4 July 2012
 
-
+%disp('Entering Cohesive_Law');
 
 % This function computes the interfacial tractions by using the cohesive
 % law.  This is done by knowing the displacement jumps and the interfacial
 % properties.  The interfacial tractions are then returned.
-% --- disp is the calculated displacement jumps, vector length NumPoints+1
+% --- displacement is the calculated displacement jumps, vector length NumPoints+1
 % --- NumPoints is the number of integration points around the ellipse
 % --- material is a structure containing material data
 % --- lambda_max is the maximum value of lambda achieved to date, vector length NumPoints+1 
@@ -26,7 +26,7 @@ gint=material.gint;
 lambda_e=material.lambda_e;
 
 %constants
-zero_intpoints=zeros(1,geom.NumPoints+1);
+zero_intpoints=zeros(1,NumPoints+1);
 
 % Previous maximum damage
 lambda_max=stepcoh.lambda_max;
@@ -55,16 +55,17 @@ loading_temp=stepcoh.loading;
 
 % Integration loop around the particle to determine stepcoh tractions
 
+tolerance=lambda_e/10;
+
 for jj=1:NumPoints+1
-  
+
   % Displacement jump
-  U=real(disp(jj));
-  V=imag(disp(jj));
+  U=real(displacement(jj));
+  V=imag(displacement(jj));
   
   % compute damage parameter lambda
   lambda(jj)=sqrt((U/delopen)^2+(V/delslide)^2);
   
-                                             
     
   %----------------------------------------------------
   % Determine the cohesive normal and tangential slopes  
@@ -82,7 +83,11 @@ for jj=1:NumPoints+1
 
   klinear=2*gint/lambda_e;                  
   ktilde=2*gint/(1-lambda_e);
-  khat=ktilde*(1-lambda_max_temp(jj))/lambda_max_temp(jj);
+  if lambda_max_temp(jj)>tolerance
+    khat=ktilde*(1-lambda_max_temp(jj))/lambda_max_temp(jj);
+  else
+    khat=klinear;
+  end
   
   
   % Three different stages, described with an if statement.  
@@ -102,7 +107,7 @@ for jj=1:NumPoints+1
   elseif lambda(jj)>lambda_e && lambda(jj)<1    
     % Check for Stage II
     
-    if loading(jj)=1                        
+    if loading(jj)==1                        
       % Check for loading
       kn=ktilde*(lambda(jj)-1)/lambda(jj)/delopen^2;
       kt=ktilde*(lambda(jj)-1)/lambda(jj)/delslide^2;
@@ -151,3 +156,5 @@ end
 stepcoh.loading_temp=loading_temp;
 stepcoh.lambda_max_temp=lambda_max_temp;
 stepcoh.lambda=lambda;
+
+%disp('Leaving Cohesive_Law...');

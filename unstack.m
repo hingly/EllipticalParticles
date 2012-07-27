@@ -1,7 +1,7 @@
 function structure=unstack(vector, NumModes, tt)
 
 % Unstack output vector
-for kk=1:loads.NumModes+1
+for kk=1:NumModes+1
   structure.sk(tt,kk)=vector(kk) + i * vector(NumModes+1+kk);
 end
 for kk=1:3
