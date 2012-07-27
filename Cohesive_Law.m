@@ -26,7 +26,7 @@ gint=material.gint;
 lambda_e=material.lambda_e;
 
 %constants
-zero_intpoints=zeros(1,geom.NumPoints+1);
+zero_intpoints=zeros(1,NumPoints+1);
 
 % Previous maximum damage
 lambda_max=stepcoh.lambda_max;
@@ -102,7 +102,7 @@ for jj=1:NumPoints+1
   elseif lambda(jj)>lambda_e && lambda(jj)<1    
     % Check for Stage II
     
-    if loading(jj)=1                        
+    if loading(jj)==1                        
       % Check for loading
       kn=ktilde*(lambda(jj)-1)/lambda(jj)/delopen^2;
       kt=ktilde*(lambda(jj)-1)/lambda(jj)/delslide^2;

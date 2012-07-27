@@ -1,4 +1,4 @@
-function [loads,soln,stepload]=initialize_loading(loads, geom)
+function [loads,soln,disp,cohesive,potential,stepload,stepcoh]=initialize_loading(loads, geom, material)
 
   % This subroutine initializes all the loading, stress and strain arrays, and computes the 
   % imposed macroscopic stress in local rather than principal coordinates.
@@ -10,6 +10,7 @@ function [loads,soln,stepload]=initialize_loading(loads, geom)
   zero_timestep_matrix = zeros(loads.timesteps,3);
   zero_timestep_modes=zeros(loads.timesteps, loads.NumModes+1);
   zero_timestep_intpoints=zeros(loads.timesteps,geom.NumPoints+1);
+  zero_intpoints=zeros(1,geom.NumPoints+1);
   
   
 %---------------------------------------------
@@ -60,12 +61,12 @@ disp.total_xy=zero_timestep_intpoints;
 % Initialize cohesive array
 %=============================================  
 
-coh.traction=zero_timestep_intpoints;
-coh.traction_xy=zero_timestep_intpoints;
-coh.lambda=zero_timestep_intpoints;
-coh.lambda_xy=zero_timestep_intpoints;
-coh.lambda_max=zero_timestep_intpoints;
-coh.loading=zero_timestep_intpoints;
+cohesive.traction=zero_timestep_intpoints;
+cohesive.traction_xy=zero_timestep_intpoints;
+cohesive.lambda=zero_timestep_intpoints;
+cohesive.lambda_xy=zero_timestep_intpoints;
+cohesive.lambda_max=zero_timestep_intpoints;
+cohesive.loading=zero_timestep_intpoints;
 
 
 
@@ -167,7 +168,8 @@ potential.psicoh=zero_timestep_intpoints;
   stepload.MacroStrain=zero_matrix;
   stepload.MacroStress=zero_matrix;
   stepload.Sigma_m=zero_matrix;
-    
+  stepcoh.lambda_max=zero_intpoints;
+  stepcoh.loading=zero_intpoints;
 
   
   

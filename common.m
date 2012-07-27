@@ -1,4 +1,4 @@
-function [stepcoh, stepdisp,steppot]=common(N1, N2, omega, geom,  material,loads, sk)
+function [stepcoh, stepdisp,steppot]=common(N1, N2, omega, geom,  material,loads, sk,stepcoh)
 
 % Given far-field loading and Fourier modes, compute cohesive tractions and displacements
 % Created from residual.m 16/7/2012
@@ -87,7 +87,7 @@ stepdisp.total_xy=stepdisp.farfield_xy+stepdisp.coh_xy;
 stepcoh=Cohesive_Law(stepdisp.total,geom.NumPoints,material,stepcoh);
 
 for kk=1:geom.NumPoints+1
-    stepcoh.traction_xy(kk)=stepcoh.traction(kk)*exp(i*beta(kk));
+    stepcoh.traction_xy(kk)=stepcoh.traction(kk)*exp(i*geom.beta(kk));
 end
 
 

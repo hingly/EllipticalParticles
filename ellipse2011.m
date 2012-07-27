@@ -23,7 +23,7 @@ geom=calculate_geometry(geom);
 % Calculate loading variables
 %==================================================================
 
-[loads,soln,stepload]=initialize_loading(loads,geom);      
+[loads,soln,disp,cohesive,potential,stepload,stepcoh]=initialize_loading(loads,geom,material);      
 % Solution variables (sk, sigma_p and eps_int) are all stored in the soln structure
 
 
@@ -38,13 +38,13 @@ for tt=1:loads.timesteps  % Loop through loading steps
   %initialised/reset properly here! ****
   
   if tt>1
-    [soln, stepload] = incorporate_previous_timestep(soln, material, loads, tt);
+    [soln, stepload,stepcoh] = incorporate_previous_timestep(soln, material, loads, cohesive,tt);
   end
   
   % The complex fourier terms are  split into real and imaginary 
   % parts before going into the solution loop.  
   
-  input=stack(soln,loads.NumModes,tt);
+  input_guess=stack(soln,loads.NumModes,tt);
   
   exitflag=0;
   counter=0;
@@ -62,7 +62,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
     % Solve for sk, Sigma_p, Eps_int
     %       options=optimset('Display','iter', 'TolFun',1e-5,
     %       'MaxFunEvals', 5000, 'MaxIter', 60);    % Option to display output
-    [output,fval,exitflag]=fsolve(@(input) residual(input, steploads,loads, material, geom),input);
+    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess);
     
     
     if exitflag<=0
@@ -70,7 +70,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
         error('Non-converged solution')
       else
         for kk=1:2*loads.NumModes+8
-          input(kk)=output(kk)*(1+rand/100);
+          input_guess(kk)=output(kk)*(1+rand/100);
         end
       end
     end

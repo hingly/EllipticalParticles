@@ -1,4 +1,4 @@
-function Rk=residual(input,steploads,loads, material, geom)
+function Rk=residual(input_guess,stepload,loads, material, geom,stepcoh)
 
 
 
@@ -23,7 +23,7 @@ function Rk=residual(input,steploads,loads, material, geom)
 % changes for structures)
 
 % Unstack input vector and separate into components
-dummy=unstack(input, loads.NumModes, 1)
+dummy=unstack(input_guess, loads.NumModes, 1);
 
 Sigma_p=dummy.Sigma_p;
 Eps_int=dummy.Eps_int;
@@ -38,14 +38,14 @@ sk = dummy.sk;
 % Macroscopic stresses and strains for the current timestep are computed from the given macroscopic strain eps_11
 % Note that these depend on Sigma_p and Eps_int, so will be updated at every convergence step
 
-[steploads.MacroStress, steploads.MacroStrain, steploads.Sigma_m]= macrostress(steploads.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
+[stepload.MacroStress, stepload.MacroStrain, stepload.Sigma_m]= macrostress(stepload.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
 
 
 %-----------------------------------------------
 % Compute farfield loading
 %===============================================
 
-[N1, N2, omega] = principal(steploads.Sigma_m(1), steploads.Sigma_m(2),steploads.Sigma_m(3));
+[N1, N2, omega] = principal(stepload.Sigma_m(1), stepload.Sigma_m(2),stepload.Sigma_m(3));
   
 %-------------------> Completed to here Apr 10 6:27
 
@@ -54,7 +54,7 @@ sk = dummy.sk;
 % Compute displacements and cohesive tractions
 %===============================================
 
-[stepcoh,stepdisp,steppot]=common(N1, N2, omega, geom, material,loads, sk)
+[stepcoh,stepdisp,steppot]=common(N1, N2, omega, geom, material,loads, sk,stepcoh);
 
 
 % Compute Fourier modes corresponding to cohesive tractions

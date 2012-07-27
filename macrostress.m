@@ -8,8 +8,7 @@ function [MacroStress, MacroStrain,Sigma_m]= macrostress(MacroStrain,Sigma_p, Ep
 
 %Define mu and nu for convenience
 mu=material.mu_m;
-nu=material.nu_m
-
+nu=material.nu_m;
   if loads.SigBar_xy(1)==0
     % Special case that we have to handle differently
     materialterm22 = -2*mu/nu;
