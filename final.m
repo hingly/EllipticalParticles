@@ -1,4 +1,4 @@
-function [stepcoh,stepdisp, stepload,steppot]=final(soln, loads, material, geom)
+function [stepcoh,stepdisp, stepload,steppot]=final(soln, stepload,loads, material, geom,stepcoh)
 
 
 % Given converged solution, including Fourier coefficients sk, the average particle stress
@@ -27,7 +27,7 @@ stepcoh.lambda_xy=zero_intpoints;
 % from the given macroscopic strain eps_11.  Note that these depend on Sigma_p 
 % and Eps_int, so must be re-calculated after convergence
 
-[stepload.MacroStress, stepload.MacroStrain, stepload.Sigma_m]= macrostress(stepload.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
+[stepload.MacroStress, stepload.MacroStrain, stepload.Sigma_m]= macrostress(stepload.MacroStrain, soln.Sigma_p, soln.Eps_int, loads,geom, material);
 
 
 %-----------------------------------------------
@@ -44,16 +44,16 @@ stepcoh.lambda_xy=zero_intpoints;
 % Compute displacements and cohesive tractions
 %===============================================
 
-[stepcoh,stepdisp,steppot]=common(N1, N2, omega, geom, material,loads, sk)
+[stepcoh,stepdisp,steppot]=common(N1, N2, omega, geom, material,loads, soln.sk,stepcoh);
 
 % *** Completed to here 16/7/2012 - still need to deal with lambda in a sensible way
 
 for kk=1:geom.NumPoints+1
-  if real(stepdisp(kk))<0
+  if real(stepdisp.total(kk))<0
     stepcoh.lambda(kk)=0;
 % CHECK : This is for display purposes - not sure it's right to be doing
   end
-  stepcoh.lambda_xy(kk)=stepcoh.lambda(kk)*geom.normal(kk));
+  stepcoh.lambda_xy(kk)=stepcoh.lambda(kk)*geom.normal(kk);
   
   % Write lambda_max_temp and loading_temp to lambda_max and
   % loading at end of convergence loop

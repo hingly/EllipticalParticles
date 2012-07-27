@@ -38,7 +38,8 @@ for tt=1:loads.timesteps  % Loop through loading steps
   %initialised/reset properly here! ****
   
   disp('Beginning timestep...');
-
+  loads.MacroStrain(tt,1)
+  
   if tt>1
     [soln, stepload,stepcoh] = incorporate_previous_timestep(soln, material, loads, cohesive,tt);
   end
@@ -62,9 +63,8 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     
     % Solve for sk, Sigma_p, Eps_int
-    %       options=optimset('Display','iter', 'TolFun',1e-5,
-    %       'MaxFunEvals', 5000, 'MaxIter', 60);    % Option to display output
-    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess);
+    options=optimset('Display','iter', 'TolFun',1e-5, 'MaxFunEvals', 5000, 'MaxIter', 60);    % Option to display output
+    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess,options);
     
     
     if exitflag<=0
@@ -83,10 +83,10 @@ for tt=1:loads.timesteps  % Loop through loading steps
   soln=unstack(output,loads.NumModes,tt);
 
   % Calculate final values based on converged sk, sigma_p and eps_int
-  [stepcoh, stepdisp, stepload, steppot]=final(soln, loads, material, geom);
+  [stepcoh, stepdisp, stepload, steppot]=final(soln, stepload,loads, material, geom,stepcoh);
 
   % Write final step values to global values
-  [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, tt);
+  [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, loads,tt);
 
 % FIXME : finalize_timestep.m could be inside final.m
 

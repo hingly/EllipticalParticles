@@ -167,6 +167,7 @@ potential.psicoh=zero_timestep_intpoints;
     
   % Initialise loading data for timesteps
   stepload.MacroStrain=zero_matrix;
+  stepload.MacroStrain(1)=loads.MacroStrain(tt,1);
   stepload.MacroStress=zero_matrix;
   stepload.Sigma_m=zero_matrix;
   stepcoh.lambda_max=zero_intpoints;
