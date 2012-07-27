@@ -136,3 +136,10 @@ can't update anything inside residual.m
 ** DONE Macrostress needs to be more flexible so it can be called from final as well as residual
 ** DONE use stack and unstack in residual.m  
   CLOCK: [2012-07-17 Tue 11:03]--[2012-07-17 Tue 11:19] =>  0:16
+
+
+
+
+** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
+
+** go through code and check that I don't use == test for non-integers
