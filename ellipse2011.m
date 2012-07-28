@@ -63,9 +63,11 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     
     % Solve for sk, Sigma_p, Eps_int
-    options=optimset('Display','iter', 'TolFun',1e-5, 'MaxFunEvals', 5000, 'MaxIter', 60);    % Option to display output
-    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess,options);
+   % options=optimset('Display','iter', 'TolFun',1e-5, 'MaxFunEvals', 5000, 'MaxIter', 60);    % Option to display output
+
+%    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess,options);
     
+    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess);
     
     if exitflag<=0
       if counter>2
@@ -83,7 +85,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   soln=unstack(output,loads.NumModes,tt);
 
   % Calculate final values based on converged sk, sigma_p and eps_int
-  [stepcoh, stepdisp, stepload, steppot]=final(soln(tt,:), stepload,loads, material, geom,stepcoh);
+  [stepcoh, stepdisp, stepload, steppot]=final(soln, stepload,loads, material, geom,stepcoh,tt);
 
   % Write final step values to global values
   [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, loads,tt);
@@ -133,16 +135,16 @@ end      % end loop through loading steps
 
 
 
-% $$$ figure
-% $$$ axis equal;
-% $$$ hold on;
-% $$$ plot(ellipse(1,:),ellipse(2,:), 'LineWidth', 2);
-% $$$ plot(ellipse(1,:)+scale*real(dispxy), ellipse(2,:)+scale*imag(dispxy),'r', 'Linewidth', 2)
-% $$$ plot(ellipse(1,:)+scale*real(dispffxy), ellipse(2,:)+scale*imag(dispffxy),'k:')
-% $$$ legend('Undeformed shape', 'Total Deformed Shape','Deformed shape due to far-field loading','Location', 'NorthWest')
-% $$$ xlabel('x')
-% $$$ ylabel('y')
-% $$$ 
+figure(1)
+axis equal;
+hold on;
+plot(geom.ellipse(1,:),geom.ellipse(2,:), 'LineWidth', 2);
+plot(geom.ellipse(1,:)+post.scale*real(displacement.total_xy), geom.ellipse(2,:)+post.scale*imag(displacement.total_xy),'r', 'Linewidth', 2);
+plot(geom.ellipse(1,:)+post.scale*real((displacement.farfield_xy), geom.ellipse(2,:)+post.scale*imag(displacement.farfield_xy),'k:');
+%legend('Undeformed shape', 'Total Deformed Shape','Deformed shape due to far-field loading','Location', 'NorthWest')
+%xlabel('x')
+%ylabel('y')
+
 % $$$ 
 % $$$ figure
 % $$$ axis equal;
@@ -155,26 +157,23 @@ end      % end loop through loading steps
 % $$$ xlabel('x')
 % $$$ ylabel('y')
 % 
-% figure2
-% hold on
-% plot(macstrain(:,1), macstress(:,1), 'bx-', 'LineWidth', 2)
-% title('Macroscopic constitutive response - 11')
-% xlabel('strain')
-% ylabel('stress')
-% 
-% figure2
-% hold on
-% plot(macstrain(:,2), macstress(:,2), 'rx-', 'LineWidth', 2)
-% title('Macroscopic constitutive response - 22')
-% xlabel('strain')
-% ylabel('stress')
-% 
-% figure2
-% hold on
-% plot(macstrain(:,3), macstress(:,3), 'kx-', 'LineWidth', 2)
-% title('Macroscopic constitutive response - 33')
-% xlabel('strain')
-% ylabel('stress')
 
-
-
+% $$$ figure(2)
+% $$$ hold on
+% $$$ plot(loads.MacroStrain(:,1), loads.MacroStress(:,1), 'bx-', 'LineWidth', 2)
+% $$$ title('Macroscopic constitutive response - 11')
+% $$$ xlabel('strain')
+% $$$ ylabel('stress')
+ 
+% $$$  hold on
+% $$$  plot(loads.MacroStrain(:,2), loads.MacroStress(:,2), 'rx-', 'LineWidth', 2)
+% $$$  title('Macroscopic constitutive response - 22')
+% $$$  xlabel('strain')
+% $$$  ylabel('stress')
+% $$$ 
+% $$$  hold on
+% $$$  plot(loads.MacroStrain(:,3), loads.MacroStress(:,3), 'kx-', 'LineWidth', 2)
+% $$$  title('Macroscopic constitutive response - 33')
+% $$$  xlabel('strain')
+% $$$  ylabel('stress')
+% $$$ 

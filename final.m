@@ -1,4 +1,4 @@
-function [stepcoh,stepdisp, stepload,steppot]=final(currentsoln, stepload,loads, material, geom,stepcoh)
+function [stepcoh,stepdisp, stepload,steppot]=final(soln, stepload,loads, material, geom,stepcoh,tt)
 
 
 % Given converged solution, including Fourier coefficients sk, the average particle stress
@@ -27,7 +27,7 @@ stepcoh.lambda_xy=zero_intpoints;
 % from the given macroscopic strain eps_11.  Note that these depend on Sigma_p 
 % and Eps_int, so must be re-calculated after convergence
 
-[stepload.MacroStress, stepload.MacroStrain, stepload.Sigma_m]= macrostress(stepload.MacroStrain, currentsoln.Sigma_p, currentsoln.Eps_int, loads,geom, material);
+[stepload.MacroStress, stepload.MacroStrain, stepload.Sigma_m]= macrostress(stepload.MacroStrain, soln.Sigma_p(tt,:), soln.Eps_int(tt,:), loads,geom, material);
 
 
 %-----------------------------------------------
@@ -44,7 +44,7 @@ stepcoh.lambda_xy=zero_intpoints;
 % Compute displacements and cohesive tractions
 %===============================================
 
-[stepcoh,stepdisp,steppot]=common(N1, N2, omega, geom, material,loads, currentsoln.sk,stepcoh);
+[stepcoh,stepdisp,steppot]=common(N1, N2, omega, geom, material,loads, soln.sk(tt,:),stepcoh);
 
 % *** Completed to here 16/7/2012 - still need to deal with lambda in a sensible way
 

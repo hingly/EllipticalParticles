@@ -35,6 +35,10 @@ can't update anything inside residual.m
 * TODO Run code in Matlab and in Octave 
   -- Week 30 (July 23-27)
    
+** TODO Output macroscopic stress and strain and plot
+** TODO plot displaced shape
+** TODO output arrays
+
 
 ** TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
 ** TODO problem with loading angles (I don't accept omega=pi/2) see p.67

@@ -27,11 +27,11 @@
 %       AppliedLoadAngle: angle of SigmaBar1 relative to major axis of ellipse 
 0.78539816
 %       timesteps: number of timesteps
-10 
+1 
 %       MinimumStrain: minimum applied strain [-]
 0.004
 %       LoadFactor: fraction of maxstrain/minstrain
-10.0 
+1
 %	ScalingParameter: scaling for displaced shape [-]
 1
 
