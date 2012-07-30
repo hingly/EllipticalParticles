@@ -1,5 +1,5 @@
 
-* TODO Code Revisions
+* DONE Code Revisions
 ** DONE Changing Variables 
    To minimise ambiguity and to Structure variables to allow structures to be passed rather than variables.    
    -- Week 27 (July 2-6) and Week 29 (July 16-20)
@@ -27,32 +27,33 @@ can't update anything inside residual.m
    CLOCK: [2012-07-20 Fri 11:10]--[2012-07-20 Fri 11:46] =>  0:36
 ** DONE Should cohesive loading/unloading decision be made on the fly or at the end of previous converged step?
    --- I think, from past experience, it's safer to use the end of previous converged step - we get convergence issues otherwise with switching back and forth
-
+   
 
 
 
     
 * TODO Run code in Matlab and in Octave 
   -- Week 30 (July 23-27)
+
+
+** DONE Roll back some of read_input - Carl has hard-coded values I want to be calculated (mu, kappa, etc)
+** DONE output arrays
+** DONE Check eq 4.80 - have we accounted for plane stress/plane strain?
+       --- I calculate kappa for plane stress and plane strain, and in fact have a parameter for plane stress or plane strain in the input file, but eq 4.80 in the derivation is only for plane strain.  
+       --- Removed option of plane stress 30/7/2012
+
    
 ** TODO Output macroscopic stress and strain and plot
 ** TODO plot displaced shape
-** TODO output arrays
 
 
-** TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
-** TODO problem with loading angles (I don't accept omega=pi/2) see p.67
-** TODO How do I want to handle damage under normal compression?  
-   -- At the moment I accumulate damage, but compensate for slope in normal mode.  
-      But large normal compression and no shear could still result in substantial damage - this is wrong
-** TODO Check eq 4.80 - have we accounted for plane stress/plane strain?
-       --- I calculate kappa for plane stress and plane strain, and in fact have a parameter for plane stress or plane strain in the input file, but eq 4.80 in the derivation is only for plane strain.  
-       --- Remove option or do alternative derivation?
 
 
 
 * TODO Write standard tests 
    -- Weeks 31 and 32 (July 30-August 10)
+
+** Think about how and what to output
 ** TODO timoshenko files or test files
 ** TODO Test principal.m and unprincipal.m functions - 
     especially calculation of alpha in principal.m
@@ -60,6 +61,11 @@ can't update anything inside residual.m
     - see p.9 of Denel notebook
 ** TODO Check that A_1 and A_2 are calculated correctly
 ** TODO Run checks on macrostress subroutine - many many typos may introduce errors.
+** TODO problem with loading angles (I don't accept omega=pi/2) see p.67
+** TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
+** TODO How do I want to handle damage under normal compression?  
+   -- At the moment I accumulate damage, but compensate for slope in normal mode.  
+      But large normal compression and no shear could still result in substantial damage - this is wrong
 
 
 
@@ -108,14 +114,10 @@ can't update anything inside residual.m
        ---Removed from subroutine farfieldstress 16/7/2012 but still need to check reasoning
 ** TODO Timestep shouldn't be needed in stack or unstack Carl has ideas 
    load should be an array of structures rather than a structure containing arrays
-** TODO check that I can pass structures with name changes as I do from residual to stack and unstack
-** TODO Am I causing problems by storing phi, phiprime, psi instead of using and discarding them?  
-       --- Do I have storage/speed issues?
-       --- Perhaps I could only save them in final.m - that would mean sacrificing common.m? or setting an option?
-       --- If I am saving them at each timestep it might be possible to loop more efficiently?
-** TODO Get Carl to help me write a better input reader/input deck (i.e. more robust)
 ** TODO Can I have a structure of structures? i.e. step.disp.etc and final.disp.etc? or steppot.coh.phi, steppot.ff.phi?
 ** TODO Do I want stepsoln?
+** TODO How to update one timestep of a structure without putting the structure in input as well as output parameters of function  - see unstack.m. Ask Carl
+
 
 
 
@@ -140,6 +142,12 @@ can't update anything inside residual.m
 ** DONE Macrostress needs to be more flexible so it can be called from final as well as residual
 ** DONE use stack and unstack in residual.m  
   CLOCK: [2012-07-17 Tue 11:03]--[2012-07-17 Tue 11:19] =>  0:16
+** DONE Get Carl to help me write a better input reader/input deck (i.e. more robust)
+** DONE check that I can pass structures with name changes as I do from residual to stack and unstack
+** DONE Am I causing problems by storing phi, phiprime, psi instead of using and discarding them?  
+       --- Do I have storage/speed issues?
+       --- Perhaps I could only save them in final.m - that would mean sacrificing common.m? or setting an option?
+       --- If I am saving them at each timestep it might be possible to loop more efficiently?
 
 
 
