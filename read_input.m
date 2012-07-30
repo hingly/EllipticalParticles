@@ -7,3 +7,40 @@ data = loadjson(input_file);
 material = data.material;
 geom = data.geom;
 loads = data.loads;
+
+if material.plstrain==0
+    error('The code can only accommodate plane strain at the moment, i.e. plstrain must be 1');
+end
+
+%---------------------------------------------------------
+% Calculate additional geometric and material parameters
+%---------------------------------------------------------
+
+geom.R=(geom.a+geom.b)/2.;                      
+% ellipse size factor
+geom.m=(geom.a-geom.b)/(geom.a+geom.b);         
+% ellipse shape factor
+
+material.mu_m=material.E_m/(2*(1+material.nu_m));       
+% Lame modulus
+material.lambda_m= (material.E_m * material.nu_m)/((1+material.nu_m)*(1-2*material.nu_m));  
+% Lame modulus
+
+if (material.plstrain==1)
+    material.kappa_m= 3+ 4*material.nu_m;
+    % plane strain kappa
+elseif (material.plstrain==0)
+    material.kappa_m= (3-material.nu_m)/(1+material.nu_m);
+    % plane stress kappa
+else
+    error('variable plstrain must have a value of 0 or 1')
+end
+
+material.delslide=material.cohscale*material.delopen;   
+%critical sliding displacement is given by cohesive scaling parameter multiplied with critical opening displacement
+
+material.gint=material.sigmax*material.delopen/2;       
+% Cohesive energy is area under curve
+
+loads.SigmaBar1=1;          
+%       SigmaBar1: principal applied macroscopic stress.  We never use the magnitude, so this is set to 1

@@ -1,4 +1,4 @@
-function ellipse2011(filename)
+function [loads, displacement, cohesive, soln]=ellipse2011(filename)
 
 if ~exist('filename', 'var')
   filename=input('Enter the complete input filename: ','s');
@@ -88,7 +88,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   [stepcoh, stepdisp, stepload, steppot]=final(soln, stepload,loads, material, geom,stepcoh,tt);
 
   % Write final step values to global values
-  [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, loads,tt);
+  [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, cohesive, displacement, loads, potential,tt);
 
 % FIXME : finalize_timestep.m could be inside final.m
 

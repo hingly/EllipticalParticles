@@ -29,8 +29,9 @@ nu=material.nu_m;
   end
   
 % Calculate remaining element of MacroStrain (eq 4.80)
-MacroStrain(2) = 2*mu*((1-nu)*MacroStress(2) - nu*MacroStress(1)) + geom.f*(-2*mu*((1-nu)*Sigma_p(2) - nu*Sigma_p(1)) + Eps_int(2));
-MacroStrain(3) = 2*mu*MacroStress(3) + geom.f*(-2*mu*Sigma_p(3) + Eps_int(3));
+MacroStrain(2) = 1/(2*mu)*((1-nu)*MacroStress(2) - nu*MacroStress(1)) + geom.f*(-1/(2*mu)*((1-nu)*Sigma_p(2) - nu*Sigma_p(1)) + Eps_int(2));
+MacroStrain(3) = 1/(2*mu)*MacroStress(3) + geom.f*(-2*mu*Sigma_p(3) + Eps_int(3));
 
 % Compute matrix stresses (eq 4.68)
 Sigma_m = (MacroStress - geom.f * Sigma_p)/(1-geom.f);
+
