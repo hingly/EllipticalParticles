@@ -82,7 +82,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   end
   % end convergence loop
   
-  soln=unstack(output,loads.NumModes,tt);
+  soln=unstack(output,loads.NumModes,tt,soln);
 
   % Calculate final values based on converged sk, sigma_p and eps_int
   [stepcoh, stepdisp, stepload, steppot]=final(soln, stepload,loads, material, geom,stepcoh,tt);

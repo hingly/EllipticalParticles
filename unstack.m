@@ -1,4 +1,4 @@
-function structure=unstack(vector, NumModes, tt)
+function structure=unstack(vector, NumModes, tt,structure)
 
 % Unstack output vector
 for kk=1:NumModes+1
