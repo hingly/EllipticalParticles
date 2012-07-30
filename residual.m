@@ -21,9 +21,11 @@ function Rk=residual(input_guess,stepload,loads, material, geom,stepcoh)
 
 % FIXME : check that I'm passing things correctly (i.e. name
 % changes for structures)
-
+dummy.Sigma_p=zeros(1,3);
+dummy.Eps_int=zeros(1,3);
+dummy.sk=zeros(1,loads.NumModes+1);
 % Unstack input vector and separate into components
-dummy=unstack(input_guess, loads.NumModes, 1);
+dummy=unstack(input_guess, loads.NumModes, 1,dummy);
 
 Sigma_p=dummy.Sigma_p;
 Eps_int=dummy.Eps_int;

@@ -6,11 +6,6 @@
 		"delopen": 0.5,
 		"cohscale": 1,
 		"plstrain": 1,
-		"mu_m": 1592.592593,
-		"lambda_m": 3716.049383,
-		"kappa_m": 4.4,
-		"delslide": 0.5,
-		"gint": 0.5,
 		"lambda_e": 0.001
 	},
 	"geom": {
@@ -18,17 +13,14 @@
 		"b": 5,
 		"f": 0.4,
 		"NumPoints": 200,
-		"R": 7.5,
-		"m": 0.3333333333,
 		"rho": 1
 	},
 	"loads": {
 		"NumModes": 20,
-		"SigmaBarRatio": 0.25,
-		"AppliedLoadAngle": 0.78539816,
-		"timesteps": 1,
-		"MinimumStrain": 0.004,
-		"LoadFactor": 1,
-		"SigmaBar1": 1
+		"SigmaBarRatio": 0,
+		"AppliedLoadAngle": 0,
+		"timesteps": 3,
+		"MinimumStrain": 0.0011,
+		"LoadFactor": 3
 	}
 }

@@ -1,4 +1,4 @@
-function [cohesive, disp, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload,steppot,loads,tt)
+function [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload,steppot,cohesive, displacement, loads, potential,tt)
 
 % This subroutine writes step quantities to global quantities at the
 % end of a converged loadstep.  
@@ -14,12 +14,12 @@ loads.MacroStress(tt,:)=stepload.MacroStress(:);
 loads.Sigma_m(tt,:)=stepload.Sigma_m(:);
 
 
-disp.farfield(tt,:)=stepdisp.farfield(:);
-disp.farfield_xy(tt,:)=stepdisp.farfield_xy(:);
-disp.coh(tt,:)=stepdisp.coh(:);
-disp.coh_xy(tt,:)=stepdisp.coh_xy(:);
-disp.total(tt,:)=stepdisp.total(:);
-disp.total_xy(tt,:)=stepdisp.total_xy(:);
+displacement.farfield(tt,:)=stepdisp.farfield(:);
+displacement.farfield_xy(tt,:)=stepdisp.farfield_xy(:);
+displacement.coh(tt,:)=stepdisp.coh(:);
+displacement.coh_xy(tt,:)=stepdisp.coh_xy(:);
+displacement.total(tt,:)=stepdisp.total(:);
+displacement.total_xy(tt,:)=stepdisp.total_xy(:);
 
 
 cohesive.traction(tt,:)=stepcoh.traction(:);
