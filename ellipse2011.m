@@ -63,11 +63,11 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     
     % Solve for sk, Sigma_p, Eps_int
-   % options=optimset('Display','iter', 'TolFun',1e-5, 'MaxFunEvals', 5000, 'MaxIter', 60);    % Option to display output
+    options=optimset('Display','iter', 'TolFun',1e-5, 'MaxFunEvals', 5000, 'MaxIter', 60);    % Option to display output
 
-%    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess,options);
+    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess,options);
     
-    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess);
+%    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess);
     
     if exitflag<=0
       if counter>2

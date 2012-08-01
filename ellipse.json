@@ -2,24 +2,24 @@
 	"material": {
 		"E_m": 4300,
 		"nu_m": 0.35,
-		"sigmax": 2,
-		"delopen": 0.5,
+		"sigmax": 20,
+		"delopen": 0.5e-3,
 		"cohscale": 1,
 		"plstrain": 1,
 		"lambda_e": 0.001
 	},
 	"geom": {
-		"a": 10,
-		"b": 5,
+		"a": 90e-3,
+		"b": 90e-3,
 		"f": 0.4,
-		"NumPoints": 200,
+		"NumPoints": 300,
 		"rho": 1
 	},
 	"loads": {
-		"NumModes": 20,
+		"NumModes": 30,
 		"SigmaBarRatio": 0,
-		"AppliedLoadAngle": 0.78,
-		"timesteps": 10,
+		"AppliedLoadAngle": 0,
+		"timesteps": 20,
 		"MinimumStrain": 0.001,
 		"LoadFactor": 10
 	}
