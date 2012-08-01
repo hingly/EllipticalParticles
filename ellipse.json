@@ -18,9 +18,9 @@
 	"loads": {
 		"NumModes": 20,
 		"SigmaBarRatio": 0,
-		"AppliedLoadAngle": 0,
-		"timesteps": 3,
-		"MinimumStrain": 0.0011,
-		"LoadFactor": 3
+		"AppliedLoadAngle": 0.78,
+		"timesteps": 10,
+		"MinimumStrain": 0.001,
+		"LoadFactor": 10
 	}
 }
