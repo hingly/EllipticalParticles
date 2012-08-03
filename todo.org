@@ -117,7 +117,7 @@ can't update anything inside residual.m
 ** TODO Can I have a structure of structures? i.e. step.disp.etc and final.disp.etc? or steppot.coh.phi, steppot.ff.phi?
 ** TODO Do I want stepsoln?
 ** TODO How to update one timestep of a structure without putting the structure in input as well as output parameters of function  - see unstack.m. Ask Carl
-
+** TODO Does it matter what the units of delopen and a and b are, as long as they're the same?
 
 
 
