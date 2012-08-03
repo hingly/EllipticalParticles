@@ -12,15 +12,15 @@
 		"a": 90e-3,
 		"b": 90e-3,
 		"f": 0.4,
-		"NumPoints": 300,
+		"NumPoints": 10,
 		"rho": 1
 	},
 	"loads": {
-		"NumModes": 30,
-		"SigmaBarRatio": 0,
+		"NumModes": 2,
+		"SigmaBarRatio": 1,
 		"AppliedLoadAngle": 0,
-		"timesteps": 5,
+		"timesteps": 3,
 		"MinimumStrain": 0.001,
-		"LoadFactor": 2
+		"LoadFactor": 3
 	}
 }
