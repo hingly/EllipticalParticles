@@ -47,6 +47,8 @@ for kk=1:NumPoints+1
    sigmap(2)=sigmap(2)+imag(Tcohxy(kk))*b*sin(theta(kk))*dS;
    sigmap(3)=sigmap(1)+(real(Tcohxy(kk))*b*sin(theta(kk))+ imag(Tcohxy(kk))*a*cos(theta(kk)))/2*dS;
      
+   
+   
 end
 
 
