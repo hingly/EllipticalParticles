@@ -7,7 +7,6 @@
 *** DONE calculatestress.m --- not used
 *** DONE ellipse2011.m
 
-
 ** DONE temporary and permanent structures for disp and cohesive
 ** DONE Write steploads quantities to loads quantities at end of timestep. 
   Also, use loads quantities from previous timestep as first guess for steploads quantities? 
@@ -30,11 +29,9 @@ can't update anything inside residual.m
    
 
 
-
     
-* TODO Run code in Matlab and in Octave 
+* DONE Run code in Matlab and in Octave 
   -- Week 30 (July 23-27)
-
 
 ** DONE Roll back some of read_input - Carl has hard-coded values I want to be calculated (mu, kappa, etc)
 ** DONE output arrays
@@ -42,19 +39,13 @@ can't update anything inside residual.m
        --- I calculate kappa for plane stress and plane strain, and in fact have a parameter for plane stress or plane strain in the input file, but eq 4.80 in the derivation is only for plane strain.  
        --- Removed option of plane stress 30/7/2012
 
-   
-** TODO Output macroscopic stress and strain and plot
-** TODO plot displaced shape
-
-
-
 
 
 * TODO Write standard tests 
    -- Weeks 31 and 32 (July 30-August 10)
 
-** Think about how and what to output
 ** TODO timoshenko files or test files
+** TODO integration of averages
 ** TODO Test principal.m and unprincipal.m functions - 
     especially calculation of alpha in principal.m
     Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
@@ -66,7 +57,14 @@ can't update anything inside residual.m
 ** TODO How do I want to handle damage under normal compression?  
    -- At the moment I accumulate damage, but compensate for slope in normal mode.  
       But large normal compression and no shear could still result in substantial damage - this is wrong
+** TODO Problem with circle under equibiaxial loading.   
+** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
+** TODO go through code and check that I don't use == test for non-integers
 
+
+** TODO Think about how and what to output
+** TODO Output macroscopic stress and strain and plot
+** TODO plot displaced shape
 
 
 * TODO Debugging 
@@ -118,6 +116,7 @@ can't update anything inside residual.m
 ** TODO Do I want stepsoln?
 ** TODO How to update one timestep of a structure without putting the structure in input as well as output parameters of function  - see unstack.m. Ask Carl
 ** TODO Does it matter what the units of delopen and a and b are, as long as they're the same?
+** TODO Some kind of version management so I save the input file and output files - filenaming convention - so I can track what happened when I ran what.  Ask Carl
 
 
 
@@ -152,6 +151,3 @@ can't update anything inside residual.m
 
 
 
-** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
-
-** go through code and check that I don't use == test for non-integers
