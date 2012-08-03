@@ -45,6 +45,7 @@ can't update anything inside residual.m
    -- Weeks 31 and 32 (July 30-August 10)
 
 ** TODO timoshenko files or test files
+** TODO Write test for cohesive law - check that cohesive law is calculating the right things in the right way given prescribed inputs
 ** TODO integration of averages
 ** TODO Test principal.m and unprincipal.m functions - 
     especially calculation of alpha in principal.m
@@ -117,6 +118,8 @@ can't update anything inside residual.m
 ** TODO How to update one timestep of a structure without putting the structure in input as well as output parameters of function  - see unstack.m. Ask Carl
 ** TODO Does it matter what the units of delopen and a and b are, as long as they're the same?
 ** TODO Some kind of version management so I save the input file and output files - filenaming convention - so I can track what happened when I ran what.  Ask Carl
+** TODO Plan known results and test code against them where it must abort if it doesn't match?
+       --- Die routine - subroutine to output data before dying.
 
 
 
