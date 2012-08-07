@@ -8,7 +8,8 @@ function [stepcoh]=Cohesive_Law(displacement, NumPoints,material, stepcoh)
 % This function computes the interfacial tractions by using the cohesive
 % law.  This is done by knowing the displacement jumps and the interfacial
 % properties.  The interfacial tractions are then returned.
-% --- displacement is the calculated displacement jumps, vector length NumPoints+1
+% --- displacement is the calculated displacement jumps, vector
+%                  length NumPoints+1 (complex)
 % --- NumPoints is the number of integration points around the ellipse
 % --- material is a structure containing material data
 % --- lambda_max is the maximum value of lambda achieved to date, vector length NumPoints+1 

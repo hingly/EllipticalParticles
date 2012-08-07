@@ -46,6 +46,7 @@ can't update anything inside residual.m
 
 ** TODO timoshenko files or test files
 ** TODO Write test for cohesive law - check that cohesive law is calculating the right things in the right way given prescribed inputs
+   CLOCK: [2012-08-07 Tue 13:33]
 ** TODO integration of averages
 ** TODO Test principal.m and unprincipal.m functions - 
     especially calculation of alpha in principal.m
@@ -61,6 +62,7 @@ can't update anything inside residual.m
 ** TODO Problem with circle under equibiaxial loading.   
 ** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
 ** TODO go through code and check that I don't use == test for non-integers
+** TODO replace NumPoints+1 with NumPoints
 
 
 ** TODO Think about how and what to output
