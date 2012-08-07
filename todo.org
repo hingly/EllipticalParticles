@@ -44,10 +44,12 @@ can't update anything inside residual.m
 * TODO Write standard tests 
    -- Weeks 31 and 32 (July 30-August 10)
 
-** TODO timoshenko files or test files
 ** TODO Write test for cohesive law - check that cohesive law is calculating the right things in the right way given prescribed inputs
    CLOCK: [2012-08-07 Tue 13:33]
+
 ** TODO integration of averages
+
+** TODO timoshenko files or test files
 ** TODO Test principal.m and unprincipal.m functions - 
     especially calculation of alpha in principal.m
     Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
