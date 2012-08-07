@@ -6,21 +6,24 @@
 		"delopen": 0.5e-3,
 		"cohscale": 1,
 		"plstrain": 1,
-		"lambda_e": 0.001
+		"lambda_e": 0.01
 	},
 	"geom": {
 		"a": 90e-3,
 		"b": 90e-3,
 		"f": 0.4,
-		"NumPoints": 10,
+		"NumPoints": 200,
 		"rho": 1
 	},
 	"loads": {
-		"NumModes": 2,
-		"SigmaBarRatio": 1,
+		"NumModes": 20,
+		"SigmaBarRatio": 0,
 		"AppliedLoadAngle": 0,
-		"timesteps": 6,
-		"MinimumStrain": 0.0001,
-		"LoadFactor": 6
+		"timesteps": 10,
+		"MinimumStrain": 0.00001,
+		"LoadFactor": 10
+	},
+	"post": {
+		"scale": 1
 	}
 }

@@ -45,7 +45,7 @@ can't update anything inside residual.m
    -- Weeks 31 and 32 (July 30-August 10)
 
 ** TODO Write test for cohesive law - check that cohesive law is calculating the right things in the right way given prescribed inputs
-   CLOCK: [2012-08-07 Tue 13:33]
+   CLOCK: [2012-08-07 Tue 13:33]--[2012-08-07 Tue 14:50] =>  1:17
 
 ** TODO integration of averages
 
@@ -65,11 +65,14 @@ can't update anything inside residual.m
 ** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
 ** TODO go through code and check that I don't use == test for non-integers
 ** TODO replace NumPoints+1 with NumPoints
-
+** TODO sign of cohesive traction, and document
+** TODO Failure is not starting at zero degrees even when load is applied at zero degrees.  Weird. 7/8/12
+** TODO theoretical derivation for circular, equibiaxial loading
 
 ** TODO Think about how and what to output
 ** TODO Output macroscopic stress and strain and plot
 ** TODO plot displaced shape
+
 
 
 * TODO Debugging 

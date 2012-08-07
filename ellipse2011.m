@@ -138,7 +138,7 @@ end      % end loop through loading steps
 %figure(1)
 %axis equal;
 %hold on;
-%plot(geom.ellipse(1,:),geom.ellipse(2,:), 'LineWidth', 2);
+%plot(geom.ellipse(1,:),geom.ellipse(2,:),'b', 'LineWidth', 2);
 %plot(geom.ellipse(1,:)+post.scale*real(displacement.total_xy), geom.ellipse(2,:)+post.scale*imag(displacement.total_xy),'r', 'Linewidth', 2);
 %plot(geom.ellipse(1,:)+post.scale*real((displacement.farfield_xy), geom.ellipse(2,:)+post.scale*imag(displacement.farfield_xy),'k:');
 %legend('Undeformed shape', 'Total Deformed Shape','Deformed shape due to far-field loading','Location', 'NorthWest')
@@ -158,22 +158,21 @@ end      % end loop through loading steps
 % $$$ ylabel('y')
 % 
 
-% $$$ figure(2)
-% $$$ hold on
-% $$$ plot(loads.MacroStrain(:,1), loads.MacroStress(:,1), 'bx-', 'LineWidth', 2)
-% $$$ title('Macroscopic constitutive response - 11')
-% $$$ xlabel('strain')
-% $$$ ylabel('stress')
+figure(2);
+hold on;
+plot(loads.MacroStrain(:,1), loads.MacroStress(:,1), 'bx-', 'LineWidth', 2);
+%title('Macroscopic constitutive response - 11')
+%xlabel('strain')
+%ylabel('stress')
  
-% $$$  hold on
-% $$$  plot(loads.MacroStrain(:,2), loads.MacroStress(:,2), 'rx-', 'LineWidth', 2)
-% $$$  title('Macroscopic constitutive response - 22')
-% $$$  xlabel('strain')
-% $$$  ylabel('stress')
-% $$$ 
-% $$$  hold on
-% $$$  plot(loads.MacroStrain(:,3), loads.MacroStress(:,3), 'kx-', 'LineWidth', 2)
-% $$$  title('Macroscopic constitutive response - 33')
-% $$$  xlabel('strain')
-% $$$  ylabel('stress')
-% $$$ 
+% hold on
+% plot(loads.MacroStrain(:,2), loads.MacroStress(:,2), 'rx-', 'LineWidth', 2)
+ %title('Macroscopic constitutive response - 22')
+ %xlabel('strain')
+ %ylabel('stress')
+
+% hold on
+% plot(loads.MacroStrain(:,3), loads.MacroStress(:,3), 'kx-', 'LineWidth', 2)
+ %title('Macroscopic constitutive response - 33')
+ %xlabel('strain')
+ %ylabel('stress')

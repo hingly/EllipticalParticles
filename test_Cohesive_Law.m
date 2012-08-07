@@ -7,12 +7,12 @@ material.delopen=0.5;
 material.delslide=0.5;
 material.gint=5;
 %corresponds to sigmax=20
-material.lambda_e=0.001;
+material.lambda_e=0.01;
 
 NumPoints=1;
 %Only 1 point around the ellipse
 
-NumSteps=20;
+NumSteps=200;
 % Number of steps in the displacement vector
 
 
@@ -79,6 +79,6 @@ end
 % $$$ modeI_tl.cohesive.lambda_max(:,1)
 % $$$ modeI_tl.cohesive.lambda(:,1)
 % $$$ modeI_tl.cohesive.loading(:,1)
-%plot(modeI_tl.displacement(:,1),modeI_tl.cohesive.traction(:,1),'bx-');
+plot(modeI_tl.displacement(:,1),modeI_tl.cohesive.traction(:,1),'bx-');
 
 
