@@ -3,7 +3,7 @@ function geom=calculate_geometry(geom)
 % Calculates the (x,y) position, and each different type of angle
 % for each point around the ellipse
 
-disp('Calculating geometry...');
+%disp('Calculating geometry...');
 
 n=geom.NumPoints;
 a=geom.a;

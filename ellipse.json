@@ -17,7 +17,7 @@
 	},
 	"loads": {
 		"NumModes": 10,
-		"SigmaBarRatio": 1,
+		"SigmaBarRatio": 0,
 		"AppliedLoadAngle": 0,
 		"timesteps": 2,
 		"MinimumStrain": 0.001,

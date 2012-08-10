@@ -50,6 +50,7 @@ can't update anything inside residual.m
 ** TODO integration of averages
 
 ** TODO timoshenko files or test files
+
 ** TODO Test principal.m and unprincipal.m functions - 
     especially calculation of alpha in principal.m
     Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
