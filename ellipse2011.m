@@ -55,7 +55,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   while exitflag<=0                    
     % Convergence loop
     
-    counter=counter+1;
+    counter=counter+1
     
     %****  Notice: need to check that everything is getting
     %initialised/reset properly here! ****
@@ -158,9 +158,9 @@ end      % end loop through loading steps
 % $$$ ylabel('y')
 % 
 
-figure(2);
-hold on;
-plot(loads.MacroStrain(:,1), loads.MacroStress(:,1), 'bx-', 'LineWidth', 2);
+%figure(2);
+%hold on;
+%plot(loads.MacroStrain(:,1), loads.MacroStress(:,1), 'bx-', 'LineWidth', 2);
 %title('Macroscopic constitutive response - 11')
 %xlabel('strain')
 %ylabel('stress')
