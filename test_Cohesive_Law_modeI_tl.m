@@ -90,6 +90,6 @@ delta_points = [0 material.lambda_e*material.delopen material.delopen max(displa
 sigma_points = [0 material.sigmax 0 0];
 desired_traction = interp1(delta_points, sigma_points, displacement(:,1));
 
-assert(almostequal(cohesive.traction(:,1)+1, desired_traction,epsilon),...
+assert(almostequal(cohesive.traction(:,1), desired_traction,epsilon),...
        'cohesive traction separation law is not the expected shape for mode I loading');
 
