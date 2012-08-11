@@ -16,11 +16,12 @@ beta=zeros(1,n+1);               % normal angle
 alpha=zeros(1,n+1);              % polar angle
 normal=zeros(1,n+1);               % normal vector (complex)
 
+theta=linspace(0,2*pi,n+1);
 
 for kk=1:n+1    % Loop over integration points to calculate geometric quantities
 
     % Compute angles and coordinates
-    theta(kk)=2*pi*(kk-1)/n;
+%    theta(kk)=2*pi*(kk-1)/n;
     ellipse(1,kk)=a*cos(theta(kk));
     ellipse(2,kk)=b*sin(theta(kk));
 % FIXME : Why is ellipse not stored as a complex variable?
@@ -44,8 +45,6 @@ for kk=1:n+1    % Loop over integration points to calculate geometric quantities
     end
     normal(kk)=exp(i*beta(kk));
 end
-
-normal(kk)=exp(i*beta(kk));
 
 geom.theta=theta;
 geom.beta=beta;
