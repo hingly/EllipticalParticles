@@ -1,17 +1,12 @@
 function[sigmap, epsint] = averages(dispxy, Tcohxy, geom)
 
-
-% Edited July 3, 2012
-
-
-
 % This subroutine calculates volume averages of interfacial strain
 % (equations 4.73-4.75) and particle stress (equations 4.76-4.78)
 
-% --- dispxy is the displacement of the points on the interface in x,y coords, vector length NumPoints
-% --- Tcohxy is the cohesive traction in x,y coords, vector length NumPoints
+% --- dispxy is the displacement of the points on the interface in
+%            x,y coords, complex vector length NumPoints
+% --- Tcohxy is the cohesive traction in x,y coords, complex vector length NumPoints
 % --- geom is a structure containing geometric data
-
 
 % --- NumPoints is the number of integration points around the ellipse
 NumPoints=geom.NumPoints;
@@ -25,6 +20,8 @@ beta=geom.beta;
 % --- normal is the normal vector to the ellipse
 normal=geom.normal;
 
+% --- ellipse is the coordinates of points on the ellipse (i.e. x+iy)
+ellipse=geom.ellipse;
 
 
 % --- a, b, R, m are geometric quantities, same definition as elsewhere
@@ -32,7 +29,6 @@ a=geom.a;
 b=geom.b;
 R=geom.R;
 m=geom.m;
-
 
 
 % area of the ellipse
@@ -48,9 +44,16 @@ epsint(1)=sum(real(dispxy).*real(normal).*dS);
 epsint(2)=sum(imag(dispxy).*imag(normal).*dS);
 epsint(3)=sum((real(dispxy).*imag(normal) + imag(dispxy).*real(normal))/2.*dS); 
 
-sigmap(1)=sum(real(Tcohxy)*a.*cos(theta).*dS);
-sigmap(2)=sum(imag(Tcohxy)*b.*sin(theta).*dS);
-sigmap(3)=sum((real(Tcohxy)*b.*sin(theta) + imag(Tcohxy)*a.*cos(theta))/2.*dS);
+sigmap(1)=sum(real(Tcohxy).*real(ellipse).*dS);
+sigmap(2)=sum(imag(Tcohxy).*imag(ellipse).*dS);
+%sigmap(3)=sum((real(Tcohxy).*imag(ellipse) + imag(Tcohxy).*real(ellipse))/2.*dS);
+sigmap(3)=sum(real(Tcohxy).*imag(ellipse).*dS)
+sigmaptest=sum(imag(Tcohxy).*real(ellipse).*dS);
+assert(almostequal(sigmap(3),sigmaptest,1e-10),'sigmap not symmetric');
+
+% FIXME : I don't think that sigmap(3) should be 12 + 21 - should
+% calculate 12 and 21 and compare
+
 
 epsint=epsint/volume;
 sigmap=sigmap/volume;
