@@ -20,7 +20,7 @@ for f = nontestfiles'
     else
         printf(':\n')
         filetests = filetests + 1;
-        for test = testfiles
+        for test = testfiles'
             tests = tests + 1;
             printf('  %s... ', test.name)
             try

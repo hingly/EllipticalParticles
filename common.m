@@ -12,7 +12,7 @@ function [stepcoh, stepdisp,steppot]=common(N1, N2, omega, geom,  material,loads
 %==============================
 
 %constants
-zero_intpoints=zeros(1,geom.NumPoints+1);
+zero_intpoints=zeros(1,geom.NumPoints);
 
 stepdisp.farfield=zero_intpoints;
 stepdisp.farfield_xy=zero_intpoints;
@@ -37,7 +37,7 @@ steppot.psicoh=zero_intpoints;
 % Begin loop over integration points
 %========================================
 
-for kk=1:geom.NumPoints+1   
+for kk=1:geom.NumPoints   
   % loop over all integration points
     
   %------------------------------------------------------
@@ -88,7 +88,7 @@ stepdisp.total_xy=stepdisp.farfield_xy+stepdisp.coh_xy;
 
 stepcoh=Cohesive_Law(stepdisp.total,geom.NumPoints,material,stepcoh);
 
-for kk=1:geom.NumPoints+1
+for kk=1:geom.NumPoints
     stepcoh.traction_xy(kk)=stepcoh.traction(kk)*exp(i*geom.beta(kk));
 end
 

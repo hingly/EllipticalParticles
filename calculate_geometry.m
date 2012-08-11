@@ -5,49 +5,50 @@ function geom=calculate_geometry(geom)
 
 %disp('Calculating geometry...');
 
-n=geom.NumPoints;
+NumPoints=geom.NumPoints;
 a=geom.a;
 b=geom.b;
+ 
+%-------------------------------------------
+% Calculate additional geometric parameters
+%-------------------------------------------
+
+
+geom.R=(geom.a+geom.b)/2.;                      
+% ellipse size factor
+geom.m=(geom.a-geom.b)/(geom.a+geom.b);         
+% ellipse shape factor
+
+
+%-----------------------------
+% Calculate  geometric arrays
+%-----------------------------
+
+zero_intpoints=zeros(1,geom.NumPoints);
 
 % initialising arrays
-theta=zeros(1,n+1);             % angle in zeta-plane
-ellipse=zeros(2,n+1);            % coordinates of points around the ellipse
-beta=zeros(1,n+1);               % normal angle
-alpha=zeros(1,n+1);              % polar angle
-normal=zeros(1,n+1);               % normal vector (complex)
+theta=zero_intpoints;             % angle in zeta-plane
+ellipse=zero_intpoints;            % coordinates of points around the ellipse
+beta=zero_intpoints;               % normal angle
+alpha=zero_intpoints;              % polar angle
+normal=zero_intpoints;               % normal vector (complex)
 
-theta=linspace(0,2*pi,n+1);
+theta=linspace(0,2*pi,NumPoints+1);
+theta=theta(1:NumPoints);
 
-for kk=1:n+1    % Loop over integration points to calculate geometric quantities
+%coordinates of the ellipse
+ellipse=a*cos(theta) + i*b*sin(theta);
 
-    % Compute angles and coordinates
-%    theta(kk)=2*pi*(kk-1)/n;
-    ellipse(1,kk)=a*cos(theta(kk));
-    ellipse(2,kk)=b*sin(theta(kk));
 % FIXME : Why is ellipse not stored as a complex variable?
 
-    beta(kk)=atan(a/b*tan(theta(kk)));           % angle of the normal to the surface
-    alpha(kk)=atan(b/a*tan(theta(kk)));          % polar angle
+% angle of the normal to the surface
+beta = unwrap(atan2(a*sin(theta), b*cos(theta)));
 
-    % correct for arctan errors
-    if theta(kk)<=pi/2;
-        beta(kk)=beta(kk);
-        alpha(kk)=alpha(kk);
-    elseif (theta(kk)>pi/2) && (theta(kk)<=3*pi/2)
-        beta(kk)=beta(kk)+pi;
-        alpha(kk)=alpha(kk)+pi;
-    elseif (theta(kk)>3*pi/2) && (theta(kk)<=2*pi)
-        beta(kk)=beta(kk)+2*pi;
-        alpha(kk)=alpha(kk)+2*pi;
-    else
-        theta(kk)
-        error('what size is theta anyway?')
-    end
-    normal(kk)=exp(i*beta(kk));
-end
+% normal vector
+normal=exp(i*beta);
+
 
 geom.theta=theta;
 geom.beta=beta;
-geom.alpha=alpha;
 geom.ellipse=ellipse;
 geom.normal=normal;

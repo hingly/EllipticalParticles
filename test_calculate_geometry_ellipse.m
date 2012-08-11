@@ -3,29 +3,24 @@ function test_calculate_geometry_ellipse
 epsilon=1e-10;
 
 numpointslist=[13 200 111];
-alist=[10 90e-3];
+geom.a=10;
+blist=[0.1 0.5 1 2 5 8];
+Rcheck=[5.05 5.25 5.5 6 7.5 9];
+mcheck=[99/101 19/21 9/11 2/3 1/3 1/9];
+
 for numpoints = numpointslist
-  for a = alist
-    geom.NumPoints=numpoints;
-    geom.a=a;
-    geom.b=geom.a;
-  
+  for kk = 1:size(blist)
+    geom.NumPoints = numpoints;
+    geom.b = blist(kk);
     geom=calculate_geometry(geom);
-
-    assert(almostequal(geom.theta, geom.beta, epsilon),...
-           'theta and beta should be equal for a circle');
+       
+    assert(almostequal(Rcheck(kk),geom.R,epsilon));
+    assert(almostequal(mcheck(kk),geom.m,epsilon));  
+    radius = (real(geom.ellipse)./geom.a).^2 + (imag(geom.ellipse)./geom.b).^2;
     
-    assert(almostequal(geom.theta, geom.alpha, epsilon), ...
-           'theta and alpha should be equal for a circle');
-    
-    radius = sqrt(geom.ellipse(1,:).^2 + geom.ellipse(2,:).^2);
-
-    assert(almostequal(radius,geom.a,epsilon),...
-           ['radius did not equal a for numpoints =' ...
-            num2str(numpoints) ' and a = ' num2str(a)])
-    assert(almostequal(radius,geom.b,epsilon),...
-           ['radius did not equal b for numpoints =' ...
-            num2str(numpoints) ' and a = ' num2str(a)])
+    assert(almostequal(radius,1,epsilon),...
+           ['ellipseradius did not equal 1 for numpoints =' ...
+            num2str(numpoints) ' a = ' num2str(geom.a) ' and b = ' num2str(geom.b)])
     
     normalx=geom.b*cos(geom.theta);
     normaly=geom.a*sin(geom.theta);
@@ -34,8 +29,7 @@ for numpoints = numpointslist
     
     assert(almostequal(normalcheck, geom.normal,epsilon),...
            ['normals did not match for numpoints = '...
-            num2str(numpoints) ' and a = ' num2str(a)]);
-                          
-  end
+            num2str(numpoints) ' and a = ' num2str(geom.a)]);
+  end                       
 end
 

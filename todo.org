@@ -45,27 +45,27 @@ can't update anything inside residual.m
    -- Weeks 31 and 32 (July 30-August 10)
 
 ** TODO Write test for cohesive law - check that cohesive law is calculating the right things in the right way given prescribed inputs
-*** TODO Mode I Tension loading
+*** DONE Mode I Tension loading
    CLOCK: [2012-08-07 Tue 13:33]--[2012-08-07 Tue 14:50] =>  1:17
 *** TODO Mode I compression
 *** TODO Mode II both directions
 *** TODO Mixed mode
 *** TODO Mixed mode unloading
 
-** TODO Test calculate_geometry.m
-*** TODO circle
-    CLOCK: [2012-08-11 Sat 15:15]
+** DONE Test calculate_geometry.m
+   CLOCK: [2012-08-11 Sat 15:15]--[2012-08-11 Sat 17:53] =>  2:38
 
-*** TODO narrow ellipse horizontal
-*** TODO narrow ellipse vertical
-*** TODO medium ellipse horizontal
-*** TODO medium ellipse vertical
 ** TODO Test averages.m
+   CLOCK: [2012-08-11 Sat 18:10]
+
 *** TODO circle
 *** TODO narrow ellipse horizontal
 *** TODO narrow ellipse vertical
 *** TODO medium ellipse horizontal
 *** TODO medium ellipse vertical
+
+
+
 ** TODO Test calculatedisplacement.m
 ** TODO Test common.m
 ** TODO Test farfieldpotential.m
@@ -106,7 +106,7 @@ can't update anything inside residual.m
 ** TODO Problem with circle under equibiaxial loading.   
 ** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
 ** TODO go through code and check that I don't use == test for non-integers
-** TODO replace NumPoints+1 with NumPoints
+** DONE replace NumPoints+1 with NumPoints
 ** TODO sign of cohesive traction, and document
 ** TODO Failure is not starting at zero degrees even when load is applied at zero degrees.  Weird. 7/8/12
 

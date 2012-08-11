@@ -10,8 +10,8 @@ function [loads,soln,displacement,cohesive,potential,stepload,stepcoh]=initializ
   zero_matrix = zeros(1,3);
   zero_timestep_matrix = zeros(loads.timesteps,3);
   zero_timestep_modes=zeros(loads.timesteps, loads.NumModes+1);
-  zero_timestep_intpoints=zeros(loads.timesteps,geom.NumPoints+1);
-  zero_intpoints=zeros(1,geom.NumPoints+1);
+  zero_timestep_intpoints=zeros(loads.timesteps,geom.NumPoints);
+  zero_intpoints=zeros(1,geom.NumPoints);
   
   
 %---------------------------------------------

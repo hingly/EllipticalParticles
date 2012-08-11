@@ -12,14 +12,17 @@ if material.plstrain==0
     error('The code can only accommodate plane strain at the moment, i.e. plstrain must be 1');
 end
 
+
+if geom.b>geom.a
+  error(['The major axis (a) must be larger than the minor axis ' ...
+         '(b)']);
+end
+
 %---------------------------------------------------------
-% Calculate additional geometric and material parameters
+% Calculate additional material parameters
 %---------------------------------------------------------
 
-geom.R=(geom.a+geom.b)/2.;                      
-% ellipse size factor
-geom.m=(geom.a-geom.b)/(geom.a+geom.b);         
-% ellipse shape factor
+
 
 material.mu_m=material.E_m/(2*(1+material.nu_m));       
 % Lame modulus

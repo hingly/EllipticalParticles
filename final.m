@@ -12,7 +12,7 @@ disp('Entering final...');
 %==============================
 
 %constants
-zero_intpoints=zeros(1,geom.NumPoints+1);
+zero_intpoints=zeros(1,geom.NumPoints);
 
 stepcoh.lambda_xy=zero_intpoints;
 
@@ -48,7 +48,7 @@ stepcoh.lambda_xy=zero_intpoints;
 
 % *** Completed to here 16/7/2012 - still need to deal with lambda in a sensible way
 
-for kk=1:geom.NumPoints+1
+for kk=1:geom.NumPoints
   if real(stepdisp.total(kk))<0
     stepcoh.lambda(kk)=0;
 % CHECK : This is for display purposes - not sure it's right to be doing

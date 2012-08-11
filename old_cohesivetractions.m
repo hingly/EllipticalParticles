@@ -14,9 +14,9 @@ function T_Coh=old_cohesivetractions(disp, NumPoints,delopen,delslide, gint,lamb
 
 
 
-T_Coh=zeros(1,NumPoints+1);
+T_Coh=zeros(1,NumPoints);
 
-for jj=1:NumPoints+1
+for jj=1:NumPoints
     
     % Displacement jump
     U=real(disp(jj));

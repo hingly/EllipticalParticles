@@ -6,8 +6,8 @@ function coeff=fouriertransform(force,theta,NumPoints,NumModes)
 
 % This subroutine calculates the Fourier coefficients f_k to apply
 % a known force.  
-% --- force is a vector, length NumPoints+1, containing forces
-% --- theta is a vector, length NumPoints+1, containing angles
+% --- force is a vector, length NumPoints, containing forces
+% --- theta is a vector, length NumPoints, containing angles
 % --- NumPoints is the number of points around the ellipse at which we
 %          evaluate quantities
 % --- NumModes is the number of modes in the Fourier series (must be

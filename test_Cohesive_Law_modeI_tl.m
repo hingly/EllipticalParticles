@@ -21,8 +21,8 @@ NumSteps=200;
 
 
 % initialise arrays
-zero_intpoints=zeros(1,NumPoints+1);
-zero_stepsintpoints=zeros(NumSteps,NumPoints+1);
+zero_intpoints=zeros(1,NumPoints);
+zero_stepsintpoints=zeros(NumSteps,NumPoints);
 
 
 
@@ -33,7 +33,6 @@ zero_stepsintpoints=zeros(NumSteps,NumPoints+1);
 
 %Initialise structure for Mode I tension loading
 
-displacement=zero_stepsintpoints;
 cohesive.lambda=zero_stepsintpoints;
 cohesive.lambda_max=zero_stepsintpoints;
 cohesive.loading=zero_stepsintpoints;
@@ -42,20 +41,14 @@ cohesive.traction=zero_stepsintpoints;
 
 % Populate displacement vector
 u=linspace(0,material.delopen*1.1,NumSteps);
-v=zeros(NumSteps);
+v=linspace(0,0,NumSteps);
 
-for step=1:NumSteps
-  displacement(step,1)=u(step)+i*v(step);
-  displacement(step,2)= displacement(step,1);
-end
-
-
-
+displacement=u+i*v;
 
 
 for step=1:NumSteps
   
-  stepdisp=displacement(step,:);
+  stepdisp=displacement(step);
   stepcoh.lambda=cohesive.lambda(step,:);
   stepcoh.lambda_max=cohesive.lambda_max(step,:);
   stepcoh.loading=cohesive.loading(step,:);
@@ -81,15 +74,15 @@ end
 
 
 % Check that lambda_max is updating correctly
-assert(almostequal(cohesive.lambda(:,1), cohesive.lambda_max(:,1), epsilon),...
+assert(almostequal(cohesive.lambda, cohesive.lambda_max, epsilon),...
        'lambda_max is not updating correctly')
 
 % Check that cohesive traction separation law is the expected shape
 % for mode I loading
-delta_points = [0 material.lambda_e*material.delopen material.delopen max(displacement(:,1))];
+delta_points = [0 material.lambda_e*material.delopen material.delopen max(displacement)];
 sigma_points = [0 material.sigmax 0 0];
-desired_traction = interp1(delta_points, sigma_points, displacement(:,1));
+desired_traction = interp1(delta_points, sigma_points, displacement)';
 
-assert(almostequal(cohesive.traction(:,1), desired_traction,epsilon),...
+assert(almostequal(cohesive.traction, desired_traction,epsilon),...
        'cohesive traction separation law is not the expected shape for mode I loading');
 

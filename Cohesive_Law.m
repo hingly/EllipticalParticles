@@ -9,10 +9,10 @@ function [stepcoh]=Cohesive_Law(displacement, NumPoints,material, stepcoh)
 % law.  This is done by knowing the displacement jumps and the interfacial
 % properties.  The interfacial tractions are then returned.
 % --- displacement is the calculated displacement jumps, vector
-%                  length NumPoints+1 (complex)
+%                  length NumPoints (complex)
 % --- NumPoints is the number of integration points around the ellipse
 % --- material is a structure containing material data
-% --- lambda_max is the maximum value of lambda achieved to date, vector length NumPoints+1 
+% --- lambda_max is the maximum value of lambda achieved to date, vector length NumPoints 
 
 % --- delopen is the critical opening displacement (Delta n_c)
 delopen=material.delopen;
@@ -27,7 +27,7 @@ gint=material.gint;
 lambda_e=material.lambda_e;
 
 %constants
-zero_intpoints=zeros(1,NumPoints+1);
+zero_intpoints=zeros(1,NumPoints);
 
 % Previous maximum damage
 lambda_max=stepcoh.lambda_max;
@@ -58,7 +58,7 @@ loading_temp=stepcoh.loading;
 
 tolerance=lambda_e/10;
 
-for jj=1:NumPoints+1
+for jj=1:NumPoints
 
   % Displacement jump
   U=real(displacement(jj));
