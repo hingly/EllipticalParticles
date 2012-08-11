@@ -56,13 +56,8 @@ can't update anything inside residual.m
    CLOCK: [2012-08-11 Sat 15:15]--[2012-08-11 Sat 17:53] =>  2:38
 
 ** TODO Test averages.m
-   CLOCK: [2012-08-11 Sat 18:10]
+   CLOCK: [2012-08-11 Sat 18:10]--[2012-08-11 Sat 20:09] =>  1:59
 
-*** TODO circle
-*** TODO narrow ellipse horizontal
-*** TODO narrow ellipse vertical
-*** TODO medium ellipse horizontal
-*** TODO medium ellipse vertical
 
 
 
@@ -70,7 +65,8 @@ can't update anything inside residual.m
 ** TODO Test common.m
 ** TODO Test farfieldpotential.m
 ** TODO Test final.m
-** TODO Test almostequal.m
+** DONE Test almostequal.m
+** DONE Test allequal.m
 ** TODO Test ellipse2011.m
 ** TODO Test finalize_timestep.m
 ** TODO Test fouriertransform.m

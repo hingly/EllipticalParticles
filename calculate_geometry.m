@@ -27,19 +27,24 @@ geom.m=(geom.a-geom.b)/(geom.a+geom.b);
 zero_intpoints=zeros(1,geom.NumPoints);
 
 % initialising arrays
-theta=zero_intpoints;             % angle in zeta-plane
-ellipse=zero_intpoints;            % coordinates of points around the ellipse
-beta=zero_intpoints;               % normal angle
-alpha=zero_intpoints;              % polar angle
-normal=zero_intpoints;               % normal vector (complex)
 
+% angle in zeta-plane
+theta=zero_intpoints;             
+% coordinates of points around the ellipse (complex)
+ellipse=zero_intpoints;           
+% normal angle
+beta=zero_intpoints;               
+% normal vector (complex)
+normal=zero_intpoints;              
+
+
+% Create theta with NumPoints + 1 entries, and then drop the last
+% one, which is 2*pi.
 theta=linspace(0,2*pi,NumPoints+1);
 theta=theta(1:NumPoints);
 
 %coordinates of the ellipse
 ellipse=a*cos(theta) + i*b*sin(theta);
-
-% FIXME : Why is ellipse not stored as a complex variable?
 
 % angle of the normal to the surface
 beta = unwrap(atan2(a*sin(theta), b*cos(theta)));
