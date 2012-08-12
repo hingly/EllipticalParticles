@@ -30,6 +30,8 @@ b=geom.b;
 R=geom.R;
 m=geom.m;
 
+% Error tolerance
+epsilon=1e-10;
 
 % area of the ellipse
 volume = pi*a*b;   
@@ -46,13 +48,11 @@ epsint(3)=sum((real(dispxy).*imag(normal) + imag(dispxy).*real(normal))/2.*dS);
 
 sigmap(1)=sum(real(Tcohxy).*real(ellipse).*dS);
 sigmap(2)=sum(imag(Tcohxy).*imag(ellipse).*dS);
-%sigmap(3)=sum((real(Tcohxy).*imag(ellipse) + imag(Tcohxy).*real(ellipse))/2.*dS);
-sigmap(3)=sum(real(Tcohxy).*imag(ellipse).*dS)
+sigmap(3)=sum(real(Tcohxy).*imag(ellipse).*dS);
 sigmaptest=sum(imag(Tcohxy).*real(ellipse).*dS);
-assert(almostequal(sigmap(3),sigmaptest,1e-10),'sigmap not symmetric');
-
-% FIXME : I don't think that sigmap(3) should be 12 + 21 - should
-% calculate 12 and 21 and compare
+if norm(sigmap(3)-sigmaptest)>epsilon
+  warning('Sigmap is not symmetric')
+end
 
 
 epsint=epsint/volume;

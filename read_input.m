@@ -18,6 +18,13 @@ if geom.b>geom.a
          '(b)']);
 end
 
+if mod(geom.NumPoints,2)==1
+  warning(['The integration in averages.m is less accurate for odd ' ...
+           'numbers of points'])
+end
+
+
+
 %---------------------------------------------------------
 % Calculate additional material parameters
 %---------------------------------------------------------

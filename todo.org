@@ -114,6 +114,8 @@ can't update anything inside residual.m
 
 * TODO Debugging 
    -- Weeks 33-34 (August 13-August 24)
+
+** TODO characterise accuracy of averages.m (there's this even, odd thing)
 * TODO Run Results and compare with previous findings for validity 
    -- Week 35 (August 27-31)
 
