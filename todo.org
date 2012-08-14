@@ -47,8 +47,9 @@ can't update anything inside residual.m
 ** TODO Write test for cohesive law - check that cohesive law is calculating the right things in the right way given prescribed inputs
 *** DONE Mode I Tension loading
    CLOCK: [2012-08-07 Tue 13:33]--[2012-08-07 Tue 14:50] =>  1:17
-*** TODO Mode I compression
-*** TODO Mode II both directions
+*** DONE Mode I compression
+*** DONE Mode II both directions
+*** TODO Mode I tension unloading
 *** TODO Mixed mode
 *** TODO Mixed mode unloading
 
@@ -57,7 +58,7 @@ can't update anything inside residual.m
 
 ** TODO Test averages.m
    CLOCK: [2012-08-11 Sat 18:10]--[2012-08-11 Sat 20:09] =>  1:59
-*** TODO Still need a check for the 1-2 terms, need to understand what is happening with sigmap
+*** DONE Still need a check for the 1-2 terms, need to understand what is happening with sigmap
 
 
 

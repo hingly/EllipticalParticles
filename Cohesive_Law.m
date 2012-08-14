@@ -63,9 +63,15 @@ for jj=1:NumPoints
   % Displacement jump
   U=real(displacement(jj));
   V=imag(displacement(jj));
-  
+
   % compute damage parameter lambda
-  lambda(jj)=sqrt((U/delopen)^2+(V/delslide)^2);
+  if U<0
+    % don't allow damage under compression
+    lambda(jj) = sqrt((V/delslide)^2);
+  else
+    lambda(jj) = sqrt((U/delopen)^2+(V/delslide)^2);  
+  end
+  
   
     
   %----------------------------------------------------
@@ -150,6 +156,10 @@ for jj=1:NumPoints
     % set loading flag to 1
     lambda_max_temp(jj)=lambda(jj);                  
     % update lambda_max_temp
+  else
+    % If unloading
+    loading_temp(jj)=0;                                   
+    % set loading flag to 0, don't update lambda_max_temp
   end   
   
   
