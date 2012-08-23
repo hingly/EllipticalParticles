@@ -13,20 +13,11 @@ material.lambda_e=0.01;
 material.sigmax=2*material.gint/material.delopen;
  
 
-NumPoints=1;
 %Only 1 point around the ellipse
-
-% Number of steps in first loading phase
-NumSteps1 = 100;
-
-%Number of steps in unloading phase
-NumSteps2 = 50;
-
-%Number of steps in second loading phase
-NumSteps3 = 150;
+NumPoints=1;
 
 % Number of steps in the displacement vector
-NumSteps=NumSteps1+NumSteps2+NumSteps3;
+NumSteps=200;
 
 
 % initialise arrays
@@ -49,13 +40,8 @@ cohesive.traction=zero_stepsintpoints;
 
 
 % Populate displacement vector
-u1=linspace(0,material.delopen/2, NumSteps1+1);
-u1=u1(1:NumSteps1);
-u2=linspace(material.delopen/2, material.delopen/4, NumSteps2+1);
-u2=u2(1:NumSteps2);
-u3=linspace(material.delopen/4, material.delopen*1.1, NumSteps3);
-u=[u1 u2 u3];
-v=u;
+u=linspace(0, material.delopen*1.1, NumSteps);
+v=linspace(0, material.delslide*1.1, NumSteps);
 
 displacement=u+i*v;
 
