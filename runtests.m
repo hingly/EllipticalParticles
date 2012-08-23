@@ -2,7 +2,11 @@ function runtests
 
 allfiles = dir('*.m');
 startswith = @(long, short) strncmp(long, short, length(short));
-nontestfiles = allfiles(~startswith({allfiles.name}, 'test_'));
+inlist = @(str, list) cellfun(@(s) any(strcmp(s, list)), str);
+blacklist = read_txt('do_not_test.txt');
+names = {allfiles.name};
+nontestfiles = allfiles(~startswith(names, 'test_') & ...
+                        ~inlist(names, blacklist));
 
 filetests = 0;
 tests = 0;

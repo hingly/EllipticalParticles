@@ -86,7 +86,7 @@ for step=1:NumSteps
 
 end
 
-
+figure(1);
 plot(displacement, cohesive.traction,'x-')
 
 % Check that lambda_max is updating correctly
