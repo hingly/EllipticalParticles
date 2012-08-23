@@ -1,6 +1,6 @@
 function test_Cohesive_Law_modeI_tu
 
-  [material, epsilon, NumPoints] = Cohesive_test_input
+  [material, epsilon, NumPoints] = Cohesive_test_input;
 
   % Number of steps in first loading phase
   NumSteps1 = 100;

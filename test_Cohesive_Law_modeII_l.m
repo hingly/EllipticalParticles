@@ -1,151 +1,68 @@
 function test_Cohesive_Law_modeII_l
 
-epsilon = 1e-5;
+  [material, epsilon, NumPoints] = Cohesive_test_input;
 
-% FIXME : consider making these not hard-coded
+  % Number of steps in the displacement vector
+  NumSteps=200;
 
-material.delopen=0.5;
-material.delslide=0.5;
-material.gint=5;
-%corresponds to sigmax=20
-material.lambda_e=0.01;
+  %-----------------------------------------
+  % Test Mode II tension loading (modeII_tl)
+  %=========================================
 
-material.sigmax=2*material.gint/material.delopen;
+
+  % Populate displacement vector
+  u=linspace(0,0,NumSteps);
+  v=linspace(0, material.delslide*1.1,NumSteps);
+
+  displacement_t=u+i*v;
+
+  cohesive_t = Cohesive_test_common(NumPoints, NumSteps,  displacement_t, material);
+
+  %---------------------------------------------
+  % Test Mode II compressive loading (modeII_cl)
+  %=============================================
+
+
+  % Populate displacement vector
+  u=linspace(0,0,NumSteps);
+  v=linspace(0, -material.delslide*1.1,NumSteps);
+
+  displacement_c=u+i*v;
+
+  cohesive_c = Cohesive_test_common(NumPoints, NumSteps,  displacement_c, material);
+
+  
+  %-----------------
+  % Check results
+  %=================
+  
+  % Check that lambda_max is updating correctly
+  assert(almostequal(cohesive_t.lambda, cohesive_t.lambda_max, epsilon),...
+         'lambda_max is not updating correctly --- tension');
  
-
-NumPoints=1;
-%Only 1 point around the ellipse
-
-NumSteps=200;
-% Number of steps in the displacement vector
-
-
-% initialise arrays
-zero_intpoints=zeros(1,NumPoints);
-zero_stepsintpoints=zeros(NumSteps,NumPoints);
-
-
-
-%-----------------------------------------
-% Test Mode II tension loading (modeII_tl)
-%=========================================
-
-
-%Initialise structure for Mode I tension loading
-
-cohesive.lambda=zero_stepsintpoints;
-cohesive.lambda_max=zero_stepsintpoints;
-cohesive.loading=zero_stepsintpoints;
-cohesive.traction=zero_stepsintpoints;
-
-
-% Populate displacement vector
-u=linspace(0,0,NumSteps);
-v=linspace(0, material.delslide*1.1,NumSteps);
-
-displacement=u+i*v;
-
-
-for step=1:NumSteps
+  assert(almostequal(cohesive_c.lambda, cohesive_c.lambda_max, epsilon),...
+         'lambda_max is not updating correctly --- compression');
   
-  stepdisp=displacement(step);
-  stepcoh.lambda=cohesive.lambda(step,:);
-  stepcoh.lambda_max=cohesive.lambda_max(step,:);
-  stepcoh.loading=cohesive.loading(step,:);
+  % Create points set
+  xs_loading_t=imag(displacement_t(cohesive_t.loading));
+  ys_loading_t=imag(cohesive_t.traction(cohesive_t.loading))';
+  xs_loading_c=imag(displacement_c(cohesive_c.loading));
+  ys_loading_c=imag(cohesive_c.traction(cohesive_c.loading))';
+  xs=[xs_loading_t xs_loading_c];
+  ys=[ys_loading_t ys_loading_c];
 
   
-  % Cohesive law
-  stepcoh=Cohesive_Law(stepdisp,NumPoints,material,stepcoh);
 
+  % Check for loading part of curve
+  lineys_loading = [0 0 -material.sigmax 0 material.sigmax 0 0];
+  linexs_loading = [min(imag(displacement_c)) -material.delslide ...
+                    -material.lambda_e*material.delslide 0 ...
+                    material.lambda_e*material.delslide ...
+                    material.delslide max(imag(displacement_t))];
 
-  % Write step quantites to stored quantities
-  cohesive.lambda(step,:)=stepcoh.lambda;
-  cohesive.traction(step,:)=stepcoh.traction;
-  cohesive.lambda_max(step,:)=stepcoh.lambda_max_temp;
-  cohesive.loading(step,:)=stepcoh.loading_temp;
+  epsilon2=material.sigmax/NumSteps;
+  distances = points_to_lines(xs, ys, linexs_loading, lineys_loading);
+  assert(allequal(distances, zeros(size(distances)), epsilon2), ...
+         'Incorrect points generated during loading');
 
-  % Prime stored quantities
-  if step<NumSteps
-    cohesive.lambda_max(step+1,:)=cohesive.lambda_max(step,:);
-    cohesive.loading(step+1,:)=cohesive.loading(step,:);
-  end
-
-end
-
-% Check that lambda_max is updating correctly
-assert(almostequal(cohesive.lambda, cohesive.lambda_max, epsilon),...
-       'lambda_max is not updating correctly')
-
-% Check that cohesive traction separation law is the expected shape
-% for mode II loading
-delta_points = [0 material.lambda_e*material.delslide material.delslide max(imag(displacement))];
-sigma_points = [0 material.sigmax 0 0];
-desired_traction1 = interp1(delta_points, sigma_points, imag(displacement))';
-
-assert(almostequal(imag(cohesive.traction), desired_traction1,epsilon),...
-       'cohesive traction separation law is not the expected shape for mode II loading');
-
-
-%---------------------------------------------
-% Test Mode II compressive loading (modeII_cl)
-%=============================================
-
-
-%Initialise structure for Mode I tension loading
-
-cohesive.lambda=zero_stepsintpoints;
-cohesive.lambda_max=zero_stepsintpoints;
-cohesive.loading=zero_stepsintpoints;
-cohesive.traction=zero_stepsintpoints;
-
-
-% Populate displacement vector
-u=linspace(0,0,NumSteps);
-v=linspace(0, -material.delslide*1.1,NumSteps);
-
-displacement=u+i*v;
-
-
-for step=1:NumSteps
-  
-  stepdisp=displacement(step);
-  stepcoh.lambda=cohesive.lambda(step,:);
-  stepcoh.lambda_max=cohesive.lambda_max(step,:);
-  stepcoh.loading=cohesive.loading(step,:);
-
-  
-  % Cohesive law
-  stepcoh=Cohesive_Law(stepdisp,NumPoints,material,stepcoh);
-
-
-  % Write step quantites to stored quantities
-  cohesive.lambda(step,:)=stepcoh.lambda;
-  cohesive.traction(step,:)=stepcoh.traction;
-  cohesive.lambda_max(step,:)=stepcoh.lambda_max_temp;
-  cohesive.loading(step,:)=stepcoh.loading_temp;
-
-  % Prime stored quantities
-  if step<NumSteps
-    cohesive.lambda_max(step+1,:)=cohesive.lambda_max(step,:);
-    cohesive.loading(step+1,:)=cohesive.loading(step,:);
-  end
-
-end
-
-% Check that lambda_max is updating correctly
-assert(almostequal(cohesive.lambda, cohesive.lambda_max, epsilon),...
-       'lambda_max is not updating correctly')
-
-% Check that cohesive traction separation law is the expected shape
-% for mode II loading
-delta_points = [min(imag(displacement)) -material.delslide ...
-                -material.lambda_e*material.delslide 0];
-sigma_points = [0 0 -material.sigmax 0];
-desired_traction2 = interp1(delta_points, sigma_points, imag(displacement))';
-
-assert(almostequal(imag(cohesive.traction), desired_traction2,epsilon),...
-       'cohesive traction separation law is not the expected shape for mode II loading');
-
-assert(almostequal(desired_traction1, -desired_traction2, epsilon), ...
-       'traction behaviour is not antisymmetric');
 
