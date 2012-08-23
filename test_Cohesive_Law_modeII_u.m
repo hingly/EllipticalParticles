@@ -2,52 +2,52 @@ function test_Cohesive_Law_modeII_u
 
   [material, epsilon, NumPoints] = Cohesive_test_input;
 
-% Number of steps in first loading phase
-NumSteps1 = 100;
+  % Number of steps in first loading phase
+  NumSteps1 = 100;
 
-%Number of steps in unloading phase
-NumSteps2 = 50;
+  %Number of steps in unloading phase
+  NumSteps2 = 50;
 
-%Number of steps in second loading phase
-NumSteps3 = 150;
+  %Number of steps in second loading phase
+  NumSteps3 = 150;
 
-% Number of steps in the displacement vector
-NumSteps=NumSteps1+NumSteps2+NumSteps3;
+  % Number of steps in the displacement vector
+  NumSteps=NumSteps1+NumSteps2+NumSteps3;
 
-%--------------------------------------------
-% Test Mode II tension unloading (modeII_tu)
-%============================================
+  %--------------------------------------------
+  % Test Mode II tension unloading (modeII_tu)
+  %============================================
 
-% Populate displacement vector
-u=linspace(0,0,NumSteps);
-v1=linspace(0,material.delslide*(1+material.lambda_e)/2, NumSteps1+1);
-v1=v1(1:NumSteps1);
-v2=linspace(material.delslide*(1+material.lambda_e)/2, material.delslide/4, NumSteps2+1);
-v2=v2(1:NumSteps2);
-v3=linspace(material.delslide/4, material.delslide*1.1, NumSteps3);
-v=[v1 v2 v3];
+  % Populate displacement vector
+  u=linspace(0,0,NumSteps);
+  v1=linspace(0,material.delslide*(1+material.lambda_e)/2, NumSteps1+1);
+  v1=v1(1:NumSteps1);
+  v2=linspace(material.delslide*(1+material.lambda_e)/2, material.delslide/4, NumSteps2+1);
+  v2=v2(1:NumSteps2);
+  v3=linspace(material.delslide/4, material.delslide*1.1, NumSteps3);
+  v=[v1 v2 v3];
 
-displacement_t=u+i*v;
+  displacement_t=u+i*v;
 
-cohesive_t = Cohesive_test_common(NumPoints, NumSteps,  displacement_t, material);
+  cohesive_t = Cohesive_test_common(NumPoints, NumSteps,  displacement_t, material);
 
-%-----------------------------------------------
-% Test Mode II compressive unloading (modeII_cu)
-%===============================================
+  %-----------------------------------------------
+  % Test Mode II compressive unloading (modeII_cu)
+  %===============================================
 
 
-% Populate displacement vector
-u=linspace(0,0,NumSteps);
-v1=linspace(0, -material.delslide/2, NumSteps1+1);
-v1=v1(1:NumSteps1);
-v2=linspace(-material.delslide/2, -material.delslide/4, NumSteps2+1);
-v2=v2(1:NumSteps2);
-v3=linspace(-material.delslide/4, -material.delslide*1.1, NumSteps3);
-v=[v1 v2 v3];
+  % Populate displacement vector
+  u=linspace(0,0,NumSteps);
+  v1=linspace(0, -material.delslide/2, NumSteps1+1);
+  v1=v1(1:NumSteps1);
+  v2=linspace(-material.delslide/2, -material.delslide/4, NumSteps2+1);
+  v2=v2(1:NumSteps2);
+  v3=linspace(-material.delslide/4, -material.delslide*1.1, NumSteps3);
+  v=[v1 v2 v3];
 
-displacement_c=u+i*v;
+  displacement_c=u+i*v;
 
-cohesive_c = Cohesive_test_common(NumPoints, NumSteps,  displacement_c, material);
+  cohesive_c = Cohesive_test_common(NumPoints, NumSteps,  displacement_c, material);
 
   
   %-----------------
@@ -55,12 +55,12 @@ cohesive_c = Cohesive_test_common(NumPoints, NumSteps,  displacement_c, material
   %=================
   
   % Check that lambda_max is updating correctly
-assert(lessthanequal(cohesive_t.lambda, cohesive_t.lambda_max),...
-       'lambda_max is not updating correctly --- tension')
+  assert(lessthanequal(cohesive_t.lambda, cohesive_t.lambda_max),...
+         'lambda_max is not updating correctly --- tension')
 
-% Check that lambda_max is updating correctly
-assert(lessthanequal(cohesive_c.lambda, cohesive_c.lambda_max),...
-       'lambda_max is not updating correctly --- compression')
+  % Check that lambda_max is updating correctly
+  assert(lessthanequal(cohesive_c.lambda, cohesive_c.lambda_max),...
+         'lambda_max is not updating correctly --- compression')
 
   % Check that loading flag is being set correctly
   loadingcheck_t=(cohesive_t.lambda_max-cohesive_t.lambda) < epsilon;

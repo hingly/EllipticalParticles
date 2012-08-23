@@ -27,9 +27,7 @@ function test_Cohesive_Law_modeI_tu
 
   displacement=u+i*v;
 
-
   cohesive = Cohesive_test_common(NumPoints, NumSteps,  displacement, material);
-
 
   % Check that lambda_max is updating correctly
   assert(lessthanequal(cohesive.lambda, cohesive.lambda_max),...

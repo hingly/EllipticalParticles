@@ -44,19 +44,19 @@ can't update anything inside residual.m
 * TODO Write standard tests 
    -- Weeks 31 and 32 (July 30-August 10)
 
-** TODO Write test for cohesive law - check that cohesive law is calculating the right things in the right way given prescribed inputs
+** DONE Write test for cohesive law - check that cohesive law is calculating the right things in the right way given prescribed inputs
 *** DONE Mode I Tension loading
    CLOCK: [2012-08-07 Tue 13:33]--[2012-08-07 Tue 14:50] =>  1:17
 *** DONE Mode I compression
 *** DONE Mode II both directions
 *** DONE Mode I tension unloading
 *** DONE Mixed mode
-*** TODO Mixed mode unloading
+*** DONE Mixed mode unloading
 
 ** DONE Test calculate_geometry.m
    CLOCK: [2012-08-11 Sat 15:15]--[2012-08-11 Sat 17:53] =>  2:38
 
-** TODO Test averages.m
+** DONE Test averages.m
    CLOCK: [2012-08-11 Sat 18:10]--[2012-08-11 Sat 20:09] =>  1:59
 *** DONE Still need a check for the 1-2 terms, need to understand what is happening with sigmap
 

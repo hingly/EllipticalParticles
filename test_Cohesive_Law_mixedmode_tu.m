@@ -1,215 +1,138 @@
 function test_Cohesive_Law_mixedmode_tu
 
-epsilon = 1e-5;
 
-% FIXME : consider making these not hard-coded
+  [material, epsilon, NumPoints] = Cohesive_test_input;
 
-material.delopen=0.5;
-material.delslide=material.delopen;
-material.gint=5;
-%corresponds to sigmax=20
-material.lambda_e=0.01;
+  % Number of steps in first loading phase
+  NumSteps1 = 100;
 
-material.sigmax=2*material.gint/material.delopen;
- 
+  %Number of steps in unloading phase
+  NumSteps2 = 50;
 
-NumPoints=1;
-%Only 1 point around the ellipse
+  %Number of steps in second loading phase
+  NumSteps3 = 150;
 
-% Number of steps in first loading phase
-NumSteps1 = 100;
-
-%Number of steps in unloading phase
-NumSteps2 = 50;
-
-%Number of steps in second loading phase
-NumSteps3 = 150;
-
-% Number of steps in the displacement vector
-NumSteps=NumSteps1+NumSteps2+NumSteps3;
-
-
-% initialise arrays
-zero_intpoints=zeros(1,NumPoints);
-zero_stepsintpoints=zeros(NumSteps,NumPoints);
+  % Number of steps in the displacement vector
+  NumSteps=NumSteps1+NumSteps2+NumSteps3;
 
 
 
-%-----------------------------------------
-% Test Mixed mode positive shear loading
-%=========================================
+
+  %-----------------------------------------
+  % Test Mixed mode positive shear loading
+  %=========================================
 
 
-%Initialise structure for Mixed Mode positive shear loading
 
-cohesive.lambda=zero_stepsintpoints;
-cohesive.lambda_max=zero_stepsintpoints;
-cohesive.loading=zero_stepsintpoints;
-cohesive.traction=zero_stepsintpoints;
+  % Populate displacement vector
+  u1=linspace(0,material.delopen*(1+material.lambda_e)/2/sqrt(2), NumSteps1+1);
+  u1=u1(1:NumSteps1);
+  u2=linspace(material.delopen*(1+material.lambda_e)/2/sqrt(2), material.delopen/4/sqrt(2), NumSteps2+1);
+  u2=u2(1:NumSteps2);
+  u3=linspace(material.delopen/4/sqrt(2), material.delopen*1.1, NumSteps3);
+  u=[u1 u2 u3];
+  v=u;
 
+  displacement_t=u+i*v;
 
-% Populate displacement vector
-u1=linspace(0,material.delopen/2, NumSteps1+1);
-u1=u1(1:NumSteps1);
-u2=linspace(material.delopen/2, material.delopen/4, NumSteps2+1);
-u2=u2(1:NumSteps2);
-u3=linspace(material.delopen/4, material.delopen*1.1, NumSteps3);
-u=[u1 u2 u3];
-v=u;
-
-displacement=u+i*v;
-
-
-for step=1:NumSteps
-  
-  stepdisp=displacement(step);
-  stepcoh.lambda=cohesive.lambda(step,:);
-  stepcoh.lambda_max=cohesive.lambda_max(step,:);
-  stepcoh.loading=cohesive.loading(step,:);
+  cohesive_t = Cohesive_test_common(NumPoints, NumSteps,  displacement_t, material);
 
   
-  % Cohesive law
-  stepcoh=Cohesive_Law(stepdisp,NumPoints,material,stepcoh);
+  %---------------------------------------------
+  % Test Mixed Mode negative shear loading
+  %=============================================
 
 
-  % Write step quantites to stored quantities
-  cohesive.lambda(step,:)=stepcoh.lambda;
-  cohesive.traction(step,:)=stepcoh.traction;
-  cohesive.lambda_max(step,:)=stepcoh.lambda_max_temp;
-  cohesive.loading(step,:)=stepcoh.loading_temp;
+  % Populate displacement vector
+  u1=linspace(0, material.delopen*(1+material.lambda_e)/2/sqrt(2), NumSteps1+1);
+  u1=u1(1:NumSteps1);
+  u2=linspace(material.delopen*(1+material.lambda_e)/2/sqrt(2), material.delopen/4/sqrt(2), NumSteps2+1);
+  u2=u2(1:NumSteps2);
+  u3=linspace(material.delopen/4/sqrt(2), material.delopen*1.1, NumSteps3);
+  u=[u1 u2 u3];
+  v=-u;
 
-  % Prime stored quantities
-  if step<NumSteps
-    cohesive.lambda_max(step+1,:)=cohesive.lambda_max(step,:);
-    cohesive.loading(step+1,:)=cohesive.loading(step,:);
-  end
-end
+  displacement_c=u+i*v;
 
-% figure(2)
-% plot(real(displacement), real(cohesive.traction),'-')
-% hold on
-% plot(imag(displacement), imag(cohesive.traction),'ro')
-% hold off
+  cohesive_c = Cohesive_test_common(NumPoints, NumSteps,  displacement_c, material);
 
-% Check that lambda_max is updating correctly
-assert(lessthanequal(cohesive.lambda, cohesive.lambda_max),...
-       'lambda_max is not updating correctly')
-
-% Check that loading flag is being set correctly
-loadingcheck=zeros(NumSteps,1);
-for kk=1:NumSteps
-  if (cohesive.lambda_max(kk)-cohesive.lambda(kk)) < epsilon
-    loadingcheck(kk)=1;
-  end
-end
-
-assert(allequal(cohesive.loading,loadingcheck,epsilon), ...
-       'Loading flag is not being set correctly');
-
-% FIXME : I don't know how to write this test
-
-% % Check that cohesive traction separation law is the expected shape
-% % for mode II loading
-% delta_points = [0 material.lambda_e*material.delopen/sqrt(2) material.delopen/sqrt(2) max(real(displacement))];
-% sigma_points = [0 material.sigmax/sqrt(2) 0 0];
-% desired_traction1 = interp1(delta_points, sigma_points, real(displacement))';
-
-% assert(almostequal(imag(cohesive.traction), desired_traction1,epsilon),...
-%        ['cohesive traction separation law is not the expected shape ' ...
-%         'for Mixed mode positive shear loading---shear']);
-
-% assert(almostequal(real(cohesive.traction), desired_traction1,epsilon),...
-%        ['cohesive traction separation law is not the expected shape ' ...
-%         'for Mixed mode positive shear loading---normal']);
-
-%---------------------------------------------
-% Test Mixed Mode negative shear loading
-%=============================================
-
-
-%Initialise structure for Mixed Mode negative shear loading
-
-cohesive.lambda=zero_stepsintpoints;
-cohesive.lambda_max=zero_stepsintpoints;
-cohesive.loading=zero_stepsintpoints;
-cohesive.traction=zero_stepsintpoints;
-
-
-
-% Populate displacement vector
-u1=linspace(0, -material.delopen/2, NumSteps1+1);
-u1=u1(1:NumSteps1);
-u2=linspace(-material.delopen/2, -material.delopen/4, NumSteps2+1);
-u2=u2(1:NumSteps2);
-u3=linspace(-material.delopen/4, -material.delopen*1.1, NumSteps3);
-u=[u1 u2 u3];
-v=u;
-
-displacement=u+i*v;
-
-
-
-for step=1:NumSteps
+  %-----------------
+  % Check results
+  %=================
   
-  stepdisp=displacement(step);
-  stepcoh.lambda=cohesive.lambda(step,:);
-  stepcoh.lambda_max=cohesive.lambda_max(step,:);
-  stepcoh.loading=cohesive.loading(step,:);
+  % Check that lambda_max is updating correctly
+  assert(lessthanequal(cohesive_t.lambda, cohesive_t.lambda_max, epsilon),...
+         'lambda_max is not updating correctly --- positive shear');
+  
+  assert(lessthanequal(cohesive_c.lambda, cohesive_c.lambda_max, epsilon),...
+         'lambda_max is not updating correctly --- negative shear');
+  
+
+  % Check that loading flag is being set correctly
+  loadingcheck_t=(cohesive_t.lambda_max-cohesive_t.lambda) < epsilon;
+  loadingcheck_c=(cohesive_c.lambda_max-cohesive_c.lambda) < epsilon;
+
+  assert(all(cohesive_t.loading==loadingcheck_t), ...
+         'Loading flag is not being set correctly --- positive shear');
+  assert(all(cohesive_c.loading==loadingcheck_c), ...
+         'Loading flag is not being set correctly --- negative shear');
+
+
+  % Create loading set for mode I
+  xs_loading_t1=real(displacement_t(cohesive_t.loading));
+  xs_loading_c1=real(displacement_c(cohesive_c.loading));
+  ys_loading_t1=real(cohesive_t.traction(cohesive_t.loading))';
+  ys_loading_c1=real(cohesive_c.traction(cohesive_c.loading))';
+  xs_loading1=[xs_loading_t1 xs_loading_c1];
+  ys_loading1=[ys_loading_t1 ys_loading_c1];
+
+  % Create loading set for mode II
+  xs_loading_t2=imag(displacement_t(cohesive_t.loading));
+  xs_loading_c2=imag(displacement_c(cohesive_c.loading));
+  ys_loading_t2=imag(cohesive_t.traction(cohesive_t.loading))';
+  ys_loading_c2=imag(cohesive_c.traction(cohesive_c.loading))';
+  xs_loading2=[xs_loading_t2 xs_loading_c2];
+  ys_loading2=[ys_loading_t2 ys_loading_c2];
+
+  % Check for loading part of curve
+  lineys_loading = [0 0 -material.sigmax/sqrt(2) 0 material.sigmax/sqrt(2) 0 0];
+  linexs_loading = [min(imag(displacement_c)) -material.delopen/sqrt(2) ...
+                    -material.lambda_e*material.delopen/sqrt(2) 0 ...
+                    material.lambda_e*material.delopen/sqrt(2) ...
+                    material.delopen/sqrt(2) max(imag(displacement_t))];
+
+  epsilon2=material.sigmax/NumSteps;  
+  distances = points_to_lines(xs_loading1, ys_loading1, linexs_loading, lineys_loading);
+  assert(allequal(distances, zeros(size(distances)), epsilon2), ...
+         'Incorrect points generated during loading --- mode I');
+  distances = points_to_lines(xs_loading2, ys_loading2, linexs_loading, lineys_loading);
+  assert(allequal(distances, zeros(size(distances)), epsilon2), ...
+         'Incorrect points generated during loading --- mode II');
+
+  % Check for unloading part of curve - mode I
+  xs_unloading_t1=real(displacement_t(~cohesive_t.loading));
+  ys_unloading_t1=real(cohesive_t.traction(~cohesive_t.loading))';
+  xs_unloading_c1=real(displacement_c(~cohesive_c.loading));
+  ys_unloading_c1=real(cohesive_c.traction(~cohesive_c.loading))';
+  xs_unloading1=[xs_unloading_t1 xs_unloading_c1];
+  ys_unloading1=[ys_unloading_t1 ys_unloading_c1];
+  
+  % Check for unloading part of curve - mode II
+  xs_unloading_t2=imag(displacement_t(~cohesive_t.loading));
+  ys_unloading_t2=imag(cohesive_t.traction(~cohesive_t.loading))';
+  xs_unloading_c2=imag(displacement_c(~cohesive_c.loading));
+  ys_unloading_c2=imag(cohesive_c.traction(~cohesive_c.loading))';
+  xs_unloading2=[xs_unloading_t2 xs_unloading_c2];
+  ys_unloading2=[ys_unloading_t2 ys_unloading_c2];
+  
+  lineys_unloading = [0 material.sigmax/2/sqrt(2)];
+  linexs_unloading = [0 material.delopen*(1+material.lambda_e)/2/sqrt(2)];
+
+  distances = points_to_lines(xs_unloading1, ys_unloading1, linexs_unloading, lineys_unloading);
+  assert(allequal(distances, zeros(size(distances)), epsilon2), ...
+         'Incorrect points generated during unloading --- mode I');
+  distances = points_to_lines(xs_unloading1, ys_unloading1, linexs_unloading, lineys_unloading);
+  assert(allequal(distances, zeros(size(distances)), epsilon2), ...
+         'Incorrect points generated during unloading --- mode II');
 
   
-  % Cohesive law
-  stepcoh=Cohesive_Law(stepdisp,NumPoints,material,stepcoh);
-
-
-  % Write step quantites to stored quantities
-  cohesive.lambda(step,:)=stepcoh.lambda;
-  cohesive.traction(step,:)=stepcoh.traction;
-  cohesive.lambda_max(step,:)=stepcoh.lambda_max_temp;
-  cohesive.loading(step,:)=stepcoh.loading_temp;
-
-  % Prime stored quantities
-  if step<NumSteps
-    cohesive.lambda_max(step+1,:)=cohesive.lambda_max(step,:);
-    cohesive.loading(step+1,:)=cohesive.loading(step,:);
-  end
-
-end
-
-% Check that lambda_max is updating correctly
-assert(lessthanequal(cohesive.lambda, cohesive.lambda_max),...
-       'lambda_max is not updating correctly')
-
-% Check that loading flag is being set correctly
-loadingcheck=zeros(NumSteps,1);
-for kk=1:NumSteps
-  if (cohesive.lambda_max(kk)-cohesive.lambda(kk)) < epsilon
-    loadingcheck(kk)=1;
-  end
-end
-
-assert(allequal(cohesive.loading,loadingcheck,epsilon), ...
-       'Loading flag is not being set correctly');
-
-
-% % FIXME : I don't know how to write this test
-% % Check that cohesive traction separation law is the expected shape
-% % for mode II loading
-% delta_points = [min(imag(displacement)) -material.delslide/sqrt(2) ...
-%                 -material.lambda_e*material.delslide/sqrt(2) 0];
-% sigma_points = [0 0 -material.sigmax/sqrt(2) 0];
-% desired_traction2 = interp1(delta_points, sigma_points, imag(displacement))';
-
-% assert(almostequal(imag(cohesive.traction), desired_traction2,epsilon),...
-%        ['cohesive traction separation law is not the expected shape ' ...
-%         'for mixed mode negative shear loading --- shear']);
-
-% assert(almostequal(real(cohesive.traction), desired_traction1,epsilon),...
-%        ['cohesive traction separation law is not the expected shape ' ...
-%         'for mixed mode negative shear loading --- normal']);
-
-
-% assert(almostequal(desired_traction1, -desired_traction2, epsilon), ...
-%        'traction behaviour is not antisymmetric');
-
-
-error('still need to write test')
