@@ -85,11 +85,11 @@ for step=1:NumSteps
   end
 end
 
-figure(2)
-plot(real(displacement), real(cohesive.traction),'-')
-hold on
-plot(imag(displacement), imag(cohesive.traction),'ro')
-hold off
+% figure(2)
+% plot(real(displacement), real(cohesive.traction),'-')
+% hold on
+% plot(imag(displacement), imag(cohesive.traction),'ro')
+% hold off
 
 % Check that lambda_max is updating correctly
 assert(lessthanequal(cohesive.lambda, cohesive.lambda_max),...

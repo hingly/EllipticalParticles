@@ -152,13 +152,13 @@ for jj=1:NumPoints
   % ----> These do not get used until next step
   if lambda(jj)>=lambda_max_temp(jj)                  
     % If loading
-    loading_temp(jj)=1;                                   
+    loading_temp(jj)=true;                                   
     % set loading flag to 1
     lambda_max_temp(jj)=lambda(jj);                  
     % update lambda_max_temp
   else
     % If unloading
-    loading_temp(jj)=0;                                   
+    loading_temp(jj)=false;                                   
     % set loading flag to 0, don't update lambda_max_temp
   end   
   
