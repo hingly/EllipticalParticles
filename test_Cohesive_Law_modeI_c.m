@@ -36,7 +36,6 @@ function test_Cohesive_Law_modeI_c
   linexs_loading = [0 material.lambda_e*material.delopen];
 
   epsilon2 = material.sigmax/NumSteps;
-  points_to_lines(xs_loading, ys_loading, linexs_loading, lineys_loading);
   distances = points_to_lines(xs_loading, ys_loading, linexs_loading, lineys_loading);
   assert(allequal(distances, zeros(size(distances)), epsilon2), ...
          'Incorrect points generated during loading');
