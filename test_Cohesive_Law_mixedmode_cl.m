@@ -1,11 +1,11 @@
-function test_Cohesive_Law_modeII_l
+function test_Cohesive_Law_mixedmode_cl
 
 epsilon = 1e-5;
 
 % FIXME : consider making these not hard-coded
 
 material.delopen=0.5;
-material.delslide=0.5;
+material.delslide=material.delopen;
 material.gint=5;
 %corresponds to sigmax=20
 material.lambda_e=0.01;
@@ -26,12 +26,13 @@ zero_stepsintpoints=zeros(NumSteps,NumPoints);
 
 
 
-%-----------------------------------------
-% Test Mode II tension loading (modeII_tl)
-%=========================================
+%----------------------------------------------------------------
+% Test Mixed mode positive shear with normal compression loading
+%================================================================
 
 
-%Initialise structure for Mode I tension loading
+%Initialise structure for Mixed Mode positive shear with normal
+%compression loading
 
 cohesive.lambda=zero_stepsintpoints;
 cohesive.lambda_max=zero_stepsintpoints;
@@ -40,8 +41,8 @@ cohesive.traction=zero_stepsintpoints;
 
 
 % Populate displacement vector
-u=linspace(0,0,NumSteps);
-v=linspace(0, material.delslide*1.1,NumSteps);
+u=linspace(0, -material.delopen*1.1, NumSteps);
+v=linspace(0, material.delslide*1.1, NumSteps);
 
 displacement=u+i*v;
 
@@ -77,21 +78,38 @@ assert(almostequal(cohesive.lambda, cohesive.lambda_max, epsilon),...
        'lambda_max is not updating correctly')
 
 % Check that cohesive traction separation law is the expected shape
-% for mode II loading
+% for mode II
 delta_points = [0 material.lambda_e*material.delslide material.delslide max(imag(displacement))];
 sigma_points = [0 material.sigmax 0 0];
 desired_traction1 = interp1(delta_points, sigma_points, imag(displacement))';
 
 assert(almostequal(imag(cohesive.traction), desired_traction1,epsilon),...
-       'cohesive traction separation law is not the expected shape for mode II loading');
+       ['cohesive traction separation law is not the expected shape ' ...
+        'for Mixed mode positive shear with normal compression ' ...
+         'loading --- shear']);
 
 
-%---------------------------------------------
-% Test Mode II compressive loading (modeII_cl)
-%=============================================
+% Check that cohesive traction separation law is the expected shape
+% for mode I
+delta_points_n = [0 -material.lambda_e*material.delopen];
+sigma_points_n = [0 -material.sigmax ];
+desired_traction_n = interp1(delta_points_n, sigma_points_n, ...
+                           real(displacement), 'extrap')';
+
+assert(almostequal(real(cohesive.traction), desired_traction_n,epsilon),...
+       ['cohesive traction separation law is not the expected shape ' ...
+        'for mixed mode mode positive shear with normal '...
+        'compression --- normal']);
 
 
-%Initialise structure for Mode I tension loading
+
+%----------------------------------------------------------------
+% Test Mixed Mode negative shear with normal compression loading
+%================================================================
+
+
+%Initialise structure for Mixed Mode negative shear with normal
+%compression loading
 
 cohesive.lambda=zero_stepsintpoints;
 cohesive.lambda_max=zero_stepsintpoints;
@@ -100,8 +118,8 @@ cohesive.traction=zero_stepsintpoints;
 
 
 % Populate displacement vector
-u=linspace(0,0,NumSteps);
-v=linspace(0, -material.delslide*1.1,NumSteps);
+u=linspace(0, -material.delopen*1.1, NumSteps);
+v=linspace(0, -material.delslide*1.1, NumSteps);
 
 displacement=u+i*v;
 
@@ -137,15 +155,30 @@ assert(almostequal(cohesive.lambda, cohesive.lambda_max, epsilon),...
        'lambda_max is not updating correctly')
 
 % Check that cohesive traction separation law is the expected shape
-% for mode II loading
+% for mode II 
 delta_points = [min(imag(displacement)) -material.delslide ...
                 -material.lambda_e*material.delslide 0];
 sigma_points = [0 0 -material.sigmax 0];
 desired_traction2 = interp1(delta_points, sigma_points, imag(displacement))';
 
 assert(almostequal(imag(cohesive.traction), desired_traction2,epsilon),...
-       'cohesive traction separation law is not the expected shape for mode II loading');
+       ['cohesive traction separation law is not the expected shape ' ...
+        'for mixed mode mode negative shear with normal compression ' ...
+         ' --- shear']);
 
+% Check that cohesive traction separation law is the expected shape
+% for mode I
+delta_points_n = [0 -material.lambda_e*material.delopen];
+sigma_points_n = [0 -material.sigmax ];
+desired_traction_n = interp1(delta_points_n, sigma_points_n, ...
+                           real(displacement), 'extrap')';
+
+assert(almostequal(real(cohesive.traction), desired_traction_n,epsilon),...
+       ['cohesive traction separation law is not the expected shape ' ...
+        'for mixed mode mode negative shear with normal '...
+        'compression --- normal']);
+
+
+% Check that Mode II behaviour is antisymmetric
 assert(almostequal(desired_traction1, -desired_traction2, epsilon), ...
        'traction behaviour is not antisymmetric');
-

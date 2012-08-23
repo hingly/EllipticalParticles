@@ -25,8 +25,8 @@ NumSteps2 = 50;
 %Number of steps in second loading phase
 NumSteps3 = 150;
 
-NumSteps=NumSteps1+NumSteps2+NumSteps3;
 % Number of steps in the displacement vector
+NumSteps=NumSteps1+NumSteps2+NumSteps3;
 
 
 % initialise arrays
