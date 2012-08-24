@@ -5,12 +5,12 @@ function [MacroStress, MacroStrain,Sigma_m]= macrostress(MacroStrain,Sigma_p, Ep
 % for the particle stress and interface strain.
 
 
-
+stress_epsilon=1e-5;
 
 %Define mu and nu for convenience
 mu=material.mu_m;
 nu=material.nu_m;
-if loads.SigBar_xy(1)==0
+if loads.SigBar_xy(1) < stress_epsilon
     % Special case that we have to handle differently
     materialterm22 = -2*mu/nu;
     particleterm22 = -1/(2*mu)*((1-nu)*Sigma_p(1) - nu*Sigma_p(2));

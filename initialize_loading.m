@@ -109,10 +109,11 @@ potential.psicoh=zero_timestep_intpoints;
   % Convert the imposed principal stresses to local coordinates
   [loads.SigBar_xy(1), loads.SigBar_xy(2), loads.SigBar_xy(3)]=unprincipal(N1,N2,omega);
 
+  stress_epsilon=1e-5;
   
   % Compute the new stress ratios, loads.StressRatio_22 and loads.StressRatio_12 
 
-  if loads.SigBar_xy(1)==0
+  if loads.SigBar_xy(1) < stress_epsilon
     %error(['Zero stress in the 11 direction.  The code cant accommodate this right now');
     % Ratio of sigma_12 to sigma_22
     loads.StressRatio_12_22 = loads.SigBar_xy(3)/loads.SigBar_xy(2);
@@ -128,7 +129,7 @@ potential.psicoh=zero_timestep_intpoints;
  
   % Guesses FOR FIRST TIMESTEP soln
   tt = 1;
-  if loads.SigBar_xy(1)==0
+  if loads.SigBar_xy(1) < stress_epsilon
     %Special case where we have to make a different assumption
  
     % Sigma_p has the same shape as the imposed macroscopic stress,
