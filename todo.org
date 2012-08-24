@@ -73,22 +73,24 @@ can't update anything inside residual.m
 ** TODO Test fouriertransform.m
 ** TODO Test incorporate_previous_timestep.m
 ** TODO Test initialize_loading.m
+    Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
+    - see p.9 of Denel notebook
+
 ** TODO Test macrostress.m
    many many typos may introduce errors.
+
 ** TODO Test modes.m
 ** TODO Test old_Cohesive_law.m
 ** TODO Test old_cohesivetractions.m
-** TODO Test principal.m
+** DONE Test principal.m
     especially calculation of alpha in principal.m
-    Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
-    - see p.9 of Denel notebook
 ** TODO Test read_input.m
 ** TODO Test residual.m
 ** TODO Test runtests.m
 ** TODO Test stack.m
-** TODO Test unprincipal.m
-   Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
-    - see p.9 of Denel notebook
+** DONE Test unprincipal.m
+   CLOCK: [2012-08-24 Fri 11:12]--[2012-08-24 Fri 11:42] =>  0:30
+
 ** TODO Test unstack.m
 
 ** TODO theoretical derivation for circular, equibiaxial loading
@@ -113,6 +115,8 @@ can't update anything inside residual.m
 
 ** TODO Zero sigmax will be equivalent to no inclusion
 ** TODO Check correct traction direction with timoshenko test
+** TODO Problem with the way lambda_max is being handled
+
 
 
 * TODO Debugging 
