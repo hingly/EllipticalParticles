@@ -60,14 +60,28 @@ can't update anything inside residual.m
    CLOCK: [2012-08-11 Sat 18:10]--[2012-08-11 Sat 20:09] =>  1:59
 *** DONE Still need a check for the 1-2 terms, need to understand what is happening with sigmap
 
+** DONE Test almostequal.m
+** DONE Test allequal.m
+
+** DONE Test principal.m
+    especially calculation of alpha in principal.m
+** DONE Test unprincipal.m
+   CLOCK: [2012-08-24 Fri 11:12]--[2012-08-24 Fri 11:42] =>  0:30
+** TODO Test stack.m
+** TODO Test unstack.m
+
+
+** DONE go through code and check that I don't use == test for non-integers
+** DONE replace NumPoints+1 with NumPoints
+
 
 
 ** TODO Test calculatedisplacement.m
+*** TODO Check that A_1 and A_2 are calculated correctly
+
 ** TODO Test common.m
 ** TODO Test farfieldpotential.m
 ** TODO Test final.m
-** DONE Test almostequal.m
-** DONE Test allequal.m
 ** TODO Test ellipse2011.m
 ** TODO Test finalize_timestep.m
 ** TODO Test fouriertransform.m
@@ -82,40 +96,36 @@ can't update anything inside residual.m
 ** TODO Test modes.m
 ** TODO Test old_Cohesive_law.m
 ** TODO Test old_cohesivetractions.m
-** DONE Test principal.m
-    especially calculation of alpha in principal.m
 ** TODO Test read_input.m
 ** TODO Test residual.m
 ** TODO Test runtests.m
-** TODO Test stack.m
-** DONE Test unprincipal.m
-   CLOCK: [2012-08-24 Fri 11:12]--[2012-08-24 Fri 11:42] =>  0:30
 
-** TODO Test unstack.m
+
+
 
 ** TODO theoretical derivation for circular, equibiaxial loading
-** TODO timoshenko files or test files
+** TODO Problem with circle under equibiaxial loading.   
 
-** TODO Check that A_1 and A_2 are calculated correctly
+** TODO timoshenko files or test files
+** TODO Zero sigmax will be equivalent to no inclusion
+** TODO Check correct traction direction with timoshenko test
+
 ** TODO problem with loading angles (I don't accept omega=pi/2) see p.67
 ** TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
 ** TODO How do I want to handle damage under normal compression?  
    -- At the moment I accumulate damage, but compensate for slope in normal mode.  
       But large normal compression and no shear could still result in substantial damage - this is wrong
-** TODO Problem with circle under equibiaxial loading.   
 ** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
-** TODO go through code and check that I don't use == test for non-integers
-** DONE replace NumPoints+1 with NumPoints
+
 ** TODO sign of cohesive traction, and document
 ** TODO Failure is not starting at zero degrees even when load is applied at zero degrees.  Weird. 7/8/12
+** TODO Problem with the way lambda_max is being handled
+
 
 ** TODO Think about how and what to output
 ** TODO Output macroscopic stress and strain and plot
 ** TODO plot displaced shape
 
-** TODO Zero sigmax will be equivalent to no inclusion
-** TODO Check correct traction direction with timoshenko test
-** TODO Problem with the way lambda_max is being handled
 
 
 
