@@ -77,8 +77,8 @@ end
 %==============================================
 
 
-stepdisp.total=stepdisp.farfield+stepdisp.coh;
-stepdisp.total_xy=stepdisp.farfield_xy+stepdisp.coh_xy;
+stepdisp.total = stepdisp.farfield + stepdisp.coh;
+stepdisp.total_xy = stepdisp.farfield_xy + stepdisp.coh_xy;
 
 
 
@@ -86,11 +86,13 @@ stepdisp.total_xy=stepdisp.farfield_xy+stepdisp.coh_xy;
 %Compute cohesive tractions resulting from displacement
 %======================================================
 
-stepcoh=Cohesive_Law(stepdisp.total,geom.NumPoints,material,stepcoh);
+stepcoh = Cohesive_Law(stepdisp.total, geom.NumPoints, material,stepcoh);
 
-for kk=1:geom.NumPoints
-    stepcoh.traction_xy(kk)=stepcoh.traction(kk)*exp(i*geom.beta(kk));
-end
+% Displacement jump must result in opposing traction
+stepcoh.traction = -stepcoh.traction;
+
+
+stepcoh.traction_xy = stepcoh.traction.*exp(i.*geom.beta);
 
 
 
