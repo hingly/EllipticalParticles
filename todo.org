@@ -67,8 +67,8 @@ can't update anything inside residual.m
     especially calculation of alpha in principal.m
 ** DONE Test unprincipal.m
    CLOCK: [2012-08-24 Fri 11:12]--[2012-08-24 Fri 11:42] =>  0:30
-** TODO Test stack.m
-** TODO Test unstack.m
+** DONE Test stack.m
+** DONE Test unstack.m
 
 
 ** DONE go through code and check that I don't use == test for non-integers
@@ -94,11 +94,8 @@ can't update anything inside residual.m
    many many typos may introduce errors.
 
 ** TODO Test modes.m
-** TODO Test old_Cohesive_law.m
-** TODO Test old_cohesivetractions.m
 ** TODO Test read_input.m
 ** TODO Test residual.m
-** TODO Test runtests.m
 
 
 

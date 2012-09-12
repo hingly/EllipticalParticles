@@ -17,23 +17,30 @@ struct_in.Eps_int=[-1 -2 -3; -2 -3 -4; -3 -4 -5];
 NumModes=0;
 struct_in.sk = zeros(NumSteps, NumModes+1);
 struct_in.sk = [4+2i; 3-5i; i];
-tt = 2;
-vect_out = stack(struct_in, NumModes, tt);
 
-vector_check = [3 -5 4 3 2 -2 -3 -4];
-assert(allequal(vect_out, vector_check, epsilon), ...
+for tt=1:NumSteps
+  vect_out_0(tt, :) = stack(struct_in, NumModes, tt);
+end
+vector_check = [4 2 3 2 1 -1 -2 -3; ...
+                3 -5 4 3 2 -2 -3 -4; ...
+                0 1 5 4 3 -3 -4 -5];
+assert(allequal(vect_out_0, vector_check, epsilon), ...
        'Vector not properly stacked for NumModes=0');
 
 % Test for two modes
 NumModes = 2;
 struct_in.sk = zeros(NumSteps, NumModes+1);
-struct_in.sk =[4+2i 3-i 1+2i; 3-5i 0 2+6i; i -1-i 2+i];
+struct_in.sk = [4+2i 3-i 1+2i; 3-5i 0 2+6i; i -1-i 2+i];
 
-tt = 1;
-vect_out=stack(struct_in, NumModes, tt);
 
-vector_check=[4 3 1 2 -1 2 3 2 1 -1 -2 -3];
-assert(allequal(vect_out, vector_check, epsilon), ...
+for tt=1:NumSteps
+  vect_out_2(tt, :) = stack(struct_in, NumModes, tt);
+end
+
+vector_check=[4 3 1 2 -1 2 3 2 1 -1 -2 -3; ...
+             3 0 2 -5 0 6 4 3 2 -2 -3 -4; ...
+             0 -1 2 1 -1 1 5 4 3 -3 -4 -5];
+assert(allequal(vect_out_2, vector_check, epsilon), ...
        'Vector not properly stacked for NumModes=2');
 
 
