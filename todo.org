@@ -74,7 +74,12 @@ can't update anything inside residual.m
 ** DONE go through code and check that I don't use == test for non-integers
 ** DONE replace NumPoints+1 with NumPoints
 
+** DONE Test macrostress.m
+   many many typos may introduce errors.
+** TODO Test modes.m
+** TODO Test fouriertransform.m
 
+** TODO Rewrite point to line cross product for efficiency
 
 ** TODO Test calculatedisplacement.m
 *** TODO Check that A_1 and A_2 are calculated correctly
@@ -84,16 +89,15 @@ can't update anything inside residual.m
 ** TODO Test final.m
 ** TODO Test ellipse2011.m
 ** TODO Test finalize_timestep.m
-** TODO Test fouriertransform.m
+
 ** TODO Test incorporate_previous_timestep.m
 ** TODO Test initialize_loading.m
     Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
     - see p.9 of Denel notebook
 
-** TODO Test macrostress.m
-   many many typos may introduce errors.
 
-** TODO Test modes.m
+
+
 ** TODO Test read_input.m
 ** TODO Test residual.m
 

@@ -35,7 +35,10 @@ function test_Cohesive_Law_mixedmode_tu
 
   displacement_t=u+i*v;
 
-  cohesive_t = Cohesive_test_common(NumPoints, NumSteps,  displacement_t, material);
+  cohesive_t = Cohesive_test_common(NumPoints, NumSteps,  displacement_t, ...
+                                    material);
+  
+
 
   
   %---------------------------------------------
@@ -56,6 +59,8 @@ function test_Cohesive_Law_mixedmode_tu
 
   cohesive_c = Cohesive_test_common(NumPoints, NumSteps,  displacement_c, material);
 
+
+  
   %-----------------
   % Check results
   %=================
@@ -105,6 +110,7 @@ function test_Cohesive_Law_mixedmode_tu
   distances = points_to_lines(xs_loading1, ys_loading1, linexs_loading, lineys_loading);
   assert(allequal(distances, zeros(size(distances)), epsilon2), ...
          'Incorrect points generated during loading --- mode I');
+
   distances = points_to_lines(xs_loading2, ys_loading2, linexs_loading, lineys_loading);
   assert(allequal(distances, zeros(size(distances)), epsilon2), ...
          'Incorrect points generated during loading --- mode II');
@@ -131,6 +137,7 @@ function test_Cohesive_Law_mixedmode_tu
   distances = points_to_lines(xs_unloading1, ys_unloading1, linexs_unloading, lineys_unloading);
   assert(allequal(distances, zeros(size(distances)), epsilon2), ...
          'Incorrect points generated during unloading --- mode I');
+
   distances = points_to_lines(xs_unloading1, ys_unloading1, linexs_unloading, lineys_unloading);
   assert(allequal(distances, zeros(size(distances)), epsilon2), ...
          'Incorrect points generated during unloading --- mode II');
