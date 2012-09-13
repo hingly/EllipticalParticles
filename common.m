@@ -1,4 +1,4 @@
-function [stepcoh, stepdisp,steppot]=common(N1, N2, omega, geom,  material,loads, sk,stepcoh)
+function [stepcoh, stepdisp,steppot] = common(N1, N2, omega, geom,  material,loads, sk,stepcoh)
 
 % Given far-field loading and Fourier modes, compute cohesive tractions and displacements
 % Created from residual.m 16/7/2012
@@ -12,23 +12,23 @@ function [stepcoh, stepdisp,steppot]=common(N1, N2, omega, geom,  material,loads
 %==============================
 
 %constants
-zero_intpoints=zeros(1,geom.NumPoints);
+zero_intpoints = zeros(1, geom.NumPoints);
 
-stepdisp.farfield=zero_intpoints;
-stepdisp.farfield_xy=zero_intpoints;
-stepdisp.coh=zero_intpoints;
-stepdisp.coh_xy=zero_intpoints;
-stepdisp.total=zero_intpoints;
-stepdisp.total_xy=zero_intpoints;
+stepdisp.farfield = zero_intpoints;
+stepdisp.farfield_xy = zero_intpoints;
+stepdisp.coh = zero_intpoints;
+stepdisp.coh_xy = zero_intpoints;
+stepdisp.total = zero_intpoints;
+stepdisp.total_xy = zero_intpoints;
 
-stepcoh.traction_xy=zero_intpoints;
+stepcoh.traction_xy = zero_intpoints;
 
-steppot.phi=zero_intpoints;
-steppot.phiprime=zero_intpoints;
-steppot.psi=zero_intpoints;
-steppot.phicoh=zero_intpoints;
-steppot.phiprimecoh=zero_intpoints;
-steppot.psicoh=zero_intpoints;
+steppot.phi = zero_intpoints;
+steppot.phiprime = zero_intpoints;
+steppot.psi = zero_intpoints;
+steppot.phicoh = zero_intpoints;
+steppot.phiprimecoh = zero_intpoints;
+steppot.psicoh = zero_intpoints;
 
 
 
