@@ -1,4 +1,4 @@
-function [MacroStress, MacroStrain,Sigma_m]= macrostress(MacroStrain,Sigma_p, Eps_int, loads, geom, material)
+function [MacroStress, MacroStrain,Sigma_m] = macrostress(MacroStrain,Sigma_p, Eps_int, loads, geom, material)
 
 % This function computes the macroscopic stress, macroscopic strain
 % and matrix stress terms given the first macroscopic strain and guesses
@@ -14,9 +14,9 @@ if loads.SigBar_xy(1) < stress_epsilon
     % Special case that we have to handle differently
     materialterm22 = -2*mu/nu;
     particleterm22 = -1/(2*mu)*((1-nu)*Sigma_p(1) - nu*Sigma_p(2));
-    MacroStress(1)=0;
+    MacroStress(1) = 0;
     MacroStress(2) = materialterm22*(MacroStrain(1) - geom.f*(particleterm22 + Eps_int(1)));
-    MacroStress(3) = loads.StressRatio_12_22*MacroStress(1);
+    MacroStress(3) = loads.StressRatio_12_22*MacroStress(2);
 
 else
     % Calculate MacroStress (eq 4.82, 4.81)
@@ -30,7 +30,7 @@ end
 
 % Calculate remaining element of MacroStrain (eq 4.80)
 MacroStrain(2) = 1/(2*mu)*((1-nu)*MacroStress(2) - nu*MacroStress(1)) + geom.f*(-1/(2*mu)*((1-nu)*Sigma_p(2) - nu*Sigma_p(1)) + Eps_int(2));
-MacroStrain(3) = 1/(2*mu)*MacroStress(3) + geom.f*(-2*mu*Sigma_p(3) + Eps_int(3));
+MacroStrain(3) = 1/(2*mu)*MacroStress(3) + geom.f*(-1/(2*mu)*Sigma_p(3) + Eps_int(3));
 
 % Compute matrix stresses (eq 4.68)
 Sigma_m = (MacroStress - geom.f * Sigma_p)/(1-geom.f);
