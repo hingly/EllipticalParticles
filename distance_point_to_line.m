@@ -9,25 +9,10 @@ function d = distance_point_to_line(pt, v1, v2)
 %pt = [0,5,0];
 %distance = point_to_line(pt,v1,v2)
 
-%http://www.mathworks.com/support/solutions/en/data/1-1BYSR/index.html?product=ML&solution=1-1BYSR
-  if length(pt)~=3
-    pt=[pt 0];
-  end
-  
-  if length(v1)~=3
-    v1=[v1 0];
-  end
-  
-  if length(v2)~=3
-    v2=[v2 0];
-  end
-  
-  assert(length(pt)==3, 'pt must be entered as 2 or 3 dimensional');
-  assert(length(v1)==3, 'v1 must be entered as 2 or 3 dimensional');
-  assert(length(v2)==3, 'v2 must be entered as 2 or 3 dimensional');
-  
-  
-  
-  a = v1 - v2;
-  b = pt - v2;
-  d = norm(cross(a,b)) / norm(a);
+assert(length(pt) == length(v1) & length(v1) == length(v2), ...
+       'all arguments must have the same dimension');
+    
+% Generalised formulation from http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line#Vector_formulation
+b = v1 - pt;
+n = (v2 - v1)/norm(v2 - v1);
+d = norm(b - dot(b, n)*n);

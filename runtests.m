@@ -24,7 +24,7 @@ for f = nontestfiles'
     else
         printf(':\n')
         filetests = filetests + 1;
-        for test = testfiles'
+        for test = reshape(testfiles, 1, length(testfiles))
             tests = tests + 1;
             printf('  %s... ', test.name)
             try
