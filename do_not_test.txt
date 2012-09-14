@@ -1,2 +1,4 @@
 runtests.m
+Cohesive_test_common.m
+Cohesive_test_input.m
 

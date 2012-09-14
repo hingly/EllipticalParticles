@@ -40,9 +40,11 @@ can't update anything inside residual.m
        --- Removed option of plane stress 30/7/2012
 
 
-
 * TODO Write standard tests 
+* TODO Debugging 
    -- Weeks 31 and 32 (July 30-August 10)
+   -- Weeks 33-34 (August 13-August 24) 
+   -- [Weeks 31 - 38 (July 30 - September 21)]
 
 ** DONE Write test for cohesive law - check that cohesive law is calculating the right things in the right way given prescribed inputs
 *** DONE Mode I Tension loading
@@ -76,33 +78,32 @@ can't update anything inside residual.m
 
 ** DONE Test macrostress.m
    many many typos may introduce errors.
-** TODO Test modes.m
-** TODO Test fouriertransform.m
+** DONE Rewrite point to line cross product for efficiency
 
-** TODO Rewrite point to line cross product for efficiency
+** DONE Test fouriertransform.m
+   -- need to check what the expected shape should be - is it being calculated correctly
+      (not sure how my function interfaces with fft - weird conjugates)
+
+** TODO Test modes.m
+** TODO Test farfieldpotential.m
 
 ** TODO Test calculatedisplacement.m
 *** TODO Check that A_1 and A_2 are calculated correctly
 
-** TODO Test common.m
-** TODO Test farfieldpotential.m
-** TODO Test final.m
+** TODO consider replacing fourier transform with fft or dft function
+** DONE number of points should be even - add assert in read_input
+** DONE number of points must be bigger than number of modes - add assert in read_input
+
 ** TODO Test ellipse2011.m
 ** TODO Test finalize_timestep.m
-
 ** TODO Test incorporate_previous_timestep.m
 ** TODO Test initialize_loading.m
     Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
     - see p.9 of Denel notebook
-
-
-
-
 ** TODO Test read_input.m
 ** TODO Test residual.m
-
-
-
+** TODO Test final.m
+** TODO Test common.m
 
 ** TODO theoretical derivation for circular, equibiaxial loading
 ** TODO Problem with circle under equibiaxial loading.   
@@ -127,33 +128,38 @@ can't update anything inside residual.m
 ** TODO Output macroscopic stress and strain and plot
 ** TODO plot displaced shape
 
-
-
-
-* TODO Debugging 
-   -- Weeks 33-34 (August 13-August 24)
-
 ** TODO characterise accuracy of averages.m (there's this even, odd thing)
+
+** TODO refactor test_macrostress to remove duplication
+
+
 * TODO Run Results and compare with previous findings for validity 
+** TODO Validate against Jay's code 
    -- Week 35 (August 27-31)
+   -- Weeks 39-40 (September 24-October 5)
+   -- [Week 39 (September 24 - September 28]
+
+
 
 * TODO Implement Optimisation Algorithms for Non-linear solver problem
 ** TODO Optimisation Technique that doesn't rely on gradients 
    -- Weeks 36-38 (September 3-21)
-** TODO Validate against Jay's code 
-   -- Weeks 39-40 (September 24-October 5)
+   -- [Weeks 40-42 (October 1 - October 19)]
    
 * TODO Get Results against test cases 
   -- Weeks 41 (October 8-12)
+  -- [Weeks 43 (October 22 - 26)]
 
 * TODO Write results into Dissertation (including conclusions) 
   -- Weeks 42-43 (October 15-26)
+  -- [Weeks 44 (October 29 - November 2)]
   
 * TODO Distribute to the committee for approval 
--- Weeks 44-45 (October 29-November9) 
+  -- Weeks 44-45 (October 29-November9) 
+  -- [Weeks 45-46 (November 5 - November 16)]
 
 * TODO Submit 
--- (Due November 16)
+  -- (Due November 23)
 
 
 

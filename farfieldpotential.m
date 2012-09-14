@@ -9,19 +9,21 @@ function [phi, phiprime, psi]=farfieldpotential(theta, rho,R, m, N1, N2, omega)
 % Note: I am never calculating stresses, so am not calculating
 % phiprime2 and psiprime  --- 16/7/2012
 
-sigma=exp(i*theta);
-zeta=rho*sigma;         
+sigma = exp(i*theta);
+zeta = rho*sigma;         
+
 % Calculate the potential functions on the ellipse, since that is 
 % where we want to know displacements.
 
-Q=(N1+N2)/4.0;
-P=(N1-N2)/2.0;
+Q = (N1 + N2)/4.0;
+P = (N1 - N2)/2.0;
 
-phi= Q*R*zeta - Q*R*m/zeta + P*R*exp(2*i*omega)/zeta;
+phi = Q*R*zeta - Q*R*m/zeta + P*R*exp(2*i*omega)/zeta;
 
-phiprime= Q*R + Q*R*m/zeta^2 - P*R*exp(2*i*omega)/zeta^2;
+phiprime = Q*R + Q*R*m/zeta^2 - P*R*exp(2*i*omega)/zeta^2;
 
-psi = -P*R*exp(-2*i*omega)*zeta - R*((1+m^2)*2*Q*zeta^2 - (1+m*zeta^2)*P*exp(2*i*omega))/(zeta*(zeta^2-m));
+psi = -P*R*exp(-2*i*omega)*zeta - ...
+      R*((1 + m^2)*2*Q*zeta^2 - (1+m*zeta^2)*P*exp(2* i*omega))/(zeta*(zeta^2 - m));
 
 
 

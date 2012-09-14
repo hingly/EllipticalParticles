@@ -60,7 +60,7 @@ sk = dummy.sk;
 
 
 % Compute Fourier modes corresponding to cohesive tractions
-skc=fouriertransform(stepcoh.traction,geom.theta,geom.NumPoints,loads.NumModes);
+skc = fouriertransform(stepcoh.traction, geom.theta, loads.NumModes);
 
 % Compute interfacial strain and average particle stress
 [Sigma_p_new, Eps_int_new] = averages(stepdisp.total_xy, stepcoh.traction_xy, geom);
