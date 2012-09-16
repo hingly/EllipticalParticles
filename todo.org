@@ -93,6 +93,7 @@ can't update anything inside residual.m
        --- happens when theta=theta0 as input to timoshenko_potentials.  Try to think of a way of skipping those points
 
 ** TODO Test farfieldpotential.m
+   --- comparing to a Timoshenko solution - no agreement, must check derivations
 
 ** TODO sign of cohesive traction, and document
 
