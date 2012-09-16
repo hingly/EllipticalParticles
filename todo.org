@@ -28,7 +28,7 @@ can't update anything inside residual.m
    --- I think, from past experience, it's safer to use the end of previous converged step - we get convergence issues otherwise with switching back and forth
    
 
-
+   
     
 * DONE Run code in Matlab and in Octave 
   -- Week 30 (July 23-27)
@@ -83,18 +83,25 @@ can't update anything inside residual.m
 ** DONE Test fouriertransform.m
    -- need to check what the expected shape should be - is it being calculated correctly
       (not sure how my function interfaces with fft - weird conjugates)
-
-** TODO Test modes.m
-** TODO Test farfieldpotential.m
-
-** TODO Test calculatedisplacement.m
-*** TODO Check that A_1 and A_2 are calculated correctly
-
-** TODO consider replacing fourier transform with fft or dft function
 ** DONE number of points should be even - add assert in read_input
 ** DONE number of points must be bigger than number of modes - add assert in read_input
 
-** TODO Test ellipse2011.m
+** DONE Test modes.m
+** TODO timoshenko test - check correct traction direction
+   -- problem comparing functions with spikes in them - allequal and almostequal don't do a good job.
+   -- weird division by zero error showing up for some angles theta0 (pi/8, pi/10) 
+       --- happens when theta=theta0 as input to timoshenko_potentials.  Try to think of a way of skipping those points
+
+** TODO Test farfieldpotential.m
+
+** TODO sign of cohesive traction, and document
+
+
+
+
+
+** TODO Test calculatedisplacement.m
+*** TODO Check that A_1 and A_2 are calculated correctly
 ** TODO Test finalize_timestep.m
 ** TODO Test incorporate_previous_timestep.m
 ** TODO Test initialize_loading.m
@@ -105,12 +112,13 @@ can't update anything inside residual.m
 ** TODO Test final.m
 ** TODO Test common.m
 
-** TODO theoretical derivation for circular, equibiaxial loading
-** TODO Problem with circle under equibiaxial loading.   
+** TODO Test ellipse2011.m
 
-** TODO timoshenko files or test files
+
+** TODO Problem with circle under equibiaxial loading, including theoretical derivation 
+
 ** TODO Zero sigmax will be equivalent to no inclusion
-** TODO Check correct traction direction with timoshenko test
+
 
 ** TODO problem with loading angles (I don't accept omega=pi/2) see p.67
 ** TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
@@ -118,19 +126,14 @@ can't update anything inside residual.m
    -- At the moment I accumulate damage, but compensate for slope in normal mode.  
       But large normal compression and no shear could still result in substantial damage - this is wrong
 ** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
-
-** TODO sign of cohesive traction, and document
 ** TODO Failure is not starting at zero degrees even when load is applied at zero degrees.  Weird. 7/8/12
 ** TODO Problem with the way lambda_max is being handled
-
-
 ** TODO Think about how and what to output
 ** TODO Output macroscopic stress and strain and plot
 ** TODO plot displaced shape
 
-** TODO characterise accuracy of averages.m (there's this even, odd thing)
+** DONE characterise accuracy of averages.m (there's this even, odd thing)
 
-** TODO refactor test_macrostress to remove duplication
 
 
 * TODO Run Results and compare with previous findings for validity 
@@ -173,6 +176,7 @@ can't update anything inside residual.m
 ** TODO Add unloading path to definition of cohesive law p65
 ** TODO Fix integration bounds, absolute value p68
 ** TODO include equation for stress transformation, fix sign error p69
+** TODO Sign convention for tractions on ellipse boundary, see if I can actually do a derivation to justify it.
 
 
 
@@ -190,6 +194,12 @@ can't update anything inside residual.m
 ** TODO Some kind of version management so I save the input file and output files - filenaming convention - so I can track what happened when I ran what.  Ask Carl
 ** TODO Plan known results and test code against them where it must abort if it doesn't match?
        --- Die routine - subroutine to output data before dying.
+
+* Long term
+** TODO Exploit periodicity and only integrate etc over half the ellipse
+** TODO consider replacing fourier transform with fft or dft function
+** TODO refactor test_macrostress to remove duplication
+
 
 
 
