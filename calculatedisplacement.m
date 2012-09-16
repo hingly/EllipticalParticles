@@ -1,4 +1,7 @@
-function disp=calculatedisplacement(phi, phiprime, psi, theta, mu, kappa, m)
+function disp=calculatedisplacement(phi, phiprime, psi, theta, m, material)
+
+mu = material.mu_m;
+kappa = material.kappa_m;
 
 % Calculates the displacement vector at a given location theta,
 % given potential functions

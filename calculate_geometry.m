@@ -3,22 +3,23 @@ function geom=calculate_geometry(geom)
 % Calculates the (x,y) position, and each different type of angle
 % for each point around the ellipse
 
-%disp('Calculating geometry...');
 
 NumPoints=geom.NumPoints;
 a=geom.a;
 b=geom.b;
  
+
+
 %-------------------------------------------
 % Calculate additional geometric parameters
 %-------------------------------------------
 
-
-geom.R=(geom.a+geom.b)/2.;                      
 % ellipse size factor
-geom.m=(geom.a-geom.b)/(geom.a+geom.b);         
+geom.R=(geom.a+geom.b)/2.;                      
 % ellipse shape factor
-
+geom.m=(geom.a-geom.b)/(geom.a+geom.b);         
+% Hard-coded - we never use a different rho
+geom.rho=1;
 
 %-----------------------------
 % Calculate  geometric arrays

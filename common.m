@@ -50,7 +50,7 @@ for kk=1:geom.NumPoints
   % Compute displacements from far-field loading 
   %=====================================================
  
-  stepdisp.farfield(kk)=calculatedisplacement(steppot.phi(kk), steppot.phiprime(kk), steppot.psi(kk), geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
+  stepdisp.farfield(kk)=calculatedisplacement(steppot.phi(kk), steppot.phiprime(kk), steppot.psi(kk), geom.theta(kk), geom.m, material);
   stepdisp.farfield_xy(kk)=stepdisp.farfield(kk)*exp(i*geom.beta(kk));    
  
   %-------------------------------------------------------
@@ -64,7 +64,7 @@ for kk=1:geom.NumPoints
   % Compute cohesive displacements 
   %=======================================================
   
-  stepdisp.coh(kk)=calculatedisplacement(steppot.phicoh(kk), steppot.phiprimecoh(kk), steppot.psicoh(kk), geom.theta(kk), material.mu_m, material.kappa_m, geom.m);
+  stepdisp.coh(kk)=calculatedisplacement(steppot.phicoh(kk), steppot.phiprimecoh(kk), steppot.psicoh(kk), geom.theta(kk), geom.m, material);
   stepdisp.coh_xy(kk)=stepdisp.coh(kk)*exp(i*geom.beta(kk));
   
 end         
@@ -88,8 +88,8 @@ stepdisp.total_xy = stepdisp.farfield_xy + stepdisp.coh_xy;
 
 stepcoh = Cohesive_Law(stepdisp.total, geom.NumPoints, material,stepcoh);
 
-% Displacement jump must result in opposing traction
-stepcoh.traction = -stepcoh.traction;
+%% Displacement jump must result in opposing traction
+%stepcoh.traction = -stepcoh.traction;
 
 
 stepcoh.traction_xy = stepcoh.traction.*exp(i.*geom.beta);

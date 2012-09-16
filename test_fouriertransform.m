@@ -32,6 +32,7 @@ assert(allequal(sk, sk_check, epsilon), ...
        'Constant complex force should return 1 non-zero mode only');
 
 % Real step force
+% Derivation in notebook for this case
 
 force=[1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0];
 
