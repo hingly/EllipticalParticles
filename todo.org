@@ -95,6 +95,9 @@ can't update anything inside residual.m
 ** TODO Test farfieldpotential.m
    --- comparing to a Timoshenko solution - no agreement, must check derivations
 
+** TODO Problem with circle under equibiaxial loading, including theoretical derivation 
+   --- working on this - farfield done, tractions on hole under way.
+
 ** TODO sign of cohesive traction, and document
 
 
@@ -102,7 +105,13 @@ can't update anything inside residual.m
 
 
 ** TODO Test calculatedisplacement.m
-*** TODO Check that A_1 and A_2 are calculated correctly
+*** DONE circular equibiaxial loading
+*** TODO other geometry/loading 
+** TODO Test Afunc.m
+*** DONE circular equibiaxial loading
+*** TODO other geometry/loading 
+
+
 ** TODO Test finalize_timestep.m
 ** TODO Test incorporate_previous_timestep.m
 ** TODO Test initialize_loading.m
@@ -116,7 +125,6 @@ can't update anything inside residual.m
 ** TODO Test ellipse2011.m
 
 
-** TODO Problem with circle under equibiaxial loading, including theoretical derivation 
 
 ** TODO Zero sigmax will be equivalent to no inclusion
 
@@ -190,7 +198,7 @@ can't update anything inside residual.m
    load should be an array of structures rather than a structure containing arrays
 ** TODO Can I have a structure of structures? i.e. step.disp.etc and final.disp.etc? or steppot.coh.phi, steppot.ff.phi?
 ** TODO Do I want stepsoln?
-** TODO How to update one timestep of a structure without putting the structure in input as well as output parameters of function  - see unstack.m. Ask Carl
+** DONE How to update one timestep of a structure without putting the structure in input as well as output parameters of function  - see unstack.m. Ask Carl
 ** TODO Does it matter what the units of delopen and a and b are, as long as they're the same?
 ** TODO Some kind of version management so I save the input file and output files - filenaming convention - so I can track what happened when I ran what.  Ask Carl
 ** TODO Plan known results and test code against them where it must abort if it doesn't match?
