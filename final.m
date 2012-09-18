@@ -27,7 +27,8 @@ stepcoh.lambda_xy=zero_intpoints;
 % from the given macroscopic strain eps_11.  Note that these depend on Sigma_p 
 % and Eps_int, so must be re-calculated after convergence
 
-[stepload.MacroStress, stepload.MacroStrain, stepload.Sigma_m]= macrostress(stepload.MacroStrain, soln.Sigma_p(tt,:), soln.Eps_int(tt,:), loads,geom, material);
+[stepload.MacroStress, stepload.MacroStrain, stepload.Sigma_m]= ...
+    macrostress(stepload.MacroStrain, soln.Sigma_p(tt,:), soln.Eps_int(tt,:), loads, geom, material);
 
 
 %-----------------------------------------------
@@ -36,8 +37,7 @@ stepcoh.lambda_xy=zero_intpoints;
 
 
 % Compute N1, N2 and omega for use as farfield stresses
-[N1, N2, omega] = principal(loads.Sigma_m(1), loads.Sigma_m(2),loads.Sigma_m(3));
-
+[N1, N2, omega] = principal(stepload.Sigma_m(1), stepload.Sigma_m(2),stepload.Sigma_m(3));
 
 
 %-----------------------------------------------
@@ -45,6 +45,7 @@ stepcoh.lambda_xy=zero_intpoints;
 %===============================================
 
 [stepcoh,stepdisp,steppot]=common(N1, N2, omega, geom, material,loads, soln.sk(tt,:),stepcoh);
+
 
 % *** Completed to here 16/7/2012 - still need to deal with lambda in a sensible way
 
