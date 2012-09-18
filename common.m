@@ -61,7 +61,7 @@ for kk=1:geom.NumPoints
   
   
   %-------------------------------------------------------
-  % Compute cohesive displacements 
+  % Compute displacements due to cohesive tractions
   %=======================================================
   
   stepdisp.coh(kk)=calculatedisplacement(steppot.phicoh(kk), steppot.phiprimecoh(kk), steppot.psicoh(kk), geom.theta(kk), geom.m, material);

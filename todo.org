@@ -97,6 +97,9 @@ can't update anything inside residual.m
 
 ** TODO Problem with circle under equibiaxial loading, including theoretical derivation 
    --- working on this - farfield done, tractions on hole under way.
+   --- ** Notice that in solving, we start by opening the hole more than is physical and then cohesive tractions act to close it - this might be why lambda_max is overestimating?
+   --- clear that sk should have only zero mode, everything should stay real
+   --- something is going wrong in going from step 1 to step 2 - everything is fine on step 1.
 
 ** TODO sign of cohesive traction, and document
 
