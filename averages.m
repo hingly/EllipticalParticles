@@ -51,7 +51,9 @@ sigmap(2)=sum(imag(Tcohxy).*imag(ellipse).*dS);
 sigmap(3)=sum(real(Tcohxy).*imag(ellipse).*dS);
 sigmaptest=sum(imag(Tcohxy).*real(ellipse).*dS);
 if norm(sigmap(3)-sigmaptest)>epsilon
-  warning('Sigmap is not symmetric')
+  symm_error = norm(sigmap(3)-sigmaptest);
+  warning(['Sigmap is not symmetric ... error of ' num2str(symm_error) ...
+         ' on ' num2str(sigmap(3))])
 end
 
 
