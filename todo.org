@@ -95,11 +95,14 @@ can't update anything inside residual.m
 ** TODO Test farfieldpotential.m
    --- comparing to a Timoshenko solution - no agreement, must check derivations
 
-** TODO Problem with circle under equibiaxial loading, including theoretical derivation 
-   --- working on this - farfield done, tractions on hole under way.
-   --- ** Notice that in solving, we start by opening the hole more than is physical and then cohesive tractions act to close it - this might be why lambda_max is overestimating?
-   --- clear that sk should have only zero mode, everything should stay real
+** DONE Problem with circle under equibiaxial loading, including theoretical derivation 
+** TODO Write tests based on this derivation
+  --- clear that sk should have only zero mode, everything should stay real
    --- something is going wrong in going from step 1 to step 2 - everything is fine on step 1.
+   --- characterise u_rho-N1 behaviour in dissertation - critical 
+   --- is there a way to use variables in json file? - I suppose we could write a json file?
+   --- 3-stage test (1) write json file (2) run code (3) run tests
+
 
 ** TODO sign of cohesive traction, and document
 

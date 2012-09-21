@@ -1,0 +1,28 @@
+{
+	"material": {
+		"E_m": 100,
+		"nu_m": 0.3,
+		"sigmax": 1,
+		"delopen": 1,
+		"cohscale": 1,
+		"plstrain": 1,
+		"lambda_e": 0.1
+	},
+	"geom": {
+		"a": 50,
+		"b": 50,
+		"f": 0.4,
+		"NumPoints": 100
+	},
+	"loads": {
+		"NumModes": 10,
+		"SigmaBarRatio": 1,
+		"AppliedLoadAngle": 0,
+		"timesteps": 1,
+		"MinimumStrain": 0.001,
+		"LoadFactor": 1
+	},
+	"post": {
+		"scale": 1
+	}
+}
