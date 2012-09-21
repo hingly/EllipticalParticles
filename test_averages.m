@@ -10,7 +10,7 @@ epsilon=1e-10;
 % (for numpoints less than 1501 with epsilon=1e-10).
 numpointslist=[200 14 112];
 a=10;
-blist=[0.1 0.5 1 2 5 8];
+blist=[0.1 0.5 1 2 5 8 10];
 scalelist=[1 1e-3];
 
 
