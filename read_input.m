@@ -1,7 +1,8 @@
-function[material,geom,loads, post] = read_input(input_file)
+function[material, geom, loads, post] = read_input(input_file)
 
 % read an input file in JSON format using JSONlab: http://sourceforge.net/projects/iso2mesh/files/jsonlab/
 % for this to work loadjson needs to be in the path
+
 
 data = loadjson(input_file);
 material = data.material;
@@ -24,6 +25,27 @@ assert(mod(geom.NumPoints,2)==0,...
 
 assert(geom.NumPoints>loads.NumModes, ['NumPoints must be bigger ' ...
                     'than NumModes']);
+
+assert(material.nu_m < 0.5, ['Physics requires that Poissons ratio ' ...
+                    'must be less than 0.5.']);
+
+assert(material.nu_m > 0, ['Poissons ratio is greater than zero '...
+                    'for most real materials.']);
+
+assert(material.E_m > 0, ['Physics requires that Youngs modulus ' ...
+                    'must be greater than zero.']);
+
+assert(material.lambda_e < 1, ['Critical damage parameter cannot be  ' ...
+                    'greater than 1']);
+
+assert(material.lambda_e > 1e-5, ['Critical damage parameter cannot be  ' ...
+                    'smaller than threshold for stability of ' ...
+                    'model.']);
+
+assert(geom.f <= 1, 'Cannot have volume fraction bigger than 1');
+
+assert(geom.f >= 0, 'Cannot have volume fraction smaller than 0');
+
 
 
 
@@ -56,3 +78,4 @@ material.gint = material.sigmax*material.delopen/2;
 
 loads.SigmaBar1 = 1;          
 %       SigmaBar1: principal applied macroscopic stress.  We never use the magnitude, so this is set to 1
+
