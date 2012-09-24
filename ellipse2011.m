@@ -92,6 +92,11 @@ for tt=1:loads.timesteps  % Loop through loading steps
 
 % FIXME : finalize_timestep.m could be inside final.m
 
+  % Write output data for JSON
+
+
+  output.cohesive = cohesive;
+  output.loading = loading;
   
 
 
