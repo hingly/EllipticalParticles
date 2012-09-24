@@ -6,7 +6,6 @@ end
 
 % This is the main driver code in the new improved 2011 version of the ellipse code.  
 
-
 %------------------------------------------------------------------
 % Read input data and create structures for main variables
 %==================================================================

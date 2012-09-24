@@ -21,7 +21,7 @@ for c1 = c1list
 
     geom.f = 0.4; 
 
-    loads.timesteps = 10;
+    loads.timesteps = 4;
     loads.MinimumStrain = 0.001;
 
     % Proportional parameters
