@@ -91,12 +91,15 @@ can't update anything inside residual.m
    -- problem comparing functions with spikes in them - allequal and almostequal don't do a good job.
    -- weird division by zero error showing up for some angles theta0 (pi/8, pi/10) 
        --- happens when theta=theta0 as input to timoshenko_potentials.  Try to think of a way of skipping those points
+   -- try integrating for overall error.
+   -- Is error reduced as number of modes increases?
 
 ** TODO Test farfieldpotential.m
    --- comparing to a Timoshenko solution - no agreement, must check derivations
 
 ** DONE Problem with circle under equibiaxial loading, including theoretical derivation 
 ** TODO Write tests based on this derivation
+** TODO Test ellipse2011.m
   --- clear that sk should have only zero mode, everything should stay real
    --- something is going wrong in going from step 1 to step 2 - everything is fine on step 1.
    --- characterise u_rho-N1 behaviour in dissertation - critical 
@@ -128,7 +131,7 @@ can't update anything inside residual.m
 ** TODO Test final.m
 ** TODO Test common.m
 
-** TODO Test ellipse2011.m
+
 
 
 
