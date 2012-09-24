@@ -12,7 +12,7 @@ function test_modes_timoshenko
 % Input geometric data
 geom.a = 10;
 geom.b = 5;
-geom.NumPoints = 3002;
+geom.NumPoints = 302;
 
 % Calculate additional geometric data
 geom = calculate_geometry(geom);
@@ -31,7 +31,7 @@ material.lambda_m = (material.E_m * material.nu_m)/((1 + material.nu_m)*(1-2*mat
 material.kappa_m = 3 + 4*material.nu_m;
 
 % Input loads data
-loads.NumModes = 2000;
+loads.NumModes = 200;
 
 % Problem-specific data
 theta0list = [pi/4]; 
@@ -94,40 +94,40 @@ for theta0 = theta0list
     % Compare solutions
     %=================================================================
     
-    figure
-    plot(geom.theta, real(phi_tim),'r-',geom.theta, real(phi),'rx', ...
-         geom.theta, imag(phi_tim),'b-',geom.theta, imag(phi),'bx');
+    %figure
+    %plot(geom.theta, real(phi_tim),'r-',geom.theta, real(phi),'rx', ...
+    %     geom.theta, imag(phi_tim),'b-',geom.theta, imag(phi),'bx');
     
     phi_error = -phi_tim + phi;
-    figure
-    plot(geom.theta, real(phi_error),'r', geom.theta, imag(phi_error),'b');
+    %figure
+    %plot(geom.theta, real(phi_error),'r', geom.theta, imag(phi_error),'b');
     
     
-    figure(3)
-    plot(geom.theta, real(phiprime_tim),'r-',geom.theta, real(phiprime),'rx', ...
-         geom.theta, imag(phiprime_tim),'b-',geom.theta, imag(phiprime),'bx');
+    %figure(3)
+    %plot(geom.theta, real(phiprime_tim),'r-',geom.theta, real(phiprime),'rx', ...
+    %     geom.theta, imag(phiprime_tim),'b-',geom.theta, imag(phiprime),'bx');
     
     phiprime_error = -phiprime_tim + phiprime;
-    figure(4)
-    plot(geom.theta, real(phiprime_error),'r', geom.theta, imag(phiprime_error),'b')
+    %figure(4)
+    %plot(geom.theta, real(phiprime_error),'r', geom.theta, imag(phiprime_error),'b')
     
-    figure(5)
-    plot(geom.theta, real(psi_tim),'r-',geom.theta, real(psi),'rx', ...
-         geom.theta, imag(psi_tim),'b-',geom.theta, imag(psi),'bx');
+    %figure(5)
+    %plot(geom.theta, real(psi_tim),'r-',geom.theta, real(psi),'rx', ...
+    %     geom.theta, imag(psi_tim),'b-',geom.theta, imag(psi),'bx');
     
     psi_error = -psi_tim + psi;
-    figure(6)
-    plot(geom.theta, real(psi_error),'r', geom.theta, imag(psi_error),'b');
+    %figure(6)
+    %plot(geom.theta, real(psi_error),'r', geom.theta, imag(psi_error),'b');
     
     
-    figure
-    plot(geom.theta, real(disp_tim),'r-', geom.theta, real(disp), 'rx',...
-         geom.theta, imag(disp_tim),'b-', geom.theta, imag(disp), ...
-         'bx');
+    %figure
+    %plot(geom.theta, real(disp_tim),'r-', geom.theta, real(disp), 'rx',...
+    %     geom.theta, imag(disp_tim),'b-', geom.theta, imag(disp), ...
+    %     'bx');
     
     disp_error = -disp_tim + disp;
-    figure
-    plot(geom.theta, real(disp_error),'r', geom.theta, imag(disp_error),'b');
+    %figure
+    %plot(geom.theta, real(disp_error),'r', geom.theta, imag(disp_error),'b');
     
     %     figure
     %    axis equal;

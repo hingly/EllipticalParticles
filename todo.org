@@ -92,7 +92,7 @@ can't update anything inside residual.m
    -- weird division by zero error showing up for some angles theta0 (pi/8, pi/10) 
        --- happens when theta=theta0 as input to timoshenko_potentials.  Try to think of a way of skipping those points
    -- try integrating for overall error.
-   -- Is error reduced as number of modes increases?
+   -- Is error reduced as number of modes increases --- yes.
 
 ** TODO Test farfieldpotential.m
    --- comparing to a Timoshenko solution - no agreement, must check derivations
