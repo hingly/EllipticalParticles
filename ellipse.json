@@ -18,9 +18,9 @@
 		"NumModes": 10,
 		"SigmaBarRatio": 1,
 		"AppliedLoadAngle": 0,
-		"timesteps": 2,
+		"timesteps": 1,
 		"MinimumStrain": 0.001,
-		"LoadFactor": 2
+		"LoadFactor": 1
 	},
 	"post": {
 		"scale": 1

@@ -2,8 +2,13 @@ function test_ellipse2011_circle
 
 epsilon = 1e-5;
 
+
+% -------------------------
+%        INPUT
+%==========================
+
 % Chosen parameters for testing
-c1 = 50;
+c1 = 100;
 c2 = 100;
 
 material.sigmax = 1;
@@ -13,8 +18,8 @@ material.nu_m = 0.3;
 
 geom.f = 0.4; 
 
-loads.timesteps = 1;
-loads.MinimumStrain = 0.005;
+loads.timesteps = 10;
+loads.MinimumStrain = 0.001;
 
 % Proportional parameters
 R = c1*material.delopen;
@@ -45,6 +50,11 @@ data.post = post;
 % Write input file for testing
 json = savejson('',data,'ellipse_circle_test.json');
 
+
+%----------------------------------
+%    PRE-PROCESSING
+%==================================
+
 % Simplified data for check quantities
 E = material.E_m;
 nu = material.nu_m;                        
@@ -63,23 +73,38 @@ N1c = 2*N1b;
 lineys = [0 N1a N1b N1c];
 linexs = [0 lambda_e*delopen delopen delopen*2];
 
-figure(1);
-plot(linexs, lineys,'b-');
-hold on;
+%figure(1);
+%plot(linexs, lineys,'b-');
+%hold on;
 
-% Run code
+%-----------------------------
+%      RUN CODE
+%=============================
 [loads,displacement,cohesive,soln] =  ...
     ellipse2011('ellipse_circle_test.json');
 
-xs=zeros(1,loads.timesteps);
-ys=zeros(1,loads.timesteps);
+%-----------------------------
+%    POST-PROCESSING
+%=============================
 
-lambda = cohesive.lambda(1,1)
+
+
+xs = zeros(1,loads.timesteps);
+ys = zeros(1,loads.timesteps);
+Tn = zeros(1,loads.timesteps);
+checkstrain = zeros(1,loads.timesteps);
+
+lambda = cohesive.lambda(:,1)
 
 for tt=1:loads.timesteps
-  N1 = loads.Sigma_m(tt,1)
-  N2 = loads.Sigma_m(tt,2)
-  N3 = loads.Sigma_m(tt,3)
+  
+  %----------------------------------------------
+  % Check displacement due to far-field loading
+  %==============================================
+  
+  N1 = loads.Sigma_m(tt,1);
+  N2 = loads.Sigma_m(tt,2);
+  N3 = loads.Sigma_m(tt,3);
   
   assert(allequal(N1,N2,epsilon), ['N2 not equal to N1 for timestep ' ...
                    num2str(tt)]);
@@ -101,15 +126,77 @@ for tt=1:loads.timesteps
                    num2str(imag(displacement.farfield(tt,1))) ...
                       ' vs check displacement of 0']);
   
+  % Calculate Tn for known displacement and lambda
+  if lambda(tt) <= material.lambda_e
+    Tn(tt) = material.sigmax/(material.lambda_e * material.delopen) ...
+             * real(displacement.total(tt,1));
+  elseif lambda(tt) <= 1
+    Tn(tt) = material.sigmax/(1-material.lambda_e)...
+             *(1 - real(displacement.total(tt,1))/material.delopen);
+  else
+    Tn(tt) = 0;
+  end
+  
+    
+  % Compare Tn with calculated traction
+  assert(allequal(real(cohesive.traction(tt,1)), Tn(tt), epsilon), ...
+         ['Incorrect traction calculated --- we have ' ...
+          num2str(real(cohesive.traction(tt,1))) ' instead of ' ...
+          num2str(Tn(tt)) ' for timestep ' num2str(tt)]);
+  
+  %---------------------------------------------
+  % Check that Fourier modes are correct
+  %=============================================
+  
+  
+  for jj=1:loads.NumModes+1
+    modenum = 2*(jj - 1) - loads.NumModes;
+    if modenum~=0
+      assert(soln.sk(tt,jj) < epsilon, ['All modes other than s_0 ' ...
+                          'should be zero.  We have s_' num2str(jj) ...
+                   ' = ' num2str(soln.sk(tt,jj)) ' for timestep ' ...
+                          num2str(tt)])
+    else
+      assert(allequal(soln.sk(tt,jj), Tn(tt), epsilon), ['s_0 should ' ...
+                          'be equal to Tn.  We have s_0 = ' ...
+                          num2str(soln.sk(tt,jj)) ' and Tn = ' ...
+                          num2str(Tn(tt)) ' for timestep ' num2str(tt)])
+    end
+  end
+  
+  
+  
+  % Prepare for u-N curve
   xs(tt)=real(displacement.total(tt,1));
   ys(tt)=N1;  
  
+  
+  %---------------------------------------
+  %    CHECK FOR STRAIN
+  %======================================
+  
+  checkstrain(tt) = (1 + nu)*(1 - 2*nu)/E*(1 - geom.f)*N1 + ...
+      geom.f/R*real(displacement.total(tt,1));
+  
+  assert(allequal(checkstrain(tt), loads.MacroStrain(tt,1), epsilon), ...
+         ['Macroscopic strain is not calculated correctly.  Should ' ...
+          'have e_11 = ' num2str(checkstrain(tt)) ' but calculated ' ...
+          'strain is ' num2str(loads.MacroStrain(tt,1)) ...
+          ' for timestep ' num2str(tt)]); 
+  
 end
 
-  plot(xs, ys,'kx');
+%--------------------------------------------
+% Check that points lie on correct u-N curve
+%============================================
+%  plot(xs, ys,'kx');
   epsilon2=1e-5;  
   distances = points_to_lines(xs, ys, linexs, lineys)
   assert(allequal(distances, zeros(size(distances)), epsilon), ...
          ['Incorrect displacement-force pair generated']);
+ 
+%  figure
+%  plot(checkstrain, ys, 'bx-');
+  
   
   error('not finished yet');
