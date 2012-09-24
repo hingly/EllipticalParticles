@@ -34,7 +34,7 @@ geom=calculate_geometry(geom);
 
 for tt=1:loads.timesteps  % Loop through loading steps
   
-% FIXME : ****  Notice: need to check that everything is getting
+  % FIXME : ****  Notice: need to check that everything is getting
   %initialised/reset properly here! ****
   
   disp('Beginning timestep...');
@@ -63,9 +63,9 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     
     % Solve for sk, Sigma_p, Eps_int
-%    options=optimset('Display','iter', 'TolFun',1e-5, 'MaxFunEvals', 5000, 'MaxIter', 60);    % Option to display output
+    %    options=optimset('Display','iter', 'TolFun',1e-5, 'MaxFunEvals', 5000, 'MaxIter', 60);    % Option to display output
 
-%    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess,options);
+    %    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess,options);
     
     [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess);
     
@@ -78,7 +78,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
         end
       end
     end
-  
+    
   end
   % end convergence loop
   
@@ -90,17 +90,22 @@ for tt=1:loads.timesteps  % Loop through loading steps
   % Write final step values to global values
   [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, cohesive, displacement, loads, potential,tt);
 
-% FIXME : finalize_timestep.m could be inside final.m
-
-  % Write output data for JSON
-
-
-  output.cohesive = cohesive;
-  output.loading = loading;
-  
-
-
+  % FIXME : finalize_timestep.m could be inside final.m
 
 end      % end loop through loading steps
 
+
+% Write output data for JSON
+
+output.cohesive = cohesive;
+output.loads = loads;
+output.displacement = displacement;
+output.potential = potential;
+output.soln = soln;
+output.material = material;
+output.geom = geom;
+
+% FIXME : use string concatenation to make appropriate output file names
+
+json = savejson('',output,'ellipse_output.json');
 
