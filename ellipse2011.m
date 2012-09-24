@@ -11,7 +11,7 @@ end
 % Read input data and create structures for main variables
 %==================================================================
 
-[material,geom,loads] = read_input(filename);
+[material,geom,loads, post] = read_input(filename);
 
 %------------------------------------------------------------------
 % Calculate positions and angles at each point around the ellipse
