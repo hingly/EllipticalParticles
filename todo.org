@@ -108,6 +108,14 @@ can't update anything inside residual.m
    --- 3-stage test (1) write json file (2) run code (3) run tests
 
 
+** DONE Test read_input.m
+   -- How to compare two structures?
+
+** TODO Test initialize_loading.m
+    Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
+    - see p.9 of Denel notebook
+
+
 ** TODO sign of cohesive traction, and document
 
 
@@ -124,10 +132,8 @@ can't update anything inside residual.m
 
 ** TODO Test finalize_timestep.m
 ** TODO Test incorporate_previous_timestep.m
-** TODO Test initialize_loading.m
-    Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
-    - see p.9 of Denel notebook
-** TODO Test read_input.m
+
+
 ** TODO Test residual.m
 ** TODO Test final.m
 ** TODO Test common.m
