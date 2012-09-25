@@ -94,51 +94,58 @@ for theta0 = theta0list
     % Compare solutions
     %=================================================================
     
-    %figure
-    %plot(geom.theta, real(phi_tim),'r-',geom.theta, real(phi),'rx', ...
-    %     geom.theta, imag(phi_tim),'b-',geom.theta, imag(phi),'bx');
-    
     phi_error = -phi_tim + phi;
-    %figure
-    %plot(geom.theta, real(phi_error),'r', geom.theta, imag(phi_error),'b');
-    
-    
-    %figure(3)
-    %plot(geom.theta, real(phiprime_tim),'r-',geom.theta, real(phiprime),'rx', ...
-    %     geom.theta, imag(phiprime_tim),'b-',geom.theta, imag(phiprime),'bx');
-    
     phiprime_error = -phiprime_tim + phiprime;
-    %figure(4)
-    %plot(geom.theta, real(phiprime_error),'r', geom.theta, imag(phiprime_error),'b')
-    
-    %figure(5)
-    %plot(geom.theta, real(psi_tim),'r-',geom.theta, real(psi),'rx', ...
-    %     geom.theta, imag(psi_tim),'b-',geom.theta, imag(psi),'bx');
-    
     psi_error = -psi_tim + psi;
-    %figure(6)
-    %plot(geom.theta, real(psi_error),'r', geom.theta, imag(psi_error),'b');
-    
-    
-    %figure
-    %plot(geom.theta, real(disp_tim),'r-', geom.theta, real(disp), 'rx',...
-    %     geom.theta, imag(disp_tim),'b-', geom.theta, imag(disp), ...
-    %     'bx');
-    
     disp_error = -disp_tim + disp;
-    %figure
-    %plot(geom.theta, real(disp_error),'r', geom.theta, imag(disp_error),'b');
+
+    plotflag = false;
     
-    %     figure
-    %    axis equal;
-    %     hold on;
-    %     plot(real(geom.ellipse),imag(geom.ellipse), 'LineWidth', 2);
-    %     plot(real(geom.ellipse)+scale*real(dispxy), imag(geom.ellipse)+scale*imag(dispxy),'rx-', 'Linewidth', 2)
-    % plot(real(geom.ellipse)+scale*real(dispxy_tim), imag(geom.ellipse)+scale*imag(dispxy_tim),'k:', 'Linewidth', 2)
-    %   title('Deformation of ellipse: Timoshenko test problem')
-    %   legend('Undeformed shape', 'Deformed shape due to internal pressure - Fourier', 'Deformed shape due to internal pressure - Timoshenko','Location', 'NorthWest')
-    %      xlabel('x')
-    %      ylabel('y') 
+    if plotflag       
+      figure
+      plot(geom.theta, real(phi_tim),'r-',geom.theta, real(phi),'rx', ...
+           geom.theta, imag(phi_tim),'b-',geom.theta, imag(phi),'bx');
+      
+      figure
+      plot(geom.theta, real(phi_error),'r', geom.theta, imag(phi_error),'b');
+      
+      
+      figure(3)
+      plot(geom.theta, real(phiprime_tim),'r-',geom.theta, real(phiprime),'rx', ...
+           geom.theta, imag(phiprime_tim),'b-',geom.theta, imag(phiprime),'bx');
+      
+      figure(4)
+      plot(geom.theta, real(phiprime_error),'r', geom.theta, imag(phiprime_error),'b')
+      
+      figure(5)
+      plot(geom.theta, real(psi_tim),'r-',geom.theta, real(psi),'rx', ...
+      %     geom.theta, imag(psi_tim),'b-',geom.theta, imag(psi),'bx');
+      
+      figure(6)
+      plot(geom.theta, real(psi_error),'r', geom.theta, imag(psi_error),'b');
+      
+      
+      figure
+      plot(geom.theta, real(disp_tim),'r-', geom.theta, real(disp), 'rx',...
+           geom.theta, imag(disp_tim),'b-', geom.theta, imag(disp), ...
+           'bx');
+      
+      figure
+      plot(geom.theta, real(disp_error),'r', geom.theta, imag(disp_error),'b');
+      
+      figure
+      axis equal;
+      hold on;
+      plot(real(geom.ellipse),imag(geom.ellipse), 'LineWidth', 2);
+      plot(real(geom.ellipse)+scale*real(dispxy), imag(geom.ellipse)+scale*imag(dispxy),'rx-', 'Linewidth', 2)
+      plot(real(geom.ellipse)+scale*real(dispxy_tim), imag(geom.ellipse)+scale*imag(dispxy_tim),'k:', 'Linewidth', 2)
+      title('Deformation of ellipse: Timoshenko test problem')
+      legend('Undeformed shape', 'Deformed shape due to internal pressure - Fourier', 'Deformed shape due to internal pressure - Timoshenko','Location', 'NorthWest')
+      xlabel('x')
+      ylabel('y') 
+    end
+
+
     
     assert(allequal(disp, disp_tim, epsilon), ...
            ['displacement does not match for pressure = ' ...
