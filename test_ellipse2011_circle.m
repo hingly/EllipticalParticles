@@ -8,7 +8,8 @@ epsilon = 1e-5;
 %==========================
 
 % Chosen parameters for testing
-c1list = [20 50 100];
+c1list = [100];
+%c1list = [20 50 100];
 c2list = [100];
 
 
