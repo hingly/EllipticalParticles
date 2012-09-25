@@ -95,10 +95,10 @@ can't update anything inside residual.m
    -- Is error reduced as number of modes increases --- yes.
 ** DONE write better error test for functions which go to infinity, exclude points which go to infinity
 
-** TODO Test calculatedisplacement.m
+** Test calculatedisplacement.m
 *** DONE circular equibiaxial loading
 *** TODO other geometry/loading 
-** TODO Test Afunc.m
+** Test Afunc.m
 *** DONE circular equibiaxial loading
 *** TODO other geometry/loading 
 

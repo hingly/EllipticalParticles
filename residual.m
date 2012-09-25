@@ -24,6 +24,7 @@ function Rk=residual(input_guess,stepload,loads, material, geom,stepcoh)
 dummy.Sigma_p=zeros(1,3);
 dummy.Eps_int=zeros(1,3);
 dummy.sk=zeros(1,loads.NumModes+1);
+
 % Unstack input vector and separate into components
 dummy=unstack(input_guess, loads.NumModes, 1,dummy);
 
@@ -49,8 +50,6 @@ sk = dummy.sk;
 
 [N1, N2, omega] = principal(stepload.Sigma_m(1), stepload.Sigma_m(2),stepload.Sigma_m(3));
   
-%-------------------> Completed to here Apr 10 6:27
-
 
 %-----------------------------------------------
 % Compute displacements and cohesive tractions
@@ -65,11 +64,6 @@ skc = fouriertransform(stepcoh.traction, geom.theta, loads.NumModes);
 % Compute interfacial strain and average particle stress
 [Sigma_p_new, Eps_int_new] = averages(stepdisp.total_xy, stepcoh.traction_xy, geom);
 
-%-------------------> Completed to here July 3 2012 but
-%                               not documented in xls file
-
-
-% CHECK : can I pass structures with name changes?
 
 % error in sk
 error.sk=skc-sk;

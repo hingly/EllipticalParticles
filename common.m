@@ -1,4 +1,5 @@
-function [stepcoh, stepdisp,steppot] = common(N1, N2, omega, geom,  material,loads, sk,stepcoh)
+function [stepcoh, stepdisp, steppot] = ...
+    common(N1, N2, omega, geom, material, loads, sk,stepcoh)
 
 % Given far-field loading and Fourier modes, compute cohesive tractions and displacements
 % Created from residual.m 16/7/2012
@@ -64,8 +65,8 @@ for kk=1:geom.NumPoints
   % Compute displacements due to cohesive tractions
   %=======================================================
   
-  stepdisp.coh(kk)=calculatedisplacement(steppot.phicoh(kk), steppot.phiprimecoh(kk), steppot.psicoh(kk), geom.theta(kk), geom.m, material);
-  stepdisp.coh_xy(kk)=stepdisp.coh(kk)*exp(i*geom.beta(kk));
+  stepdisp.coh(kk) = calculatedisplacement(steppot.phicoh(kk), steppot.phiprimecoh(kk), steppot.psicoh(kk), geom.theta(kk), geom.m, material);
+  stepdisp.coh_xy(kk) = stepdisp.coh(kk)*exp(i*geom.beta(kk));
   
 end         
 % end loop over integration points
