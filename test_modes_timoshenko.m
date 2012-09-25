@@ -119,7 +119,7 @@ for theta0 = theta0list
       
       figure(5)
       plot(geom.theta, real(psi_tim),'r-',geom.theta, real(psi),'rx', ...
-      %     geom.theta, imag(psi_tim),'b-',geom.theta, imag(psi),'bx');
+           geom.theta, imag(psi_tim),'b-',geom.theta, imag(psi),'bx');
       
       figure(6)
       plot(geom.theta, real(psi_error),'r', geom.theta, imag(psi_error),'b');
@@ -127,8 +127,7 @@ for theta0 = theta0list
       
       figure
       plot(geom.theta, real(disp_tim),'r-', geom.theta, real(disp), 'rx',...
-           geom.theta, imag(disp_tim),'b-', geom.theta, imag(disp), ...
-           'bx');
+           geom.theta, imag(disp_tim),'b-', geom.theta, imag(disp), 'bx');
       
       figure
       plot(geom.theta, real(disp_error),'r', geom.theta, imag(disp_error),'b');
