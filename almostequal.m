@@ -4,4 +4,5 @@ if ~exist('mask', 'var')
   mask = true(size(b));
 end
 
-a = norm(b(mask) - c(mask)) < epsilon;
+difference = b - c;
+a = norm(difference(mask)) < epsilon;
