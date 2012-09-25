@@ -12,7 +12,7 @@ function test_modes_timoshenko
 % Input geometric data
 geom.a = 10;
 geom.b = 5;
-geom.NumPoints = 302;
+geom.NumPoints = 202;
 
 % Calculate additional geometric data
 geom = calculate_geometry(geom);
@@ -31,19 +31,18 @@ material.lambda_m = (material.E_m * material.nu_m)/((1 + material.nu_m)*(1-2*mat
 material.kappa_m = 3 + 4*material.nu_m;
 
 % Input loads data
-loads.NumModes = 200;
+loads.NumModes = 100;
 
 % Problem-specific data
-theta0list = [pi/4]; 
-pressurelist = [100];
-%theta0list = [pi/2 pi/4 pi/6 pi/9 pi/10]; 
-%pressurelist = [100 -100];
+theta0list = [pi/2 pi/4 pi/6 pi/9 ]; 
+pressurelist = [100 -100];
 scale=10;
 
 for theta0 = theta0list
   for pressure = pressurelist
 
-    epsilon = abs(pressure)*1e-1;
+    epsilon = abs(pressure)*1e-3;
+    epsilon2 = abs(pressure)/5;
     
     %---------------------------------------------------------------
     % Timoshenko solution for pressure on a part of the interface
@@ -102,11 +101,11 @@ for theta0 = theta0list
     plotflag = false;
     
     if plotflag       
-      figure
+      figure(1)
       plot(geom.theta, real(phi_tim),'r-',geom.theta, real(phi),'rx', ...
            geom.theta, imag(phi_tim),'b-',geom.theta, imag(phi),'bx');
       
-      figure
+      figure(2)
       plot(geom.theta, real(phi_error),'r', geom.theta, imag(phi_error),'b');
       
       
@@ -125,43 +124,50 @@ for theta0 = theta0list
       plot(geom.theta, real(psi_error),'r', geom.theta, imag(psi_error),'b');
       
       
-      figure
+      figure(7)
       plot(geom.theta, real(disp_tim),'r-', geom.theta, real(disp), 'rx',...
            geom.theta, imag(disp_tim),'b-', geom.theta, imag(disp), 'bx');
       
-      figure
+      figure(8)
       plot(geom.theta, real(disp_error),'r', geom.theta, imag(disp_error),'b');
       
-      figure
+      figure(9)
       axis equal;
       hold on;
       plot(real(geom.ellipse),imag(geom.ellipse), 'LineWidth', 2);
-      plot(real(geom.ellipse)+scale*real(dispxy), imag(geom.ellipse)+scale*imag(dispxy),'rx-', 'Linewidth', 2)
-      plot(real(geom.ellipse)+scale*real(dispxy_tim), imag(geom.ellipse)+scale*imag(dispxy_tim),'k:', 'Linewidth', 2)
+      plot(real(geom.ellipse)+scale*real(dispxy), ...
+           imag(geom.ellipse)+scale*imag(dispxy),'rx-', 'Linewidth', 2)
+      plot(real(geom.ellipse)+scale*real(dispxy_tim), ...
+           imag(geom.ellipse)+scale*imag(dispxy_tim),'k:', 'Linewidth', 2)
       title('Deformation of ellipse: Timoshenko test problem')
-      legend('Undeformed shape', 'Deformed shape due to internal pressure - Fourier', 'Deformed shape due to internal pressure - Timoshenko','Location', 'NorthWest')
+      legend('Undeformed shape', 'Deformed shape due to internal pressure - Fourier',...
+             'Deformed shape due to internal pressure - Timoshenko','Location', 'NorthWest')
       xlabel('x')
       ylabel('y') 
+      
+      figure(10)
+      plot(geom.theta, abs(phiprime));
     end
-
-
     
     assert(allequal(disp, disp_tim, epsilon), ...
            ['displacement does not match for pressure = ' ...
             num2str(pressure) ' theta0 = ' num2str(theta0)] )
     
-    %assert(allequal(phi, phi_tim, epsilon), ...
-    %       ['phi not calculated correctly for pressure =' ...
-    %        num2str(pressure) ' theta0 = ' num2str(theta0)])
+
+    assert(allequal(phi, phi_tim, epsilon2), ...
+          ['phi not calculated correctly for pressure = ' ...
+           num2str(pressure) ' theta0 = ' num2str(theta0)])
     
-    % FIXME : How to compare values with spikes in them?  get large
-    % local errors.
+
+     assert(allequal(phiprime, phiprime_tim,epsilon2, ...
+                     abs(phiprime)<abs(pressure)*1.5), ...
+            ['phiprime not calculated correctly for pressure = ' ...
+           num2str(pressure) ' theta0 = ' num2str(theta0)])
     
-    %  assert(allequal(phiprime, phiprime_tim,epsilon), ...
-    %         'phiprime not calculated correctly') 
-    
-    %  assert(allequal(psi, psi_tim,epsilon), ...
-    %         'psi not calculated correctly')
+     assert(allequal(psi, psi_tim,epsilon2, ...
+                     abs(phiprime)<abs(pressure)*1.5), ...
+            ['psi not calculated correctlyfor pressure = ' ...
+           num2str(pressure) ' theta0 = ' num2str(theta0)])
     
   end
 end      

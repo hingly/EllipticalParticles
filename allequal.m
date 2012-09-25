@@ -4,6 +4,7 @@ if ~exist('mask', 'var')
   mask = true(size(b));
 end
 
+
 if length(b) ~= length(c)
     error('nonconformant arguments');
 else
