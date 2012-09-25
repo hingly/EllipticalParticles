@@ -1,4 +1,4 @@
-function test_Afunc
+function test_Afunc_circle
 
 epsilon = 1e-10;
 thetalist = [0 pi/10 pi/7 pi/5 pi/3 pi/2 3*pi/4];
@@ -16,6 +16,3 @@ for theta = thetalist
           ' and theta = ' num2str(theta)]);
 end
 
-% for another shape
-
-error('not finished yet');

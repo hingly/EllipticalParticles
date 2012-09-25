@@ -87,40 +87,13 @@ can't update anything inside residual.m
 ** DONE number of points must be bigger than number of modes - add assert in read_input
 
 ** DONE Test modes.m
-** TODO timoshenko test - check correct traction direction
+** DONE timoshenko test - check correct traction direction
    -- problem comparing functions with spikes in them - allequal and almostequal don't do a good job.
    -- weird division by zero error showing up for some angles theta0 (pi/8, pi/10) 
        --- happens when theta=theta0 as input to timoshenko_potentials.  Try to think of a way of skipping those points
    -- try integrating for overall error.
    -- Is error reduced as number of modes increases --- yes.
-** TODO write better error test for functions which go to infinity, exclude points which go to infinity
-
-** TODO Test farfieldpotential.m
-   --- comparing to a Timoshenko solution - no agreement, must check derivations
-
-** DONE Problem with circle under equibiaxial loading, including theoretical derivation 
-** DONE Write tests based on this derivation
-** TODO Test ellipse2011.m
-  --- clear that sk should have only zero mode, everything should stay real
-   --- something is going wrong in going from step 1 to step 2 - everything is fine on step 1.
-   --- characterise u_rho-N1 behaviour in dissertation - critical 
-   --- is there a way to use variables in json file? - I suppose we could write a json file?
-   --- 3-stage test (1) write json file (2) run code (3) run tests
-
-
-** DONE Test read_input.m
-   -- How to compare two structures?
-
-** TODO Test initialize_loading.m
-    Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
-    - see p.9 of Denel notebook
-
-
-** TODO sign of cohesive traction, and document
-
-
-
-
+** DONE write better error test for functions which go to infinity, exclude points which go to infinity
 
 ** TODO Test calculatedisplacement.m
 *** DONE circular equibiaxial loading
@@ -129,20 +102,38 @@ can't update anything inside residual.m
 *** DONE circular equibiaxial loading
 *** TODO other geometry/loading 
 
+** DONE Test read_input.m.m
 
+
+** TODO Test initialize_loading.m
+    Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
+    - see p.9 of Denel notebook
 ** TODO Test finalize_timestep.m
 ** TODO Test incorporate_previous_timestep.m
+
 
 
 ** TODO Test residual.m
 ** TODO Test final.m
 ** TODO Test common.m
 
+** TODO Test farfieldpotential.m
+   --- comparing to a Timoshenko solution - no agreement, must check derivations
 
 
+
+** TODO sign of cohesive traction, and document
 
 
 ** TODO Zero sigmax will be equivalent to no inclusion
+
+** TODO Failure is not starting at zero degrees even when load is applied at zero degrees.  Weird. 7/8/12
+** TODO Problem with the way lambda_max is being handled
+** TODO Think about how and what to output
+   -- output to json file
+   --- need to make compund output file name
+** TODO Output macroscopic stress and strain and plot
+** TODO plot displaced shape
 
 
 ** TODO problem with loading angles (I don't accept omega=pi/2) see p.67
@@ -151,13 +142,6 @@ can't update anything inside residual.m
    -- At the moment I accumulate damage, but compensate for slope in normal mode.  
       But large normal compression and no shear could still result in substantial damage - this is wrong
 ** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
-** TODO Failure is not starting at zero degrees even when load is applied at zero degrees.  Weird. 7/8/12
-** TODO Problem with the way lambda_max is being handled
-** TODO Think about how and what to output
-   -- output to json file
-   --- need to make compund output file name
-** TODO Output macroscopic stress and strain and plot
-** TODO plot displaced shape
 
 ** DONE characterise accuracy of averages.m (there's this even, odd thing)
 
@@ -169,6 +153,16 @@ can't update anything inside residual.m
    -- Weeks 39-40 (September 24-October 5)
    -- [Week 39 (September 24 - September 28]
 
+
+** DONE Problem with circle under equibiaxial loading, including theoretical derivation 
+** DONE Write tests based on this derivation
+** TODO Test ellipse2011.m
+  --- clear that sk should have only zero mode, everything should stay real
+   --- something is going wrong in going from step 1 to step 2 - everything is fine on step 1.
+   --- characterise u_rho-N1 behaviour in dissertation - critical 
+   --- is there a way to use variables in json file? - I suppose we could write a json file?
+   --- 3-stage test (1) write json file (2) run code (3) run tests
+   --- This is a test case, not a unit test.
 
 
 * TODO Implement Optimisation Algorithms for Non-linear solver problem

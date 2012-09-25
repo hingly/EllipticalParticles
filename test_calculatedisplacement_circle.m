@@ -1,4 +1,4 @@
-function test_calculatedisplacement
+function test_calculatedisplacement_circle
 
 epsilon=1e-10;
 
@@ -38,4 +38,3 @@ assert(imag(disp)<epsilon, 'Tangential displacement not calculated correctly')
 assert(allequal(real(disp), disp_check, epsilon), ['Normal displacement ' ...
                     'not calculated correctly'])
 
-error('not finished yet');
