@@ -1,5 +1,4 @@
-function [stepcoh,stepdisp, stepmacro_var,steppot] = ...
-    final(soln, stepmacro_var, loads, material, geom,stepcoh,tt)
+function [step] = final(soln, loads, material, geom, step, tt)
 
 
 % Given converged solution, including Fourier coefficients sk, the average particle stress
@@ -15,7 +14,7 @@ disp('Entering final...');
 %constants
 zero_intpoints=zeros(1,geom.NumPoints);
 
-stepcoh.lambda_xy=zero_intpoints;
+step.cohesive.lambda_xy=zero_intpoints;
 
 
 
@@ -28,8 +27,8 @@ stepcoh.lambda_xy=zero_intpoints;
 % from the given macroscopic strain eps_11.  Note that these depend on Sigma_p 
 % and Eps_int, so must be re-calculated after convergence
 
-[stepmacro_var.MacroStress, stepmacro_var.MacroStrain, stepmacro_var.Sigma_m]= ...
-    macrostress(stepmacro_var.MacroStrain, soln.Sigma_p(tt,:), soln.Eps_int(tt,:), loads, geom, material);
+[step.macro_var.MacroStress, step.macro_var.MacroStrain, step.macro_var.Sigma_m]= ...
+    macrostress(step.macro_var.MacroStrain, soln.Sigma_p(tt,:), soln.Eps_int(tt,:), loads, geom, material);
 
 
 %-----------------------------------------------
@@ -38,28 +37,27 @@ stepcoh.lambda_xy=zero_intpoints;
 
 
 % Compute N1, N2 and omega for use as farfield stresses
-[N1, N2, omega] = principal(stepmacro_var.Sigma_m(1), stepmacro_var.Sigma_m(2),stepmacro_var.Sigma_m(3));
+[N1, N2, omega] = principal(step.macro_var.Sigma_m(1), step.macro_var.Sigma_m(2),step.macro_var.Sigma_m(3));
 
 
 %-----------------------------------------------
 % Compute displacements and cohesive tractions
 %===============================================
 
-[stepcoh,stepdisp,steppot] = common(N1, N2, omega, geom, material, ...
-                                  loads, soln.sk(tt,:), stepcoh);
+[step] = common(N1, N2, omega, geom, material, loads, soln.sk(tt,:), step);
 
 
 for kk=1:geom.NumPoints
-  if real(stepdisp.total(kk))<0
-    stepcoh.lambda(kk)=0;
+  if real(step.displacement.total(kk))<0
+    step.cohesive.lambda(kk)=0;
 % CHECK : This is for display purposes - not sure it's right to be doing
   end
-  stepcoh.lambda_xy(kk)=stepcoh.lambda(kk)*geom.normal(kk);
+  step.cohesive.lambda_xy(kk)=step.cohesive.lambda(kk)*geom.normal(kk);
   
   % Write lambda_max_temp and loading_temp to lambda_max and
   % loading at end of convergence loop
-  stepcoh.lambda_max=stepcoh.lambda_max_temp;
-  stepcoh.loading=stepcoh.loading_temp;
+  step.cohesive.lambda_max=step.cohesive.lambda_max_temp;
+  step.cohesive.loading=step.cohesive.loading_temp;
   
 end
 

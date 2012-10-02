@@ -1,4 +1,4 @@
-function [stepcoh]=Cohesive_Law(displacement, NumPoints,material, stepcoh)
+function [step] = Cohesive_Law(NumPoints, material, step)
 
 % This is a new function to replace the functionality of
 % old_cohesivetractions.m and old_Cohesive_Law.m   ---4 July 2012
@@ -8,11 +8,13 @@ function [stepcoh]=Cohesive_Law(displacement, NumPoints,material, stepcoh)
 % This function computes the interfacial tractions by using the cohesive
 % law.  This is done by knowing the displacement jumps and the interfacial
 % properties.  The interfacial tractions are then returned.
-% --- displacement is the calculated displacement jumps, vector
-%                  length NumPoints (complex)
 % --- NumPoints is the number of integration points around the ellipse
 % --- material is a structure containing material data
-% --- lambda_max is the maximum value of lambda achieved to date, vector length NumPoints 
+% --- step contains step data
+%     --- displacement is the calculated displacement jumps, vector
+%                  length NumPoints (complex)
+%     --- lambda_max is the maximum value of lambda achieved to date, vector length NumPoints 
+
 
 % --- delopen is the critical opening displacement (Delta n_c)
 delopen=material.delopen;
@@ -29,18 +31,21 @@ lambda_e=material.lambda_e;
 %constants
 zero_intpoints=zeros(1,NumPoints);
 
+% displacement
+displacement = step.displacement; 
+
 % Previous maximum damage
-lambda_max=stepcoh.lambda_max;
+lambda_max=step.cohesive.lambda_max;
 
 % Are we loading or unloading?
-loading=stepcoh.loading;
+loading=step.cohesive.loading;
 
 % Initialise data
-stepcoh.traction=zero_intpoints;
+step.cohesive.traction=zero_intpoints;
 lambda=zero_intpoints;
 
-lambda_max_temp=stepcoh.lambda_max;
-loading_temp=stepcoh.loading;
+lambda_max_temp=step.cohesive.lambda_max;
+loading_temp=step.cohesive.loading;
 
 % Structure of code:
    % Integration loop around particle
@@ -50,11 +55,11 @@ loading_temp=stepcoh.loading;
           % Compare lambda with lambda_max, and determine loading or unloading --- 
                % These will be used in next timestep
           % Determine which stage of loading we are in, compute dphi/dlambda
-          % Compute cohesive tractions stepcoh.traction 
+          % Compute cohesive tractions step.cohesive.traction 
           % Do temporary store of new lambda_max, new loading where applicable.  
           % After convergence, lambda_max and loading get updated
 
-% Integration loop around the particle to determine stepcoh tractions
+% Integration loop around the particle to determine step.cohesive tractions
 
 tolerance=lambda_e/10;
 
@@ -146,7 +151,7 @@ for jj=1:NumPoints
   S=kn*U;
   T=kt*V;
   
-  stepcoh.traction(jj)=S+i*T;
+  step.cohesive.traction(jj)=S+i*T;
   
   % Compute new lambda_max_temp and loading_temp 
   % ----> These do not get used until next step
@@ -166,9 +171,9 @@ for jj=1:NumPoints
 end
 % end of the integration loop
 
-stepcoh.loading_temp=loading_temp;
-stepcoh.lambda_max_temp=lambda_max_temp;
-stepcoh.lambda=lambda;
+step.cohesive.loading_temp=loading_temp;
+step.cohesive.lambda_max_temp=lambda_max_temp;
+step.cohesive.lambda=lambda;
 
 
 %disp('Leaving Cohesive_Law...');

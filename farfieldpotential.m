@@ -1,4 +1,4 @@
-function [phi, phiprime, psi]=farfieldpotential(theta, rho,R, m, N1, N2, omega)
+function [phi, phiprime, psi]=farfieldpotential(theta, rho, R, m, N1, N2, omega)
 
 
 % Given far-field loading as a principal stress state plus

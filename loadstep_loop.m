@@ -1,7 +1,10 @@
 function [cohesive, displacement, loads, macro_var, potential, soln]= ...
     loadstep_loop(geom, material, loads, macro_var, soln, displacement, cohesive, ...
-                  potential, stepmacro_var, stepcoh)
+                  potential, step)
 
+
+% FIXME : It would make sense for step not to exist outside of
+% loadstep_loop
 
 %-----------------------------------------
 % Begin loop through loadsteps
@@ -16,7 +19,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   loads.DriverStrain(tt)
   
   if tt>1
-    [soln, stepmacro_var,stepcoh] = incorporate_previous_timestep(soln, material, loads, cohesive,tt);
+    [soln, step] = incorporate_previous_timestep(soln, material, loads, cohesive,tt);
   end
   
   % The complex fourier terms are  split into real and imaginary 
@@ -40,8 +43,8 @@ for tt=1:loads.timesteps  % Loop through loading steps
     % Solve for sk, Sigma_p, Eps_int
     
     [output,fval,exitflag] = ...
-        fsolve(@(input_guess) residual(input_guess, stepmacro_var, loads, ...
-                                       material, geom, stepcoh),input_guess);
+        fsolve(@(input_guess) residual(input_guess, loads, material, ...
+                                       geom, step), input_guess);
     
     if exitflag<=0
       if counter>2
@@ -57,15 +60,11 @@ for tt=1:loads.timesteps  % Loop through loading steps
   soln = unstack(output,loads.NumModes,tt,soln);
 
   % Calculate final values based on converged sk, sigma_p and eps_int
-  [stepcoh, stepdisp, stepmacro_var, steppot] = ...
-      final(soln, stepmacro_var, loads, material, geom, stepcoh, tt);
+  [step] = final(soln, loads, material, geom, step, tt);
 
   % Write final step values to global values
   [cohesive, displacement, macro_var, potential] = ...
-      finalize_timestep(stepcoh, stepdisp, stepmacro_var, steppot, cohesive, ...
-                        displacement, macro_var, loads, potential,tt);
-
-  % FIXME : finalize_timestep.m could be inside final.m
+      finalize_timestep(step, cohesive, displacement, macro_var, loads, potential,tt);
 
 end      % end loop through loading steps
 

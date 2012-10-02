@@ -1,6 +1,4 @@
-function Rk = ...
-    residual(input_guess, stepmacro_var, loads, material, ...
-             geom, stepcoh)
+function Rk = residual(input_guess, loads, material, geom, step)
 
 
 
@@ -43,28 +41,28 @@ sk = dummy.sk;
 % Macroscopic stresses and strains for the current timestep are computed from the given macroscopic strain eps_11
 % Note that these depend on Sigma_p and Eps_int, so will be updated at every convergence step
 
-[stepmacro_var.MacroStress, stepmacro_var.MacroStrain, stepmacro_var.Sigma_m]= macrostress(stepmacro_var.MacroStrain, Sigma_p, Eps_int, loads, geom, material);
+[step.macro_var.MacroStress, step.macro_var.MacroStrain, step.macro_var.Sigma_m]= macrostress(step.macro_var.MacroStrain, Sigma_p, Eps_int, loads, geom, material);
 
 
 %-----------------------------------------------
 % Compute farfield loading
 %===============================================
 
-[N1, N2, omega] = principal(stepmacro_var.Sigma_m(1), stepmacro_var.Sigma_m(2),stepmacro_var.Sigma_m(3));
+[N1, N2, omega] = principal(step.macro_var.Sigma_m(1), step.macro_var.Sigma_m(2),step.macro_var.Sigma_m(3));
   
 
 %-----------------------------------------------
 % Compute displacements and cohesive tractions
 %===============================================
 
-[stepcoh,stepdisp,steppot]=common(N1, N2, omega, geom, material,loads, sk,stepcoh);
+[step]=common(N1, N2, omega, geom, material, loads, sk, step);
 
 
 % Compute Fourier modes corresponding to cohesive tractions
-skc = fouriertransform(stepcoh.traction, geom.theta, loads.NumModes);
+skc = fouriertransform(step.cohesive.traction, geom.theta, loads.NumModes);
 
 % Compute interfacial strain and average particle stress
-[Sigma_p_new, Eps_int_new] = averages(stepdisp.total_xy, stepcoh.traction_xy, geom);
+[Sigma_p_new, Eps_int_new] = averages(step.displacement.total_xy, step.cohesive.traction_xy, geom);
 
 
 % error in sk

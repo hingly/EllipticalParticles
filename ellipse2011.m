@@ -29,14 +29,14 @@ geom=calculate_geometry(geom);
 % Calculate loading variables
 %==================================================================
 
-[loads, macro_var, soln, displacement, cohesive, potential, stepmacro_var, stepcoh] = ...
+[loads, macro_var, soln, displacement, cohesive, potential, step] = ...
     initialize_loading(loads, geom, material);      
 % Solution variables (sk, sigma_p and eps_int) are all stored in the soln structure
 
 
 [cohesive, displacement, loads, macro_var, potential, soln]= ...
     loadstep_loop(geom, material, loads, macro_var, soln, displacement, cohesive, ...
-                  potential, stepmacro_var, stepcoh);
+                  potential, step);
 
 
 % Write output data for JSON

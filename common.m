@@ -1,5 +1,4 @@
-function [stepcoh, stepdisp, steppot] = ...
-    common(N1, N2, omega, geom, material, loads, sk,stepcoh)
+function [step] = common(N1, N2, omega, geom, material, loads, sk, step)
 
 % Given far-field loading and Fourier modes, compute cohesive tractions and displacements
 % Created from residual.m 16/7/2012
@@ -15,21 +14,21 @@ function [stepcoh, stepdisp, steppot] = ...
 %constants
 zero_intpoints = zeros(1, geom.NumPoints);
 
-stepdisp.farfield = zero_intpoints;
-stepdisp.farfield_xy = zero_intpoints;
-stepdisp.coh = zero_intpoints;
-stepdisp.coh_xy = zero_intpoints;
-stepdisp.total = zero_intpoints;
-stepdisp.total_xy = zero_intpoints;
+step.displacement.farfield = zero_intpoints;
+step.displacement.farfield_xy = zero_intpoints;
+step.displacement.coh = zero_intpoints;
+step.displacement.coh_xy = zero_intpoints;
+step.displacement.total = zero_intpoints;
+step.displacement.total_xy = zero_intpoints;
 
-stepcoh.traction_xy = zero_intpoints;
+step.cohesive.traction_xy = zero_intpoints;
 
-steppot.phi = zero_intpoints;
-steppot.phiprime = zero_intpoints;
-steppot.psi = zero_intpoints;
-steppot.phicoh = zero_intpoints;
-steppot.phiprimecoh = zero_intpoints;
-steppot.psicoh = zero_intpoints;
+step.potential.phi = zero_intpoints;
+step.potential.phiprime = zero_intpoints;
+step.potential.psi = zero_intpoints;
+step.potential.phicoh = zero_intpoints;
+step.potential.phiprimecoh = zero_intpoints;
+step.potential.psicoh = zero_intpoints;
 
 
 
@@ -45,28 +44,28 @@ for kk=1:geom.NumPoints
   % Compute potential functions from far-field loading 
   %======================================================
  
-  [steppot.phi(kk),steppot.phiprime(kk),steppot.psi(kk)]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
+  [step.potential.phi(kk),step.potential.phiprime(kk),step.potential.psi(kk)]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
         
   %-----------------------------------------------------
   % Compute displacements from far-field loading 
   %=====================================================
  
-  stepdisp.farfield(kk)=calculatedisplacement(steppot.phi(kk), steppot.phiprime(kk), steppot.psi(kk), geom.theta(kk), geom.m, material);
-  stepdisp.farfield_xy(kk)=stepdisp.farfield(kk)*exp(i*geom.beta(kk));    
+  step.displacement.farfield(kk)=calculatedisplacement(step.potential.phi(kk), step.potential.phiprime(kk), step.potential.psi(kk), geom.theta(kk), geom.m, material);
+  step.displacement.farfield_xy(kk)=step.displacement.farfield(kk)*exp(i*geom.beta(kk));    
  
   %-------------------------------------------------------
   % Compute potential functions due to cohesive tractions
   %=======================================================
 
-  [steppot.phicoh(kk), steppot.phiprimecoh(kk), steppot.psicoh(kk)]=modes(geom.theta(kk),geom.rho,geom.R, geom.m, loads.NumModes, sk);
+  [step.potential.phicoh(kk), step.potential.phiprimecoh(kk), step.potential.psicoh(kk)]=modes(geom.theta(kk),geom.rho,geom.R, geom.m, loads.NumModes, sk);
   
   
   %-------------------------------------------------------
   % Compute displacements due to cohesive tractions
   %=======================================================
   
-  stepdisp.coh(kk) = calculatedisplacement(steppot.phicoh(kk), steppot.phiprimecoh(kk), steppot.psicoh(kk), geom.theta(kk), geom.m, material);
-  stepdisp.coh_xy(kk) = stepdisp.coh(kk)*exp(i*geom.beta(kk));
+  step.displacement.coh(kk) = calculatedisplacement(step.potential.phicoh(kk), step.potential.phiprimecoh(kk), step.potential.psicoh(kk), geom.theta(kk), geom.m, material);
+  step.displacement.coh_xy(kk) = step.displacement.coh(kk)*exp(i*geom.beta(kk));
   
 end         
 % end loop over integration points
@@ -78,8 +77,8 @@ end
 %==============================================
 
 
-stepdisp.total = stepdisp.farfield + stepdisp.coh;
-stepdisp.total_xy = stepdisp.farfield_xy + stepdisp.coh_xy;
+step.displacement.total = step.displacement.farfield + step.displacement.coh;
+step.displacement.total_xy = step.displacement.farfield_xy + step.displacement.coh_xy;
 
 
 
@@ -87,13 +86,13 @@ stepdisp.total_xy = stepdisp.farfield_xy + stepdisp.coh_xy;
 %Compute cohesive tractions resulting from displacement
 %======================================================
 
-stepcoh = Cohesive_Law(stepdisp.total, geom.NumPoints, material,stepcoh);
+step.cohesive = Cohesive_Law(step.displacement.total, geom.NumPoints, material,step.cohesive);
 
 %% Displacement jump must result in opposing traction
-%stepcoh.traction = -stepcoh.traction;
+%step.cohesive.traction = -step.cohesive.traction;
 
 
-stepcoh.traction_xy = stepcoh.traction.*exp(i.*geom.beta);
+step.cohesive.traction_xy = step.cohesive.traction.*exp(i.*geom.beta);
 
 
 

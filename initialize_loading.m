@@ -1,4 +1,5 @@
-function [loads, macro_var, soln,displacement,cohesive,potential,stepmacro_var,stepcoh]=initialize_loading(loads, geom, material)
+function [loads, macro_var, soln, displacement, cohesive, potential, ...
+          step] = initialize_loading(loads, geom, material)
 
   % This subroutine initializes all the loading, stress and strain arrays, and computes the 
   % imposed macroscopic stress in local rather than principal coordinates.
@@ -167,12 +168,12 @@ potential.psicoh=zero_timestep_intpoints;
   end
     
   % Initialise loading data for timesteps
-  stepmacro_var.MacroStrain=zero_matrix;
-  stepmacro_var.MacroStrain(1)=loads.DriverStrain(tt);
-  stepmacro_var.MacroStress=zero_matrix;
-  stepmacro_var.Sigma_m=zero_matrix;
-  stepcoh.lambda_max=zero_intpoints;
-  stepcoh.loading=zero_intpoints;
+  step.macro_var.MacroStrain=zero_matrix;
+  step.macro_var.MacroStrain(1)=loads.DriverStrain(tt);
+  step.macro_var.MacroStress=zero_matrix;
+  step.macro_var.Sigma_m=zero_matrix;
+  step.cohesive.lambda_max=zero_intpoints;
+  step.cohesive.loading=zero_intpoints;
 
   
   
