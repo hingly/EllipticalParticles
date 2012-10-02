@@ -1,10 +1,7 @@
 function [cohesive, displacement, loads, macro_var, potential, soln]= ...
-    loadstep_loop(geom, material, loads, macro_var, soln, displacement, cohesive, ...
-                  potential, step)
+    loadstep_loop(geom, material, loads, macro_var, soln, displacement, ...
+                  cohesive, potential)
 
-
-% FIXME : It would make sense for step not to exist outside of
-% loadstep_loop
 
 %-----------------------------------------
 % Begin loop through loadsteps
@@ -15,17 +12,20 @@ for tt=1:loads.timesteps  % Loop through loading steps
   % FIXME : ****  Notice: need to check that everything is getting
   %initialised/reset properly here! ****
   
-  disp('Beginning timestep...');
-  loads.DriverStrain(tt)
+  disp(['Beginning timestep ' num2str(tt) ' of ' num2str(loads.timesteps) ...
+        ' with macroscopic strain = ' num2str(loads.DriverStrain(tt))]);
+  
+  [step] = initialize_step_variables(loads, geom, tt);
   
   if tt>1
-    [soln, step] = incorporate_previous_timestep(soln, material, loads, cohesive,tt);
+    [soln, step] = ...
+        incorporate_previous_timestep(soln, cohesive, step, tt);
   end
   
   % The complex fourier terms are  split into real and imaginary 
   % parts before going into the solution loop.  
   
-  input_guess=stack(soln,loads.NumModes,tt);
+  input_guess = stack(soln, loads.NumModes, tt);
   
   exitflag=0;
   counter=0;

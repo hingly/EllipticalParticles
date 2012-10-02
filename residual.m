@@ -12,15 +12,12 @@ function Rk = residual(input_guess, loads, material, geom, step)
   % passed as vector 'input'
 
 
-%disp('Entering residual...');
-
 
 %----------------------------------
 % Unstack input vector
 %==================================
 
-% FIXME : check that I'm passing things correctly (i.e. name
-% changes for structures)
+
 dummy.Sigma_p=zeros(1,3);
 dummy.Eps_int=zeros(1,3);
 dummy.sk=zeros(1,loads.NumModes+1);
@@ -41,7 +38,8 @@ sk = dummy.sk;
 % Macroscopic stresses and strains for the current timestep are computed from the given macroscopic strain eps_11
 % Note that these depend on Sigma_p and Eps_int, so will be updated at every convergence step
 
-[step.macro_var.MacroStress, step.macro_var.MacroStrain, step.macro_var.Sigma_m]= macrostress(step.macro_var.MacroStrain, Sigma_p, Eps_int, loads, geom, material);
+[step.macro_var.MacroStress, step.macro_var.MacroStrain, step.macro_var.Sigma_m] = ...
+    macrostress(step.macro_var.MacroStrain, Sigma_p, Eps_int, loads, geom, material);
 
 
 %-----------------------------------------------

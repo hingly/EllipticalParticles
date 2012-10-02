@@ -26,17 +26,25 @@ material = calculate_material(material);
 geom=calculate_geometry(geom);
 
 %------------------------------------------------------------------
-% Calculate loading variables
+% Initialize global variables
 %==================================================================
 
-[loads, macro_var, soln, displacement, cohesive, potential, step] = ...
-    initialize_loading(loads, geom, material);      
-% Solution variables (sk, sigma_p and eps_int) are all stored in the soln structure
+[loads, macro_var, displacement, cohesive, potential, soln] = ...
+    initialize_global_variables(loads, geom, material);   
+
+% Calculate stress ratios for imposed stress
+[loads] = calculate_imposed_stress(loads);
+
+% Solution variables (sk, sigma_p and eps_int) are all stored in
+% the soln structure. Guess for the first timestep
+[soln] = first_guess_soln(loads, material, geom, soln);
 
 
+
+% Loop through loadsteps
 [cohesive, displacement, loads, macro_var, potential, soln]= ...
     loadstep_loop(geom, material, loads, macro_var, soln, displacement, cohesive, ...
-                  potential, step);
+                  potential);
 
 
 % Write output data for JSON
