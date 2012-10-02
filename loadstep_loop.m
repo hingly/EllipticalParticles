@@ -1,6 +1,6 @@
-function [cohesive, displacement, loads, potential, soln]= ...
-    loadstep_loop(geom, material, loads, soln, displacement, cohesive, ...
-                  potential,stepload,stepcoh)
+function [cohesive, displacement, loads, macro_var, potential, soln]= ...
+    loadstep_loop(geom, material, loads, macro_var, soln, displacement, cohesive, ...
+                  potential, stepmacro_var, stepcoh)
 
 
 %-----------------------------------------
@@ -13,10 +13,10 @@ for tt=1:loads.timesteps  % Loop through loading steps
   %initialised/reset properly here! ****
   
   disp('Beginning timestep...');
-  loads.MacroStrain(tt,1)
+  loads.DriverStrain(tt)
   
   if tt>1
-    [soln, stepload,stepcoh] = incorporate_previous_timestep(soln, material, loads, cohesive,tt);
+    [soln, stepmacro_var,stepcoh] = incorporate_previous_timestep(soln, material, loads, cohesive,tt);
   end
   
   % The complex fourier terms are  split into real and imaginary 
@@ -38,11 +38,10 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     
     % Solve for sk, Sigma_p, Eps_int
-    %    options=optimset('Display','iter', 'TolFun',1e-5, 'MaxFunEvals', 5000, 'MaxIter', 60);    % Option to display output
-
-    %    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess,options);
     
-    [output,fval,exitflag]=fsolve(@(input_guess) residual(input_guess, stepload,loads, material, geom,stepcoh),input_guess);
+    [output,fval,exitflag] = ...
+        fsolve(@(input_guess) residual(input_guess, stepmacro_var, loads, ...
+                                       material, geom, stepcoh),input_guess);
     
     if exitflag<=0
       if counter>2
@@ -55,13 +54,16 @@ for tt=1:loads.timesteps  % Loop through loading steps
   end
   % end convergence loop
   
-  soln=unstack(output,loads.NumModes,tt,soln);
+  soln = unstack(output,loads.NumModes,tt,soln);
 
   % Calculate final values based on converged sk, sigma_p and eps_int
-  [stepcoh, stepdisp, stepload, steppot]=final(soln, stepload,loads, material, geom,stepcoh,tt);
+  [stepcoh, stepdisp, stepmacro_var, steppot] = ...
+      final(soln, stepmacro_var, loads, material, geom, stepcoh, tt);
 
   % Write final step values to global values
-  [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, stepdisp, stepload, steppot, cohesive, displacement, loads, potential,tt);
+  [cohesive, displacement, macro_var, potential] = ...
+      finalize_timestep(stepcoh, stepdisp, stepmacro_var, steppot, cohesive, ...
+                        displacement, macro_var, loads, potential,tt);
 
   % FIXME : finalize_timestep.m could be inside final.m
 

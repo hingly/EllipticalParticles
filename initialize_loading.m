@@ -1,4 +1,4 @@
-function [loads,soln,displacement,cohesive,potential,stepload,stepcoh]=initialize_loading(loads, geom, material)
+function [loads, macro_var, soln,displacement,cohesive,potential,stepmacro_var,stepcoh]=initialize_loading(loads, geom, material)
 
   % This subroutine initializes all the loading, stress and strain arrays, and computes the 
   % imposed macroscopic stress in local rather than principal coordinates.
@@ -21,9 +21,9 @@ function [loads,soln,displacement,cohesive,potential,stepload,stepcoh]=initializ
   loads.MaximumStrain=loads.MinimumStrain*loads.LoadFactor;  % Maximum applied strain
 
 
-  loads.MacroStrain=zero_timestep_matrix;              % Initialise macroscopic strain matrix
-  loads.MacroStress=zero_timestep_matrix;              % Initialise macroscopic stress matrix
-  loads.Sigma_m=zero_timestep_matrix;                  % Initialise Mori-Tanaka matrix stress matrix
+  macro_var.MacroStrain=zero_timestep_matrix;              % Initialise macroscopic strain matrix
+  macro_var.MacroStress=zero_timestep_matrix;              % Initialise macroscopic stress matrix
+  macro_var.Sigma_m=zero_timestep_matrix;                  % Initialise Mori-Tanaka matrix stress matrix
 
   % Load stepping occurs in macroscopic strain component epsilon_11 - populate those elements of the macroscopic
   % strain matrix.  (Epsilon_22 and epsilon_12 will be solved for.)
@@ -167,10 +167,10 @@ potential.psicoh=zero_timestep_intpoints;
   end
     
   % Initialise loading data for timesteps
-  stepload.MacroStrain=zero_matrix;
-  stepload.MacroStrain(1)=loads.DriverStrain(tt);
-  stepload.MacroStress=zero_matrix;
-  stepload.Sigma_m=zero_matrix;
+  stepmacro_var.MacroStrain=zero_matrix;
+  stepmacro_var.MacroStrain(1)=loads.DriverStrain(tt);
+  stepmacro_var.MacroStress=zero_matrix;
+  stepmacro_var.Sigma_m=zero_matrix;
   stepcoh.lambda_max=zero_intpoints;
   stepcoh.loading=zero_intpoints;
 

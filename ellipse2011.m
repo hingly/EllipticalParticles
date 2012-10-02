@@ -1,4 +1,4 @@
-function [loads, displacement, cohesive, soln]=ellipse2011(filename)
+function [loads, macro_var, displacement, cohesive, soln]=ellipse2011(filename)
 
 if ~exist('filename', 'var')
   filename=input('Enter the complete input filename: ','s');
@@ -29,19 +29,21 @@ geom=calculate_geometry(geom);
 % Calculate loading variables
 %==================================================================
 
-[loads,soln,displacement,cohesive,potential,stepload,stepcoh]=initialize_loading(loads,geom,material);      
+[loads, macro_var, soln, displacement, cohesive, potential, stepmacro_var, stepcoh] = ...
+    initialize_loading(loads, geom, material);      
 % Solution variables (sk, sigma_p and eps_int) are all stored in the soln structure
 
 
-[cohesive, displacement, loads, potential, soln]= ...
-    loadstep_loop(geom, material, loads, soln, displacement, cohesive, ...
-                  potential,stepload,stepcoh);
+[cohesive, displacement, loads, macro_var, potential, soln]= ...
+    loadstep_loop(geom, material, loads, macro_var, soln, displacement, cohesive, ...
+                  potential, stepmacro_var, stepcoh);
 
 
 % Write output data for JSON
 
 output.cohesive = cohesive;
 output.loads = loads;
+output.macro_var = macro_var;
 output.displacement = displacement;
 output.potential = potential;
 output.soln = soln;

@@ -84,7 +84,7 @@ for c1 = c1list
     %-----------------------------
     %      RUN CODE
     %=============================
-    [loads,displacement,cohesive,soln] =  ...
+    [loads, macro_var, displacement,cohesive, soln] =  ...
         ellipse2011('ellipse_circle_test.json');
 
     %-----------------------------
@@ -106,9 +106,9 @@ for c1 = c1list
       % Check displacement due to far-field loading
       %==============================================
       
-      N1 = loads.Sigma_m(tt,1);
-      N2 = loads.Sigma_m(tt,2);
-      N3 = loads.Sigma_m(tt,3);
+      N1 = macro_var.Sigma_m(tt,1);
+      N2 = macro_var.Sigma_m(tt,2);
+      N3 = macro_var.Sigma_m(tt,3);
       
       assert(allequal(N1,N2,epsilon), ['N2 not equal to N1 for timestep ' ...
                           num2str(tt)]);
@@ -182,10 +182,10 @@ for c1 = c1list
       checkstrain(tt) = (1 + nu)*(1 - 2*nu)/E*(1 - geom.f)*N1 + ...
           geom.f/R*real(displacement.total(tt,1));
       
-      assert(allequal(checkstrain(tt), loads.MacroStrain(tt,1), epsilon), ...
+      assert(allequal(checkstrain(tt), macro_var.MacroStrain(tt,1), epsilon), ...
              ['Macroscopic strain is not calculated correctly.  Should ' ...
               'have e_11 = ' num2str(checkstrain(tt)) ' but calculated ' ...
-              'strain is ' num2str(loads.MacroStrain(tt,1)) ...
+              'strain is ' num2str(macro_var.MacroStrain(tt,1)) ...
               ' for timestep ' num2str(tt)]); 
       
     end

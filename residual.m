@@ -1,4 +1,6 @@
-function Rk=residual(input_guess,stepload,loads, material, geom,stepcoh)
+function Rk = ...
+    residual(input_guess, stepmacro_var, loads, material, ...
+             geom, stepcoh)
 
 
 
@@ -41,14 +43,14 @@ sk = dummy.sk;
 % Macroscopic stresses and strains for the current timestep are computed from the given macroscopic strain eps_11
 % Note that these depend on Sigma_p and Eps_int, so will be updated at every convergence step
 
-[stepload.MacroStress, stepload.MacroStrain, stepload.Sigma_m]= macrostress(stepload.MacroStrain, Sigma_p, Eps_int, loads,geom, material);
+[stepmacro_var.MacroStress, stepmacro_var.MacroStrain, stepmacro_var.Sigma_m]= macrostress(stepmacro_var.MacroStrain, Sigma_p, Eps_int, loads, geom, material);
 
 
 %-----------------------------------------------
 % Compute farfield loading
 %===============================================
 
-[N1, N2, omega] = principal(stepload.Sigma_m(1), stepload.Sigma_m(2),stepload.Sigma_m(3));
+[N1, N2, omega] = principal(stepmacro_var.Sigma_m(1), stepmacro_var.Sigma_m(2),stepmacro_var.Sigma_m(3));
   
 
 %-----------------------------------------------
