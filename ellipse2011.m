@@ -10,8 +10,7 @@ end
 % Read input data and create structures for main variables
 %==================================================================
 
-[material,geom,loads, post] = read_input(filename);
-
+[material, geom, loads, post] = read_input(filename);
 
 %---------------------------------------------------------
 % Calculate additional material parameters
@@ -23,7 +22,7 @@ material = calculate_material(material);
 % Calculate positions and angles at each point around the ellipse
 %==================================================================
 
-geom=calculate_geometry(geom);
+geom = calculate_geometry(geom);
 
 %------------------------------------------------------------------
 % Initialize global variables
@@ -33,12 +32,11 @@ geom=calculate_geometry(geom);
     initialize_global_variables(loads, geom, material);   
 
 % Calculate stress ratios for imposed stress
-[loads] = calculate_imposed_stress(loads);
+loads = calculate_imposed_stress(loads);
 
 % Solution variables (sk, sigma_p and eps_int) are all stored in
 % the soln structure. Guess for the first timestep
-[soln] = first_guess_soln(loads, material, geom, soln);
-
+soln = first_guess_soln(loads, material, geom, soln);
 
 
 % Loop through loadsteps

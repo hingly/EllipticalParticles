@@ -2,7 +2,7 @@ function test_calculate_geometry_ellipse
 
 epsilon=1e-10;
 
-numpointslist=[13 200 111];
+numpointslist=[10 200 114];
 geom.a=10;
 blist=[0.1 0.5 1 2 5 8];
 Rcheck=[5.05 5.25 5.5 6 7.5 9];

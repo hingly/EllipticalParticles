@@ -2,7 +2,7 @@ function test_calculate_geometry_circle
 
 epsilon=1e-10;
 
-numpointslist=[13 200 111];
+numpointslist=[10 200 114];
 alist=[10 90e-3];
 for numpoints = numpointslist
   for a = alist

@@ -1,4 +1,4 @@
-function [soln] = first_guess_soln(loads, material, geom, soln)
+function soln = first_guess_soln(loads, material, geom, soln)
   
 stress_epsilon = 1e-5;
 
