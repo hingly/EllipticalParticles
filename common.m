@@ -86,7 +86,7 @@ step.displacement.total_xy = step.displacement.farfield_xy + step.displacement.c
 %Compute cohesive tractions resulting from displacement
 %======================================================
 
-step.cohesive = Cohesive_Law(step.displacement.total, geom.NumPoints, material,step.cohesive);
+step = Cohesive_Law(geom.NumPoints, material, step);
 
 %% Displacement jump must result in opposing traction
 %step.cohesive.traction = -step.cohesive.traction;

@@ -13,7 +13,7 @@ cohesive.traction = zero_stepsintpoints;
 
 for timestep=1:NumSteps
   
-  step.displacement=displacement(timestep);
+  step.displacement.total=displacement(timestep);
   step.cohesive.lambda=cohesive.lambda(timestep,:);
   step.cohesive.lambda_max=cohesive.lambda_max(timestep,:);
   step.cohesive.loading=cohesive.loading(timestep,:);

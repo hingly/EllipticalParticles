@@ -17,10 +17,10 @@ function [step] = Cohesive_Law(NumPoints, material, step)
 
 
 % --- delopen is the critical opening displacement (Delta n_c)
-delopen=material.delopen;
+delopen = material.delopen;
 
 % --- delslide is the critical sliding displacement (Delta t_c)
-delslide=material.delslide;
+delslide = material.delslide;
 
 % --- gint is the cohesive energy
 gint=material.gint;
@@ -32,7 +32,7 @@ lambda_e=material.lambda_e;
 zero_intpoints=zeros(1,NumPoints);
 
 % displacement
-displacement = step.displacement; 
+displacement = step.displacement.total; 
 
 % Previous maximum damage
 lambda_max=step.cohesive.lambda_max;
