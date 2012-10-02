@@ -5,4 +5,4 @@ soln.sk(tt,:)=soln.sk(tt-1,:);
 
 stepcoh.lambda_max=cohesive.lambda_max(tt-1,:);
 stepcoh.loading=cohesive.loading(tt-1,:);
-stepload.MacroStrain(1)=loads.MacroStrain(tt,1);
+stepload.MacroStrain(1)=loads.DriverStrain(tt);

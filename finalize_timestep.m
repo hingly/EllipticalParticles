@@ -3,15 +3,17 @@ function [cohesive, displacement, loads, potential]=finalize_timestep(stepcoh, s
 % This subroutine writes step quantities to global quantities at the
 % end of a converged loadstep.  
 
-tolerance=1e-8;
-if abs(loads.MacroStrain(tt,1)-stepload.MacroStrain(1))<tolerance
-  loads.MacroStrain(tt,:)=stepload.MacroStrain(:);
-else
-  error('stepload.MacroStrain has been changed!!!');
-end
-
+loads.MacroStrain(tt,:)=stepload.MacroStrain(:);
 loads.MacroStress(tt,:)=stepload.MacroStress(:);
 loads.Sigma_m(tt,:)=stepload.Sigma_m(:);
+
+epsilon=1e-8;
+assert(allequal(loads.MacroStrain(tt,1), loads.DriverStrain(tt),epsilon), ...
+       'stepload.MacroStrain has been changed!!!')
+
+
+
+
 
 
 displacement.farfield(tt,:)=stepdisp.farfield(:);

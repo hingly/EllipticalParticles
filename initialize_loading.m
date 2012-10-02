@@ -28,7 +28,7 @@ function [loads,soln,displacement,cohesive,potential,stepload,stepcoh]=initializ
   % Load stepping occurs in macroscopic strain component epsilon_11 - populate those elements of the macroscopic
   % strain matrix.  (Epsilon_22 and epsilon_12 will be solved for.)
 
-  loads.MacroStrain(:,1)=linspace(loads.MinimumStrain, loads.MaximumStrain, loads.timesteps);
+  loads.DriverStrain=linspace(loads.MinimumStrain, loads.MaximumStrain, loads.timesteps);
 
 
 %---------------------------------------------
@@ -136,14 +136,14 @@ potential.psicoh=zero_timestep_intpoints;
     % sigma_p_22 is scaled by the imposed macroscopic strain
     
     soln.Sigma_p(tt,1) = 0;
-    soln.Sigma_p(tt,2) = - loads.MacroStrain(tt,1)*material.E_m/((1+material.nu_m)*material.nu_m);
+    soln.Sigma_p(tt,2) = - loads.DriverStrain(tt)*material.E_m/((1+material.nu_m)*material.nu_m);
     soln.Sigma_p(tt,3) = soln.Sigma_p(tt,2)*loads.StressRatio_12_22;
 
     % Eps_int_11 is the same as the imposed macroscopic strain
     % Eps_int_22 is scaled by Poisson effect
     % Eps_int_12 is scaled by shape of macroscopic stress 
 
-    soln.Eps_int(tt,1) = loads.MacroStrain(tt,1);
+    soln.Eps_int(tt,1) = loads.DriverStrain(tt);
     soln.Eps_int(tt,2) = - soln.Eps_int(tt,1)*(1-material.nu_m)/material.nu_m;
     soln.Eps_int(tt,3) = soln.Eps_int(tt,2)*loads.StressRatio_12_22;  
     
@@ -153,7 +153,7 @@ potential.psicoh=zero_timestep_intpoints;
     % Sigma_p has the same shape as the imposed macroscopic stress,
     % sigma_p_11 is scaled by the imposed macroscopic strain
   
-    soln.Sigma_p(tt,1) = loads.MacroStrain(tt,1)*material.E_m;
+    soln.Sigma_p(tt,1) = loads.DriverStrain(tt)*material.E_m;
     soln.Sigma_p(tt,2) = soln.Sigma_p(tt,1)*loads.StressRatio_22;
     soln.Sigma_p(tt,3) = soln.Sigma_p(tt,1)*loads.StressRatio_12;
 
@@ -161,14 +161,14 @@ potential.psicoh=zero_timestep_intpoints;
     % Eps_int has the same shape as the imposed macroscopic stress,
     % eps_int_11  is the same as the imposed macroscopic strain
 
-    soln.Eps_int(tt,1) = loads.MacroStrain(tt,1);
+    soln.Eps_int(tt,1) = loads.DriverStrain(tt);
     soln.Eps_int(tt,2) = soln.Eps_int(tt,1)*loads.StressRatio_22;
     soln.Eps_int(tt,3) = soln.Eps_int(tt,1)*loads.StressRatio_12;   
   end
     
   % Initialise loading data for timesteps
   stepload.MacroStrain=zero_matrix;
-  stepload.MacroStrain(1)=loads.MacroStrain(tt,1);
+  stepload.MacroStrain(1)=loads.DriverStrain(tt);
   stepload.MacroStress=zero_matrix;
   stepload.Sigma_m=zero_matrix;
   stepcoh.lambda_max=zero_intpoints;
