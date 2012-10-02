@@ -102,12 +102,16 @@ can't update anything inside residual.m
 *** DONE circular equibiaxial loading
 *** TODO other geometry/loading 
 
-** DONE Test read_input.m.m
+** DONE Test read_input.m
 
 
 ** TODO Test initialize_loading.m
-    Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
+*** DONE Refactor into more useful files
+*** TODO Test calculate_imposed_stress.m
+   Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
     - see p.9 of Denel notebook
+*** TODO Test first_guess_soln.m
+
 ** TODO Test finalize_timestep.m
 ** TODO Test incorporate_previous_timestep.m
 
@@ -208,7 +212,7 @@ can't update anything inside residual.m
        ---Removed from subroutine farfieldstress 16/7/2012 but still need to check reasoning
 ** TODO Timestep shouldn't be needed in stack or unstack Carl has ideas 
    load should be an array of structures rather than a structure containing arrays
-** TODO Can I have a structure of structures? i.e. step.disp.etc and final.disp.etc? or steppot.coh.phi, steppot.ff.phi?
+** DONE Can I have a structure of structures? i.e. step.disp.etc and final.disp.etc? or steppot.coh.phi, steppot.ff.phi?
 ** TODO Do I want stepsoln?
 ** DONE How to update one timestep of a structure without putting the structure in input as well as output parameters of function  - see unstack.m. Ask Carl
 ** TODO Does it matter what the units of delopen and a and b are, as long as they're the same?
