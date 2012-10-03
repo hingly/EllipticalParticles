@@ -122,9 +122,9 @@ can't update anything inside residual.m
 ** TODO Test final.m
 ** TODO Test common.m
 
-** TODO Test farfieldpotential.m
-   --- comparing to a Timoshenko solution - no agreement, must check derivations
-
+** DONE Test farfieldpotential.m
+   --- comparing to a Timoshenko solution - no agreement because Timoshenko solution is only part of the solution - superposition, must check derivations
+   --- now checking for circular particle under any loading.
 
 
 ** TODO sign of cohesive traction, and document
@@ -132,7 +132,6 @@ can't update anything inside residual.m
 
 
 ** DONE Failure is not starting at zero degrees even when load is applied at zero degrees.  Weird. 7/8/12
-** TODO Problem with the way lambda_max is being handled
 ** TODO Think about how and what to output
    -- output to json file
    --- need to make compund output file name
@@ -140,14 +139,16 @@ can't update anything inside residual.m
 ** TODO plot displaced shape
 
 
-** TODO problem with loading angles (I don't accept omega=pi/2) see p.67
+** TODO problem with loading angles (I don't accept omega=pi/2) see p.67 - I don't think this is a problem any longer.
 ** TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
+** TODO Problem with the way lambda_max is being handled
+
 ** TODO How do I want to handle damage under normal compression?  
    -- At the moment I accumulate damage, but compensate for slope in normal mode.  
       But large normal compression and no shear could still result in substantial damage - this is wrong
 ** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
 
-** DONE characterise accuracy of averages.m (there's this even, odd thing)
+** DONE characterise accuracy of averages.m (there's this even, odd thing) --- not necessary since we must have an even number of points
 
 
 
@@ -169,6 +170,8 @@ can't update anything inside residual.m
    --- This is a test case, not a unit test.
 
 ** TODO Zero sigmax will be equivalent to no inclusion
+
+** TODO Timoshenko solution for problem under farfield loading - resolve issue with incomplete solution in Timoshenko
 
 
 * TODO Implement Optimisation Algorithms for Non-linear solver problem
