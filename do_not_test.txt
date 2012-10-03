@@ -3,6 +3,8 @@ Cohesive_test_common.m
 Cohesive_test_input.m
 timoshenko_potentials.m
 timoshenko_farfield.m
+check_farfield_circle.m
+old_test_farfieldpotential_timoshenko.m
 check_geom.m
 check_material.m
 read_input.m

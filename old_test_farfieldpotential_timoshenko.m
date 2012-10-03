@@ -1,4 +1,4 @@
-function test_farfieldpotential_timoshenko
+function old_test_farfieldpotential_timoshenko
 
 % Test of farfieldpotential.m subroutine by comparing potentials output with
 % those given in Timoshenko and Goodier  pp214-215,
@@ -55,7 +55,7 @@ for S = Slist
 
 
     %---------------------------------------------------------------
-    % My solution for pressure on a part of the interface
+    % My solution for far field loading
     %===============================================================
 
     for jj=1:geom.NumPoints
