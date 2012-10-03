@@ -42,8 +42,15 @@ loads.SigBar_xy=zero_matrix;
 %--------------------------------------------------------------
 
 if loads.SigBar_xy(1) < stress_epsilon
-  % Ratio of sigma_12 to sigma_22
-  loads.StressRatio_12_22 = loads.SigBar_xy(3)/loads.SigBar_xy(2);
+  if loads.SigBar_xy(2) < stress_epsilon
+    error(['Cannot continue for case when AppliedLoadAngle = ' ...
+           num2str(loads.AppliedLoadAngle) ' and SigmaBarRatio = ' ...
+           num2str(loads.SigmaBarRatio)]);    
+  else
+    % Ratio of sigma_12 to sigma_22
+    loads.StressRatio_12_22 = loads.SigBar_xy(3)/ ...
+        loads.SigBar_xy(2);
+  end
 else
   % Ratio of sigma_22 to sigma_11
   loads.StressRatio_22 = loads.SigBar_xy(2)/loads.SigBar_xy(1);    
