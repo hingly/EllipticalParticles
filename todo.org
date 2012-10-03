@@ -100,22 +100,23 @@ can't update anything inside residual.m
 *** TODO other geometry/loading 
 ** Test Afunc.m
 *** DONE circular equibiaxial loading
-*** TODO other geometry/loading 
+*** DONE other geometry/loading 
 
 ** DONE Test read_input.m
 
 
 ** TODO Test initialize_loading.m
 *** DONE Refactor into more useful files
-*** TODO Test calculate_imposed_stress.m
+*** DONE Test calculate_imposed_stress.m
    Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
     - see p.9 of Denel notebook
 *** TODO Test first_guess_soln.m
 
-** TODO Test finalize_timestep.m
+** DONE Test finalize_timestep.m
+
 ** TODO Test incorporate_previous_timestep.m
 
-
+** TODO Test loadsteploop.m
 
 ** TODO Test residual.m
 ** TODO Test final.m
@@ -129,9 +130,8 @@ can't update anything inside residual.m
 ** TODO sign of cohesive traction, and document
 
 
-** TODO Zero sigmax will be equivalent to no inclusion
 
-** TODO Failure is not starting at zero degrees even when load is applied at zero degrees.  Weird. 7/8/12
+** DONE Failure is not starting at zero degrees even when load is applied at zero degrees.  Weird. 7/8/12
 ** TODO Problem with the way lambda_max is being handled
 ** TODO Think about how and what to output
    -- output to json file
@@ -167,6 +167,8 @@ can't update anything inside residual.m
    --- is there a way to use variables in json file? - I suppose we could write a json file?
    --- 3-stage test (1) write json file (2) run code (3) run tests
    --- This is a test case, not a unit test.
+
+** TODO Zero sigmax will be equivalent to no inclusion
 
 
 * TODO Implement Optimisation Algorithms for Non-linear solver problem
