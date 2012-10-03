@@ -11,15 +11,17 @@ material.mu_m = material.E_m/(2*(1 + material.nu_m));
 material.kappa_m = 3 + 4*material.nu_m;
     
 
-
-%--------------------------------------------------
-% For a circular hole under equibiaxial loading
-%=================================================
 geom.a = 10;
 geom.b = 10;
 geom.NumPoints = 20;
 
 geom = calculate_geometry(geom);
+
+
+%--------------------------------------------------
+% For a circular hole under equibiaxial loading
+%=================================================
+
 
 N1 = 10;
 
@@ -37,4 +39,5 @@ disp_check=ones(1, geom.NumPoints)*geom.R*N1*(material.kappa_m+1)/(4*material.mu
 assert(imag(disp)<epsilon, 'Tangential displacement not calculated correctly')
 assert(allequal(real(disp), disp_check, epsilon), ['Normal displacement ' ...
                     'not calculated correctly'])
+
 

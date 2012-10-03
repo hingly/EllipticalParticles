@@ -97,7 +97,8 @@ can't update anything inside residual.m
 
 ** Test calculatedisplacement.m
 *** DONE circular equibiaxial loading
-*** TODO other geometry/loading 
+*** DONE other geometry/loading 
+    --- not sure that this is a sensible test - too hard to come up with a test function.  Shelve for later?
 ** Test Afunc.m
 *** DONE circular equibiaxial loading
 *** DONE other geometry/loading 
@@ -172,6 +173,8 @@ can't update anything inside residual.m
 ** TODO Zero sigmax will be equivalent to no inclusion
 
 ** TODO Timoshenko solution for problem under farfield loading - resolve issue with incomplete solution in Timoshenko
+** TODO How to test calculatedisplacement.m function for more complicated geometry/loading than circle/equibiaxial?
+   --- Could just check that displacements are not tangential at extreme points of ellipse under equibiaxial loading?
 
 
 * TODO Implement Optimisation Algorithms for Non-linear solver problem
