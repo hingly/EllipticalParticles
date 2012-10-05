@@ -111,17 +111,20 @@ can't update anything inside residual.m
 *** DONE Test calculate_imposed_stress.m
    Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
     - see p.9 of Denel notebook
-*** TODO Test first_guess_soln.m
+*** DONE Test first_guess_soln.m
 
 ** DONE Test finalize_timestep.m
 
 ** TODO Test incorporate_previous_timestep.m
 
-** TODO Test loadsteploop.m
 
+** TODO Test loadsteploop.m
 ** TODO Test residual.m
 ** TODO Test final.m
 ** TODO Test common.m
+
+
+
 
 ** DONE Test farfieldpotential.m
    --- comparing to a Timoshenko solution - no agreement because Timoshenko solution is only part of the solution - superposition, must check derivations
