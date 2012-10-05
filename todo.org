@@ -98,7 +98,7 @@ can't update anything inside residual.m
 ** Test calculatedisplacement.m
 *** DONE circular equibiaxial loading
 *** DONE other geometry/loading 
-    --- not sure that this is a sensible test - too hard to come up with a test function.  Shelve for later?
+    --- Test extremum values for circle under general non-rotated loading - no tangential displacement.
 ** Test Afunc.m
 *** DONE circular equibiaxial loading
 *** DONE other geometry/loading 
@@ -106,7 +106,7 @@ can't update anything inside residual.m
 ** DONE Test read_input.m
 
 
-** TODO Test initialize_loading.m
+** DONE Test initialize_loading.m
 *** DONE Refactor into more useful files
 *** DONE Test calculate_imposed_stress.m
    Also check that the sign of alpha is handled correctly when calculating alpha_1 and alpha_2 
@@ -114,6 +114,7 @@ can't update anything inside residual.m
 *** DONE Test first_guess_soln.m
 
 ** DONE Test finalize_timestep.m
+
 
 ** TODO Test incorporate_previous_timestep.m
 
