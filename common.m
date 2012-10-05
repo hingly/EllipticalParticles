@@ -68,9 +68,6 @@ step.displacement.total_xy = step.displacement.farfield_xy + step.displacement.c
 
 step = Cohesive_Law(geom.NumPoints, material, step);
 
-%% Displacement jump must result in opposing traction
-%step.cohesive.traction = -step.cohesive.traction;
-
 
 step.cohesive.traction_xy = step.cohesive.traction.*exp(i.*geom.beta);
 

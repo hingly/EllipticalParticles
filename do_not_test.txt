@@ -12,3 +12,4 @@ ellipse2011.m
 finalize_timestep.m
 initialize_step_variables.m
 initialize_global_variables.m
+reset_step.m
