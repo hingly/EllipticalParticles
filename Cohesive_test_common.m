@@ -1,7 +1,6 @@
 function [cohesive] = Cohesive_test_common(NumPoints, NumSteps,  displacement, material)
 
 % initialise arrays
-zero_intpoints = zeros(1,NumPoints);
 zero_stepsintpoints = zeros(NumSteps,NumPoints);
 false_stepsintpoints = false(NumSteps,NumPoints);
 

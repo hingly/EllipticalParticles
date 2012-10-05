@@ -1,4 +1,5 @@
-function Rk = residual(input_guess, loads, material, geom, step)
+function Rk = residual(input_guess, loads, material, geom, step, tt, ...
+                       cohesive)
 
 
 
@@ -8,8 +9,12 @@ function Rk = residual(input_guess, loads, material, geom, step)
 % epsint_new, and hences calculates the residual Rk
 
 
-  % Note that sigma_p, eps_int and sk are local variables during the convergence loop -
-  % passed as vector 'input'
+% Reset step structure at beginning of convergence iteration
+step = reset_step(step, loads, tt, cohesive);
+
+
+% Note that sigma_p, eps_int and sk are local variables during the convergence loop -
+% passed as vector 'input'
 
 
 
@@ -47,7 +52,7 @@ sk = dummy.sk;
 %===============================================
 
 [N1, N2, omega] = principal(step.macro_var.Sigma_m(1), step.macro_var.Sigma_m(2),step.macro_var.Sigma_m(3));
-  
+
 
 %-----------------------------------------------
 % Compute displacements and cohesive tractions
@@ -72,7 +77,7 @@ error.Sigma_p=Sigma_p_new - Sigma_p;
 % error in Eps_int 
 error.Eps_int=Eps_int_new - Eps_int;      
 
-Rk=stack(error, loads.NumModes, 1);
+Rk=stack(error.sk, error.Sigma_p, error.Eps_int);
 
 Rk = real(Rk);
 

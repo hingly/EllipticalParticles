@@ -3,6 +3,7 @@ function soln = first_guess_soln(loads, material, geom, soln)
 stress_epsilon = 1e-5;
 
 % guess for first mode of first timestep of sk is based on size of particle
+soln.sk(1,:) = 0;
 soln.sk(1,1) = geom.a/10;
 
 %--------------------------------------

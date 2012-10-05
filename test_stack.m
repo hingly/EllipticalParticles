@@ -6,20 +6,20 @@ NumSteps=3;
 % Tolerance of error
 epsilon=1e-10;
 
-struct_in.Sigma_p=zeros(NumSteps,3);
-struct_in.Eps_int=zeros(NumSteps,3);
+Sigma_p=zeros(NumSteps,3);
+Eps_int=zeros(NumSteps,3);
 
-struct_in.Sigma_p=[3 2 1; 4 3 2; 5 4 3];
-struct_in.Eps_int=[-1 -2 -3; -2 -3 -4; -3 -4 -5];
+Sigma_p=[3 2 1; 4 3 2; 5 4 3];
+Eps_int=[-1 -2 -3; -2 -3 -4; -3 -4 -5];
 
 
 % Test for zero modes
 NumModes=0;
-struct_in.sk = zeros(NumSteps, NumModes+1);
-struct_in.sk = [4+2i; 3-5i; i];
+sk = zeros(NumSteps, NumModes+1);
+sk = [4+2i; 3-5i; i];
 
 for tt=1:NumSteps
-  vect_out_0(tt, :) = stack(struct_in, NumModes, tt);
+  vect_out_0(tt, :) = stack(sk(tt,:), Sigma_p(tt,:), Eps_int(tt,:));
 end
 vector_check = [4 2 3 2 1 -1 -2 -3; ...
                 3 -5 4 3 2 -2 -3 -4; ...
@@ -29,12 +29,12 @@ assert(allequal(vect_out_0, vector_check, epsilon), ...
 
 % Test for two modes
 NumModes = 2;
-struct_in.sk = zeros(NumSteps, NumModes+1);
-struct_in.sk = [4+2i 3-i 1+2i; 3-5i 0 2+6i; i -1-i 2+i];
+sk = zeros(NumSteps, NumModes+1);
+sk = [4+2i 3-i 1+2i; 3-5i 0 2+6i; i -1-i 2+i];
 
 
 for tt=1:NumSteps
-  vect_out_2(tt, :) = stack(struct_in, NumModes, tt);
+  vect_out_2(tt, :) = stack(sk(tt,:), Sigma_p(tt,:), Eps_int(tt,:));
 end
 
 vector_check=[4 3 1 2 -1 2 3 2 1 -1 -2 -3; ...

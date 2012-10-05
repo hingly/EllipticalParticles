@@ -3,29 +3,31 @@ function [cohesive, displacement, loads, macro_var, potential, soln]= ...
                   cohesive, potential)
 
 
+% Allocate step structures 
+
+  step = initialize_step_variables(loads, geom);
+
 %-----------------------------------------
 % Begin loop through loadsteps
 %=========================================
 
 for tt=1:loads.timesteps  % Loop through loading steps
   
-  % FIXME : ****  Notice: need to check that everything is getting
-  %initialised/reset properly here! ****
-  
   disp(['Beginning timestep ' num2str(tt) ' of ' num2str(loads.timesteps) ...
         ' with macroscopic strain = ' num2str(loads.DriverStrain(tt))]);
   
-  [step] = initialize_step_variables(loads, geom, tt);
-  
-  if tt>1
-    [soln, step] = ...
-        incorporate_previous_timestep(soln, cohesive, step, tt);
-  end
+
   
   % The complex fourier terms are  split into real and imaginary 
   % parts before going into the solution loop.  
-  
-  input_guess = stack(soln, loads.NumModes, tt);
+  if tt>1
+    input_guess = stack(soln.sk(tt-1,:), soln.Sigma_p(tt-1,:), ...
+                        soln.Eps_int(tt-1,:));
+  else
+    assert(tt == 1, 'Something funny happening here');
+    input_guess = stack(soln.sk(tt,:), soln.Sigma_p(tt,:), ...
+                        soln.Eps_int(tt,:));    
+  end
   
   exitflag=0;
   counter=0;
@@ -44,7 +46,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     [output,fval,exitflag] = ...
         fsolve(@(input_guess) residual(input_guess, loads, material, ...
-                                       geom, step), input_guess);
+                                       geom, step, tt, cohesive), input_guess);
     
     if exitflag<=0
       if counter>2
@@ -60,7 +62,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   soln = unstack(output,loads.NumModes,tt,soln);
 
   % Calculate final values based on converged sk, sigma_p and eps_int
-  [step] = final(soln, loads, material, geom, step, tt);
+  step = final(soln, loads, material, geom, step, tt, cohesive);
 
   % Write final step values to global values
   [cohesive, displacement, macro_var, potential] = ...

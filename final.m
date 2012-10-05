@@ -1,4 +1,4 @@
-function [step] = final(soln, loads, material, geom, step, tt)
+function [step] = final(soln, loads, material, geom, step, tt, cohesive)
 
 
 % Given converged solution, including Fourier coefficients sk, the average particle stress
@@ -7,17 +7,9 @@ function [step] = final(soln, loads, material, geom, step, tt)
 
 
 disp('Entering final...');
-%-----------------------------
-% initialise arrays
-%==============================
 
-%constants
-zero_intpoints=zeros(1,geom.NumPoints);
-
-step.cohesive.lambda_xy=zero_intpoints;
-
-
-
+% Reset step structure at beginning of convergence iteration
+step = reset_step(step, loads, tt, cohesive);
         
 %-----------------------------------------------
 % Compute macroscopic stresses and strains

@@ -41,7 +41,6 @@ lambda_max=step.cohesive.lambda_max;
 loading=step.cohesive.loading;
 
 % Initialise data
-step.cohesive.traction=zero_intpoints;
 lambda=zero_intpoints;
 
 lambda_max_temp=step.cohesive.lambda_max;
@@ -117,7 +116,7 @@ for jj=1:NumPoints
     
   elseif lambda(jj)>lambda_e && lambda(jj)<1    
     % Check for Stage II
-    if loading(jj)==1                        
+    if loading(jj)                      
       % Check for loading
       kn=ktilde*(1-lambda(jj))/lambda(jj)/delopen^2;
       kt=ktilde*(1-lambda(jj))/lambda(jj)/delslide^2;
@@ -134,7 +133,9 @@ for jj=1:NumPoints
     kt=0;
   else                                  
     % Check for errors
-    error('Incorrect value of lambda',lambda(jj));   
+    jj
+    lambda(jj)
+    error('Incorrect value of lambda');   
   end
 
   
@@ -158,7 +159,7 @@ for jj=1:NumPoints
   if lambda(jj)>=lambda_max_temp(jj)                  
     % If loading
     loading_temp(jj)=true;                                   
-    % set loading flag to 1
+    % set loading flag to true
     lambda_max_temp(jj)=lambda(jj);                  
     % update lambda_max_temp
   else
