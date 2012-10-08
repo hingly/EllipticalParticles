@@ -1,6 +1,7 @@
 function [phi, phiprime, psi] = ...
     check_farfield_circle(R, theta, alpha, omega)
 
+% Potential functions for general loading of a circular hole.  
 
 % Geometric constants
 sigma = exp(i*theta);

@@ -40,8 +40,8 @@ can't update anything inside residual.m
        --- Removed option of plane stress 30/7/2012
 
 
-* TODO Write standard tests 
-* TODO Debugging 
+* DONE Write standard tests 
+* DONE Debugging 
    -- Weeks 31 and 32 (July 30-August 10)
    -- Weeks 33-34 (August 13-August 24) 
    -- [Weeks 31 - 38 (July 30 - September 21)]
@@ -120,10 +120,7 @@ can't update anything inside residual.m
    --- restructured code to remove this function.
 
 
-** TODO Test loadsteploop.m
-** TODO Test residual.m
-** TODO Test final.m
-** TODO Test common.m
+
 
 
 
@@ -132,27 +129,7 @@ can't update anything inside residual.m
    --- comparing to a Timoshenko solution - no agreement because Timoshenko solution is only part of the solution - superposition, must check derivations
    --- now checking for circular particle under any loading.
 
-
-** TODO sign of cohesive traction, and document
-
-
-
 ** DONE Failure is not starting at zero degrees even when load is applied at zero degrees.  Weird. 7/8/12
-** TODO Think about how and what to output
-   -- output to json file
-   --- need to make compund output file name
-** TODO Output macroscopic stress and strain and plot
-** TODO plot displaced shape
-
-
-** TODO problem with loading angles (I don't accept omega=pi/2) see p.67 - I don't think this is a problem any longer.
-** TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
-** TODO Problem with the way lambda_max is being handled
-
-** TODO How do I want to handle damage under normal compression?  
-   -- At the moment I accumulate damage, but compensate for slope in normal mode.  
-      But large normal compression and no shear could still result in substantial damage - this is wrong
-** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
 
 ** DONE characterise accuracy of averages.m (there's this even, odd thing) --- not necessary since we must have an even number of points
 
@@ -180,6 +157,29 @@ can't update anything inside residual.m
 ** TODO Timoshenko solution for problem under farfield loading - resolve issue with incomplete solution in Timoshenko
 ** TODO How to test calculatedisplacement.m function for more complicated geometry/loading than circle/equibiaxial?
    --- Could just check that displacements are not tangential at extreme points of ellipse under equibiaxial loading?
+
+
+** TODO Test of critical loops
+   --- These can't be tested directly, but only through the test case procedure.
+*** TODO Test loadsteploop.m
+*** TODO Test residual.m
+*** TODO Test final.m
+*** TODO Test common.m
+
+** TODO Think about how and what to output
+   -- output to json file
+   --- need to make compund output file name
+** TODO Output macroscopic stress and strain and plot
+** TODO plot displaced shape
+
+** TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
+** TODO Problem with the way lambda_max is being handled
+
+** TODO How do I want to handle damage under normal compression?  
+   -- At the moment I accumulate damage, but compensate for slope in normal mode.  
+      But large normal compression and no shear could still result in substantial damage - this is wrong
+** TODO sigma_bar_11 close to zero but not equal to zero. ---> warning
+
 
 
 * TODO Implement Optimisation Algorithms for Non-linear solver problem
@@ -215,6 +215,8 @@ can't update anything inside residual.m
 ** TODO Fix integration bounds, absolute value p68
 ** TODO include equation for stress transformation, fix sign error p69
 ** TODO Sign convention for tractions on ellipse boundary, see if I can actually do a derivation to justify it.
+** TODO sign of cohesive traction, and document
+
 
 
 
@@ -268,6 +270,7 @@ can't update anything inside residual.m
        --- Do I have storage/speed issues?
        --- Perhaps I could only save them in final.m - that would mean sacrificing common.m? or setting an option?
        --- If I am saving them at each timestep it might be possible to loop more efficiently?
+** DONE problem with loading angles (I don't accept omega=pi/2) see p.67 - I don't think this is a problem any longer.
 
 
 
