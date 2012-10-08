@@ -1,4 +1,8 @@
-function[sigmap, epsint] = averages(dispxy, Tcohxy, geom)
+function[sigmap, epsint] = averages(dispxy, Tcohxy, geom, warningflag)
+
+if ~exist('warningflag', 'var')
+  warningflag = false;
+end
 
 % This subroutine calculates volume averages of interfacial strain
 % (equations 4.73-4.75) and particle stress (equations 4.76-4.78)
@@ -7,6 +11,7 @@ function[sigmap, epsint] = averages(dispxy, Tcohxy, geom)
 %            x,y coords, complex vector length NumPoints
 % --- Tcohxy is the cohesive traction in x,y coords, complex vector length NumPoints
 % --- geom is a structure containing geometric data
+% --- warningflag tells whether to print warnings about symmetry of Sigma_p
 
 % --- NumPoints is the number of integration points around the ellipse
 NumPoints=geom.NumPoints;
@@ -52,8 +57,10 @@ sigmap(3)=sum(real(Tcohxy).*imag(ellipse).*dS);
 sigmaptest=sum(imag(Tcohxy).*real(ellipse).*dS);
 if norm(sigmap(3)-sigmaptest)>epsilon
   symm_error = norm(sigmap(3)-sigmaptest);
-  %warning(['Sigmap is not symmetric ... error of ' num2str(symm_error) ...
-  %       ' on ' num2str(sigmap(3))])
+  if warningflag
+    warning(['Sigmap is not symmetric ... error of ' num2str(symm_error) ...
+             ' on ' num2str(sigmap(3))])
+  end
 end
 
 

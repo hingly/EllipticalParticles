@@ -54,6 +54,12 @@ for kk=1:geom.NumPoints
 end
 
 
+warningflag = true;
+%Check averages for error in Sigma_p
+[Sigma_p_new, Eps_int_new] = averages(step.displacement.total_xy, ...
+                                      step.cohesive.traction_xy, geom, warningflag);
+
+
 
 
 

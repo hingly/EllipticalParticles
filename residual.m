@@ -65,7 +65,8 @@ sk = dummy.sk;
 skc = fouriertransform(step.cohesive.traction, geom.theta, loads.NumModes);
 
 % Compute interfacial strain and average particle stress
-[Sigma_p_new, Eps_int_new] = averages(step.displacement.total_xy, step.cohesive.traction_xy, geom);
+[Sigma_p_new, Eps_int_new] = averages(step.displacement.total_xy, ...
+                                      step.cohesive.traction_xy, geom);
 
 
 % error in sk
