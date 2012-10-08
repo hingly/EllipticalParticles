@@ -36,7 +36,7 @@ R=geom.R;
 m=geom.m;
 
 % Error tolerance
-epsilon=1e-10;
+epsilon=1e-6;
 
 % area of the ellipse
 volume = pi*a*b;   
@@ -53,13 +53,14 @@ epsint(3)=sum((real(dispxy).*imag(normal) + imag(dispxy).*real(normal))/2.*dS);
 
 sigmap(1)=sum(real(Tcohxy).*real(ellipse).*dS);
 sigmap(2)=sum(imag(Tcohxy).*imag(ellipse).*dS);
-sigmap(3)=sum(real(Tcohxy).*imag(ellipse).*dS);
+sigmap(3)=sum((real(Tcohxy).*imag(ellipse) + imag(Tcohxy).*real(ellipse))/2.*dS);
 sigmaptest=sum(imag(Tcohxy).*real(ellipse).*dS);
 if norm(sigmap(3)-sigmaptest)>epsilon
   symm_error = norm(sigmap(3)-sigmaptest);
   if warningflag
     warning(['Sigmap is not symmetric ... error of ' num2str(symm_error) ...
-             ' on ' num2str(sigmap(3))])
+             ' on ' num2str(sigmap(3)) '. This might be an indication ' ...
+             'that mesh refinement is required.'])
   end
 end
 
