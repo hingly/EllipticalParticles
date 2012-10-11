@@ -37,30 +37,33 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     counter=counter+1
     
-    %****  Notice: need to check that everything is getting
-    %initialised/reset properly here! ****
     
-    
-    
-    % Solve for sk, Sigma_p, Eps_int
-    
+    % Solve for sk, Sigma_p, Eps_int    
     [output,fval,exitflag] = ...
         fsolve(@(input_guess) residual(input_guess, loads, material, ...
                                        geom, step, tt, cohesive), input_guess);
     
-    if exitflag<=0
-      if counter>2
-        error('Non-converged solution')
-      else
+    if exitflag<=0 
+      if counter < loads.NumRestarts
         input_guess=output.*(1+rand(size(input_guess))/100)
+      else
+        break
       end
+      
     end
+    
     
   end
   % end convergence loop
   
+  soln.exitflag = exitflag;
+  
+  if exitflag<=0 
+    break
+  end
+  
   soln = unstack(output,loads.NumModes,tt,soln);
-
+  
   % Calculate final values based on converged sk, sigma_p and eps_int
   step = final(soln, loads, material, geom, step, tt, cohesive);
 

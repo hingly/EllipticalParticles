@@ -32,11 +32,13 @@ function [loads, macro_var, displacement, cohesive, potential, soln] = ...
 %=============================================
 
   % Fourier coefficients --- Even numbers only from -NumModes to NumModes
-  soln.sk=nan_timestep_modes;          
+  soln.sk = nan_timestep_modes;          
   % Initialise average particle stress matrix
-  soln.Sigma_p=nan_timestep_matrix;         
+  soln.Sigma_p = nan_timestep_matrix;         
   % Initialise interfacial strain matrix
-  soln.Eps_int=nan_timestep_matrix;                  
+  soln.Eps_int = nan_timestep_matrix;     
+  % Initialise exit flags
+  soln.exitflag = nan(1,loads.timesteps);
 
   
 %---------------------------------------------
