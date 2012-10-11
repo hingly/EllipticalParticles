@@ -142,6 +142,25 @@ can't update anything inside residual.m
    -- [Week 39 (September 24 - September 28]
 
 
+
+
+** TODO Experimental design
+*** TODO Decide on factors that must vary - testcase.org
+*** TODO Decide on levels for factors
+*** TODO Decide on constraints on factor combinations
+*** TODO Experimental design strategy (full factorial, Taguchi sampling, etc)
+*** TODO System for generating input files
+*** TODO Output results in appropriate output files
+*** TODO Run code
+
+
+
+** TODO Think about how and what to output
+   -- output to json file
+   --- need to make compund output file name
+** TODO Output macroscopic stress and strain and plot
+** TODO plot displaced shape
+
 ** DONE Problem with circle under equibiaxial loading, including theoretical derivation 
 ** DONE Write tests based on this derivation
 ** TODO Test ellipse2011.m
@@ -166,11 +185,7 @@ can't update anything inside residual.m
 *** TODO Test final.m
 *** TODO Test common.m
 
-** TODO Think about how and what to output
-   -- output to json file
-   --- need to make compund output file name
-** TODO Output macroscopic stress and strain and plot
-** TODO plot displaced shape
+
 
 ** TODO There will be a problem for the case when e_11 turns out to be zero or close to zero - include warning
 ** TODO Problem with the way lambda_max is being handled
