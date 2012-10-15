@@ -80,6 +80,6 @@ error.Eps_int=Eps_int_new - Eps_int;
 
 Rk=stack(error.sk, error.Sigma_p, error.Eps_int);
 
-Rk = real(Rk);
+assert(isreal(Rk), 'Rk has complex components');
 
 
