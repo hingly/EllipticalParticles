@@ -1,4 +1,5 @@
 
+
 * DONE Code Revisions
 ** DONE Changing Variables 
    To minimise ambiguity and to Structure variables to allow structures to be passed rather than variables.    
@@ -141,7 +142,9 @@ can't update anything inside residual.m
    -- Weeks 39-40 (September 24-October 5)
    -- [Week 39 (September 24 - September 28]
 
-
+** Check Units
+** Scaling
+** Cohesive updating check
 
 
 ** TODO Experimental design
@@ -170,6 +173,9 @@ can't update anything inside residual.m
    --- is there a way to use variables in json file? - I suppose we could write a json file?
    --- 3-stage test (1) write json file (2) run code (3) run tests
    --- This is a test case, not a unit test.
+*** TODO Check behaviour of first loadstep
+
+
 
 ** TODO Zero sigmax will be equivalent to no inclusion
 
