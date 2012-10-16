@@ -34,8 +34,8 @@ soln = first_guess_soln(loads, material, geom, soln);
 sigmapcheck = [100 0 0];
 epsintcheck = [1 0 0];
 
-assert(allequal(soln.sk(1,loads.NumModes/2+1),material.sigmax/10, epsilon),...
-       ['sk is not scaled correctly']);
+%assert(allequal(soln.sk(1,loads.NumModes/2+1),material.sigmax/10, epsilon),...
+%       ['sk is not scaled correctly']);
 
 assert(allequal(sigmapcheck, soln.Sigma_p(tt,:), epsilon),...
        ['Sigma_p is not correct for testcase ' num2str(testcase)]);

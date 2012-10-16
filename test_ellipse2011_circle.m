@@ -1,15 +1,15 @@
 function test_ellipse2011_circle
 
 epsilon = 1e-5;
-
+plotflag = false;
 
 % -------------------------
 %        INPUT
 %==========================
 
 % Chosen parameters for testing
-c1list = [100];
-%c1list = [20 50 100];
+%c1list = [100];
+c1list = [20 50 100];
 c2list = [100];
 
 
@@ -22,7 +22,7 @@ for c1 = c1list
 
     geom.f = 0.4; 
 
-    loads.timesteps = 1;
+    loads.timesteps = 4;
     loads.MinimumStrain = 0.001;
 
     % Proportional parameters
@@ -77,9 +77,11 @@ for c1 = c1list
     lineys = [0 N1a N1b N1c];
     linexs = [0 lambda_e*delopen delopen delopen*2];
 
-    figure(1);
-    plot(linexs, lineys,'b-');
-    hold on;
+    if plotflag
+      figure(1);
+      plot(linexs, lineys,'b-');
+      hold on;
+    end
 
     %-----------------------------
     %      RUN CODE
@@ -99,9 +101,6 @@ for c1 = c1list
     checkstrain = zeros(1,loads.timesteps);
 
     lambda = cohesive.lambda(:,1);
-    
-    macro_var
-    soln
 
     for tt=1:loads.timesteps
       
@@ -197,14 +196,19 @@ for c1 = c1list
     %--------------------------------------------
     % Check that points lie on correct u-N curve
     %============================================
+    if plotflag
       plot(xs, ys,'kx');
+    end
+    
     epsilon2=1e-5;  
     distances = points_to_lines(xs, ys, linexs, lineys);
     assert(allequal(distances, zeros(size(distances)), epsilon), ...
            ['Incorrect displacement-force pair generated']);
     
-    %  figure
-    %  plot(checkstrain, ys, 'bx-');
-    
+    if plotflag
+      figure
+      plot(checkstrain, ys, 'bx-');
+    end
+      
   end
 end

@@ -32,12 +32,14 @@ for tt=1:loads.timesteps  % Loop through loading steps
   exitflag=0;
   counter=0;
   
-  %TODO: Figure out proper scaling values
-  default_values = zeros(size(input_guess));
-  variance = ones(size(input_guess));
+%   %TODO: Figure out proper scaling values
+%   default_values = zeros(size(input_guess));
+%   variance = ones(size(input_guess));
+
+  [default_values, variance] = scaling_values(loads, material);
   scale = @(x) (x - default_values)./variance;
   unscale = @(x) x.*variance + default_values;
-  
+
   while exitflag<=0                    
     % Convergence loop
     
@@ -52,8 +54,6 @@ for tt=1:loads.timesteps  % Loop through loading steps
     [scaled_output, scaled_fval, exitflag] = fsolve(scaled_residuals, scaled_input_guess);
     output = unscale(scaled_output);
     fval = scaled_fval.*variance;
-    scaled_fval
-    output
     
     if exitflag<=0 
       if counter < loads.NumRestarts
