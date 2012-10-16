@@ -24,7 +24,7 @@ loads.NumRestarts = 0;
 
 geom.NumPoints = 20;
 
-NumGuesses = 10000;
+NumGuesses = 1000;
 
 rand("seed", 00);
 % Generate random numbers between -10 and 10 to use as input guesses
@@ -36,11 +36,10 @@ c1list = [50];
 c2list = [100];
 strainlist = [0.001 0.002 0.005 0.01];
 
-for c1 = c1list
-  for c2 = c2list
-    for strain = strainlist
-
-      for ii = 1:NumGuesses
+for ii = 1:NumGuesses      
+  for c1 = c1list
+    for c2 = c2list
+      for strain = strainlist
         
         ii
         
