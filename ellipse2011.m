@@ -4,6 +4,10 @@ if ~exist('filename', 'var')
   filename=input('Enter the complete input filename: ','s');
 end
 
+datestring = clock;
+disp([num2str(datestring(4)) ':' num2str(datestring(5)) ' on ' ...
+      num2str(datestring(3)) '/' num2str(datestring(2)) '/' num2str(datestring(1)) ]);
+
 % This is the main driver code in the new improved 2011 version of the ellipse code.  
 
 %------------------------------------------------------------------
