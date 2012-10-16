@@ -20,7 +20,9 @@
 		"AppliedLoadAngle": 0,
 		"timesteps": 1,
 		"MinimumStrain": 0.001,
-		"LoadFactor": 1
+		"LoadFactor": 1,
+		"NumRestarts" : 2
+
 	},
 	"post": {
 		"scale": 1
