@@ -9,6 +9,7 @@ loads.DriverStrain = [1 2];
 
 material.E_m = 100;
 material.nu_m = 0.3;
+material.sigmax = 1;
 
 geom.a = 1;
 
@@ -33,7 +34,7 @@ soln = first_guess_soln(loads, material, geom, soln);
 sigmapcheck = [100 0 0];
 epsintcheck = [1 0 0];
 
-assert(allequal(soln.sk,zero_timestep_modes, epsilon),...
+assert(allequal(soln.sk(1,loads.NumModes/2+1),material.sigmax/10, epsilon),...
        ['sk is not scaled correctly']);
 
 assert(allequal(sigmapcheck, soln.Sigma_p(tt,:), epsilon),...
