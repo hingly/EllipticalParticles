@@ -4,7 +4,7 @@ function [loads, macro_var, displacement, cohesive, potential, soln] = ...
   % This subroutine initializes all the loading, stress and strain arrays, and computes the 
   % imposed macroscopic stress in local rather than principal coordinates.
  
-  disp('Initializing global variables...');
+  %disp('Initializing global variables...');
   
   
   % constants

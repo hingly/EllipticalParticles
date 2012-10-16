@@ -57,7 +57,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     if exitflag<=0 
       if counter < loads.NumRestarts
-        input_guess=output.*(1+rand(size(input_guess))/100)
+        input_guess=output.*(1+rand(size(input_guess))/100);
       else
         break
       end
