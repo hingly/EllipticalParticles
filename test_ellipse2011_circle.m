@@ -22,7 +22,7 @@ for c1 = c1list
 
     geom.f = 0.4; 
 
-    loads.timesteps = 4;
+    loads.timesteps = 1;
     loads.MinimumStrain = 0.001;
 
     % Proportional parameters
@@ -77,9 +77,9 @@ for c1 = c1list
     lineys = [0 N1a N1b N1c];
     linexs = [0 lambda_e*delopen delopen delopen*2];
 
-    %figure(1);
-    %plot(linexs, lineys,'b-');
-    %hold on;
+    figure(1);
+    plot(linexs, lineys,'b-');
+    hold on;
 
     %-----------------------------
     %      RUN CODE
@@ -99,6 +99,9 @@ for c1 = c1list
     checkstrain = zeros(1,loads.timesteps);
 
     lambda = cohesive.lambda(:,1);
+    
+    macro_var
+    soln
 
     for tt=1:loads.timesteps
       
@@ -111,7 +114,8 @@ for c1 = c1list
       N3 = macro_var.Sigma_m(tt,3);
       
       assert(allequal(N1,N2,epsilon), ['N2 not equal to N1 for timestep ' ...
-                          num2str(tt)]);
+                          num2str(tt) ', N1 = ' num2str(N1) ' N2 = ' ...
+                          num2str(N2)]);
       assert(N3<epsilon, ['N3 not equal to zero for timestep ' num2str(tt)]); 
       
       
@@ -193,7 +197,7 @@ for c1 = c1list
     %--------------------------------------------
     % Check that points lie on correct u-N curve
     %============================================
-    %  plot(xs, ys,'kx');
+      plot(xs, ys,'kx');
     epsilon2=1e-5;  
     distances = points_to_lines(xs, ys, linexs, lineys);
     assert(allequal(distances, zeros(size(distances)), epsilon), ...
