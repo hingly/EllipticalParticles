@@ -50,7 +50,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
     scaled_residuals = @(x) residual(unscale(x), loads, material, ...
                                      geom, step, tt, cohesive)./variance;
     
-    guess_fval = scaled_residuals(scaled_input_guess)
+    guess_fval = scaled_residuals(scaled_input_guess);
     [scaled_output, scaled_fval, exitflag] = fsolve(scaled_residuals, scaled_input_guess);
     output = unscale(scaled_output);
     fval = scaled_fval.*variance;

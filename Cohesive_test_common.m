@@ -9,6 +9,7 @@ cohesive.lambda_max = zero_stepsintpoints;
 cohesive.loading = false_stepsintpoints;
 cohesive.traction = zero_stepsintpoints;
 
+cohesive.loading(1,:) = true;
 
 for timestep=1:NumSteps
   

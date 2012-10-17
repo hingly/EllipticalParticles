@@ -8,7 +8,8 @@ plotflag = true;
 %==========================
 
 % Chosen parameters for testing
-c1list = [20 50 100];
+c1list = [50]
+%c1list = [20 50 100];
 c2list = [100];
 flist = [0.4];
 
@@ -27,8 +28,8 @@ for c1 = c1list
       
       geom.f = f;
 
-      loads.timesteps = 4;
-      loads.MinimumStrain = 0.001;
+      loads.timesteps = 1;
+      loads.MinimumStrain = 0.003;
       
       % Proportional parameters
       R = c1*material.delopen;
