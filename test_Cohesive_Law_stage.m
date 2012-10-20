@@ -2,7 +2,7 @@ function test_Cohesive_Law_stage
 
   [material, epsilon, NumPoints] = Cohesive_test_input;
 
-  plotflag = true;
+  plotflag = false;
   
   % Number of steps in the displacement vector
   NumSteps=10;

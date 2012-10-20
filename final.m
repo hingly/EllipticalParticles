@@ -6,7 +6,7 @@ function [step] = final(soln, loads, material, geom, step, tt, cohesive)
 % strains, cohesive tractions and cohesive damage 
 
 
-disp('Entering final...');
+%disp('Entering final...');
 
 % Reset step structure at beginning of convergence iteration
 step = reset_step(step, loads, tt, cohesive);
