@@ -1,8 +1,9 @@
-function[sigmap, epsint] = averages(dispxy, Tcohxy, geom, warningflag)
+function[sigmap, epsint, out_error] = averages(dispxy, Tcohxy, geom, warningflag)
 
 if ~exist('warningflag', 'var')
   warningflag = false;
 end
+
 
 % This subroutine calculates volume averages of interfacial strain
 % (equations 4.73-4.75) and particle stress (equations 4.76-4.78)
@@ -55,8 +56,8 @@ sigmap(1)=sum(real(Tcohxy).*real(ellipse).*dS);
 sigmap(2)=sum(imag(Tcohxy).*imag(ellipse).*dS);
 sigmap(3)=sum((real(Tcohxy).*imag(ellipse) + imag(Tcohxy).*real(ellipse))/2.*dS);
 sigmaptest=sum(imag(Tcohxy).*real(ellipse).*dS);
-if norm(sigmap(3)-sigmaptest)>epsilon
-  symm_error = norm(sigmap(3)-sigmaptest);
+symm_error = norm(sigmap(3)-sigmaptest);
+if symm_error > epsilon
   if warningflag
     warning(['Sigmap is not symmetric ... error of ' num2str(symm_error) ...
              ' on ' num2str(sigmap(3)) '. This might be an indication ' ...
@@ -69,3 +70,6 @@ epsint=epsint/volume;
 sigmap=sigmap/volume;
 
 
+if nargout > 2
+  out_error = symm_error;
+end

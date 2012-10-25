@@ -56,10 +56,10 @@ end
 
 warningflag = true;
 %Check averages for error in Sigma_p
-[Sigma_p_new, Eps_int_new] = averages(step.displacement.total_xy, ...
+[Sigma_p_new, Eps_int_new, Symm_error] = averages(step.displacement.total_xy, ...
                                       step.cohesive.traction_xy, geom, warningflag);
 
 
-
+step.symm_error = Symm_error;
 
 
