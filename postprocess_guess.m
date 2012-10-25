@@ -97,7 +97,6 @@ for loadcase = 1:4
               
             else
               step = initialize_step_variables(loads, geom);
-              break
             end
 
             data.step = step;
