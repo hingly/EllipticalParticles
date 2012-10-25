@@ -55,7 +55,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
     output = unscale(scaled_output);
     fval = scaled_fval.*variance;
     
-    if exitflag<=0 
+    if exitflag ~= 1 
       if counter < loads.NumRestarts
         input_guess=output.*(1+rand(size(input_guess))/100);
       else
@@ -68,9 +68,9 @@ for tt=1:loads.timesteps  % Loop through loading steps
   end
   % end convergence loop
   
-  soln.exitflag = exitflag;
+  soln.exitflag(tt) = exitflag;
   
-  if exitflag<=0 
+  if exitflag ~= 1 
     break
   end
   
