@@ -24,6 +24,14 @@ try:
 except ImportError:
     simpleargs = True
 
+def flattenlist(l):
+    if type(l) is not list:
+        yield l
+    else:
+        for item in l:
+            for elem in flattenlist(item):
+                yield elem
+                
 
 if __name__=="__main__":
     if simpleargs:
@@ -45,8 +53,11 @@ if __name__=="__main__":
             current = contents
             for pathitem in item.split('/'):
                 current = current[pathitem]
+                if type(current) is dict and '_ArrayData_' in current:
+                    current = current['_ArrayData_']
+                    break
             if type(current) is list:
-                outrow += current
+                outrow += list(flattenlist(current))
             else:
                 outrow.append(current)
         out.writerow(outrow)
