@@ -1,4 +1,4 @@
-function jay_loading
+function equi_loading
 
 
 epsilon = 1e-5;
@@ -16,10 +16,10 @@ material.cohscale = 1;
 
 post.scale = 1;
 
-loads.NumModes = 30;
+loads.NumModes = 10;
 loads.NumRestarts = 0;
 
-geom.NumPoints = 60;
+geom.NumPoints = 30;
 
 NumGuesses = 10;
 
@@ -31,28 +31,13 @@ random_guess = (rand(NumGuesses, 2*loads.NumModes + 8) - 0.5)*20;
 % Chosen parameters for testing
 c1list = [20 50 100];
 c2list = [100 200 500];
-%ratiolist = [0 0.5 1 -0.5 -1]; 
-ratiolist = [-0.5 -1]; 
-anglelist = [0 30]*pi/180;
-strainlist = [linspace(0.0004, 0.04, 100)];
+flist = [0.1 0.2 0.3 0.4 0.5]; 
+strainlist = [linspace(0.0002, 0.005, 11)];
 
 
 for c1 = c1list
   for c2 = c2list
-    for angle = anglelist       
-      for ratio = ratiolist
-              
-        if abs(ratio) < epsilon
-          rationame = 'uni';
-        elseif abs(ratio - 0.5) < epsilon
-          rationame = 'half';
-        elseif abs(ratio - 1) < epsilon
-          rationame = 'equi';
-        elseif abs(ratio + 0.5) < epsilon
-          rationame = 'neghalf';
-        elseif abs(ratio + 1) < epsilon
-          rationame = 'shear';  
-        end
+    for f = flist      
         
         for strain = strainlist
           for ii = 1:NumGuesses      
@@ -60,15 +45,15 @@ for c1 = c1list
             tic;
               disp(['Strain is ' num2str(strain) ' guess ' num2str(ii)]);
             
-              loads.SigmaBarRatio = ratio;
-              loads.AppliedLoadAngle = angle;
+              loads.SigmaBarRatio = 1;
+              loads.AppliedLoadAngle = 0;
               
               material.sigmax = 1;
               material.delopen = 1;
               material.lambda_e = 0.1;
               material.nu_m = 0.3;
 
-              geom.f = 0.4; 
+              geom.f = f; 
 
               loads.timesteps = 1;
               loads.MinimumStrain = strain;
@@ -166,10 +151,9 @@ for c1 = c1list
               
               % FIXME : use string concatenation to make appropriate output file names
 
-              filename = strcat(['Jay/jayrun_' num2str(ii) '_strain_' ...
+              filename = strcat(['Equibiaxial/equirun_' num2str(ii) '_strain_' ...
                                  num2str(strain*10000) '_c1_' num2str(c1) ...
-                                 '_c2_' num2str(c2) '_ratio_' rationame ...
-                                 '_angle_' num2str(angle*180/pi) '_.json']);
+                                 '_c2_' num2str(c2) '_f_' num2str(f) '_.json']);
               json = savejson('',output,filename);
               
             end

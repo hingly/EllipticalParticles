@@ -21,7 +21,7 @@ for loadcase = 1:4
     Numfiles = 201;
     aspectlist = [2 5];
   elseif loadcase == 4
-    Numfiles = 18;
+    Numfiles = 37;
     aspectlist = [1];
   end
   

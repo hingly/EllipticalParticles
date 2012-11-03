@@ -1,8 +1,10 @@
-function [loads, macro_var, displacement, cohesive, soln]=ellipse2011(filename)
+function ellipse2011(inputname)
 
-if ~exist('filename', 'var')
-  filename=input('Enter the complete input filename: ','s');
+if ~exist('inputname', 'var')
+  inputname=input('Enter the input filename including path (excluding .json): ','s');
 end
+filename = strcat([inputname '.json']);
+outputname = strcat([inputname '_output.json']);
 
 datestring = clock;
 disp([num2str(datestring(4)) ':' num2str(datestring(5)) ' on ' ...
@@ -46,10 +48,11 @@ soln = first_guess_soln(loads, material, geom, soln);
 % Loop through loadsteps
 [cohesive, displacement, loads, macro_var, potential, soln]= ...
     loadstep_loop(geom, material, loads, macro_var, soln, displacement, cohesive, ...
-                  potential);
+                  potential, inputname);
 
 
 % Write output data for JSON
+
 
 output.cohesive = cohesive;
 output.loads = loads;
@@ -60,7 +63,5 @@ output.soln = soln;
 output.material = material;
 output.geom = geom;
 
-% FIXME : use string concatenation to make appropriate output file names
-
-json = savejson('',output,'ellipse_output.json');
+json = savejson('',output,outputname);
 

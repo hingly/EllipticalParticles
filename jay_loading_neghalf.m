@@ -1,4 +1,4 @@
-function jay_loading
+function jay_loading_neghalf
 
 
 epsilon = 1e-5;
@@ -29,10 +29,9 @@ NumGuesses = 10;
 random_guess = (rand(NumGuesses, 2*loads.NumModes + 8) - 0.5)*20; 
 
 % Chosen parameters for testing
-c1list = [20 50 100];
+c1list = [50 100 20];
 c2list = [100 200 500];
-%ratiolist = [0 0.5 1 -0.5 -1]; 
-ratiolist = [-0.5 -1]; 
+ratiolist = [-0.5];  
 anglelist = [0 30]*pi/180;
 strainlist = [linspace(0.0004, 0.04, 100)];
 

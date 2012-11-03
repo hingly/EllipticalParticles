@@ -3,6 +3,9 @@
 #Start: Wed Oct 17 14:53:51 SAST 2012
 #Finish: Wed Oct 17 15:37:55 SAST 2012
 
+# python flatten.py guess_test/exitflag,guess_test/output Guess/ellipse/uniaxial/guess*strain_10_*ar_5* | tr "," "\t" > Guess/ellipse/uniaxial/strain_10_ar_5.tab.csv
+
+
 
 import csv
 import json

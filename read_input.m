@@ -18,7 +18,9 @@ check_geom(geom,loads);
 check_material(material);
 
 loads.SigmaBar1 = 1;          
-%       SigmaBar1: principal applied macroscopic stress.  We never use the magnitude, so this is set to 1
+%       SigmaBar1: principal applied macroscopic stress.  We never
+%       use the magnitude, so this is set to 1
+
 
 
 
