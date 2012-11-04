@@ -1,4 +1,4 @@
-function ellipse_testing
+function circle_testing
 
 
 epsilon = 1e-5;
@@ -25,10 +25,11 @@ c1list = [20 50 100];
 c2list = [100];
 %flist = [0.1 0.2 0.3 0.4 0.5]; 
 flist = [0.4];
-aspectlist = [2 5 10];
-ratiolist = [0];
+aspectlist = [1];
+ratiolist = [0 -0.5 -1 0.5 1];
 %anglelist = [0 15 30 45 60 75]*pi/180;
 anglelist = [0];
+lambdalist = [0.01];
 
 for c1 = c1list
   for c2 = c2list
@@ -36,6 +37,8 @@ for c1 = c1list
       for angle = anglelist       
         for ratio = ratiolist
           for aspect = aspectlist
+                        for lambda = lambdalist
+
             
             if abs(ratio) < epsilon
               rationame = 'uni';
@@ -54,7 +57,7 @@ for c1 = c1list
             
             material.sigmax = 1;
             material.delopen = 1;
-            material.lambda_e = 0.1;
+            material.lambda_e = lambda;
             material.nu_m = 0.3;
 
             geom.f = f; 
@@ -79,7 +82,7 @@ for c1 = c1list
             filename = strcat(['Ellipse_run/ellipse_c1_' num2str(c1) ...
                                '_c2_' num2str(c2) '_f_' num2str(f*100) ...
                                '_angle_' num2str(angle) '_aspect_' ...
-                               num2str(aspect) '_ratio_' ...
+                               num2str(aspect) '_lambda_e_' num2str(lambda*1000) '_ratio_' ...
                                rationame])
             
             jsonname = strcat([filename '.json']);
