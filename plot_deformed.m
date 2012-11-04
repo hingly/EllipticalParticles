@@ -1,15 +1,11 @@
-function plot_deformed(struct)
+function plot_deformed(struct, scale)
 
 ellipse = struct.geom.ellipse;
 dispxy = struct.step.displacement.total_xy;
 
-if ~exist('struct.post.scale', 'var')
-  struct.post.scale = 100;
+if ~exist('scale', 'var')
+  scale = 1;
 end
-scale = struct.post.scale;
-
-
-scale = struct.post.scale;
 
 ffxy = struct.step.displacement.farfield_xy;
 

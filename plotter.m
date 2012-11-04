@@ -12,7 +12,7 @@ aspectlist = [2];
 ratiolist = [0];
 anglelist = [0]*pi/180;
 strainlist = [linspace(1,200,200)];
-lambdalist = [0.1];
+lambdalist = [0.01 0.001];
 
 for c1 = c1list
   for c2 = c2list
@@ -21,8 +21,8 @@ for c1 = c1list
         for ratio = ratiolist
           
           for aspect = aspectlist
-            for strain = strainlist
-              for lambda = lambdalist
+            for lambda = lambdalist
+              for strain = strainlist
                 if abs(ratio) < epsilon
                   rationame = 'uni';
                 elseif abs(ratio - 0.5) < epsilon
@@ -37,7 +37,7 @@ for c1 = c1list
                 
                 if lambda == 0.1
                   lambdaname = strcat([]);
-                elseif lambda == 0.01
+                else
                   lambdaname = strcat(['_lambda_e_' num2str(lambda* ...
                                                             1000)]);
                 end
@@ -50,19 +50,19 @@ for c1 = c1list
                                    '.json']);
                 
                 data = loadjson(filename);
-                data.post.scale = 10;
+                scale = 10;
 
                 if data.converge.exitflag == 1
                   if strain == 1 && angle == 0
                     if plot_deformed_flag
-                      plot_geom(data);
+                      plot_geom(data, scale);
                     end
                     plot_stress_strain_init(data);
                   else
                     plot_stress_strain(data);
                     if plot_deformed_flag
                       if mod(strain,10) == 0
-                        plot_deformed(data);
+                        plot_deformed(data, scale);
                       end
                     end
                   end
