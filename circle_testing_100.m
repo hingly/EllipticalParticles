@@ -26,7 +26,7 @@ c2list = [100];
 %flist = [0.1 0.2 0.3 0.4 0.5]; 
 flist = [0.4];
 aspectlist = [1];
-ratiolist = [0 -0.5 -1 0.5 1];
+ratiolist = [-1];
 %anglelist = [0 15 30 45 60 75]*pi/180;
 anglelist = [0];
 lambdalist = [0.01];
@@ -62,15 +62,15 @@ for c1 = c1list
 
               geom.f = f; 
 
-              loads.timesteps = 200;
-              loads.MinimumStrain = 0.0001;
+              loads.timesteps = 191;
+              loads.MinimumStrain = 0.001;
 
               % Proportional parameters
               R = c1*material.delopen;
               geom.a = R;
               geom.b = R/aspect;
               material.E_m = c2*material.sigmax;
-              loads.LoadFactor = loads.timesteps;
+              loads.LoadFactor = 20;
               
               loads.SigmaBar1 = 1;  
               

@@ -5,14 +5,14 @@ epsilon = 1e-10;
 plot_deformed_flag = false;
 
 % Chosen parameters for testing
-c1list = [20];
+c1list = [20 50 100];
 c2list = [100];
 flist = [0.4];
-aspectlist = [2];
+aspectlist = [1];
 ratiolist = [0];
 anglelist = [0]*pi/180;
-strainlist = [linspace(1,200,200)];
-lambdalist = [0.01 0.001];
+strainlist = [linspace(1,37,37)];
+lambdalist = [0.01];
 
 for c1 = c1list
   for c2 = c2list
@@ -52,17 +52,20 @@ for c1 = c1list
                 data = loadjson(filename);
                 scale = 10;
 
+                dispfig = 1;
+                constitfig = 2;
+                
                 if data.converge.exitflag == 1
                   if strain == 1 && angle == 0
                     if plot_deformed_flag
-                      plot_geom(data, scale);
+                      plot_geom(data, dispfig, scale);
                     end
-                    plot_stress_strain_init(data);
+                    plot_stress_strain_init(data, constitfig);
                   else
-                    plot_stress_strain(data);
+                    plot_stress_strain(data, constitfig);
                     if plot_deformed_flag
                       if mod(strain,10) == 0
-                        plot_deformed(data, scale);
+                        plot_deformed(data, dispfig, scale);
                       end
                     end
                   end

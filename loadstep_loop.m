@@ -82,8 +82,9 @@ for tt=1:loads.timesteps  % Loop through loading steps
   
   soln.exitflag(tt) = exitflag;
   
+  
   if exitflag ~= 1 
-    break
+    output = output*0;
   end
 
   soln = unstack(output,loads.NumModes,tt,soln);

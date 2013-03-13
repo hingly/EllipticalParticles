@@ -1,4 +1,4 @@
-function plot_deformed(struct, scale)
+function plot_deformed(struct, f, scale)
 
 ellipse = struct.geom.ellipse;
 dispxy = struct.step.displacement.total_xy;
@@ -10,7 +10,7 @@ end
 ffxy = struct.step.displacement.farfield_xy;
 
 
-figure(1);
+figure(f);
 closedellipse = [ellipse ellipse(1)];
 closeddispxy = [dispxy dispxy(1)];
 deformed = closedellipse + scale*closeddispxy;

@@ -1,4 +1,4 @@
-function plot_geom(struct, scale)
+function plot_geom(struct, f, scale)
 
 ellipse = struct.geom.ellipse;
 dispxy = struct.step.displacement.total_xy;
@@ -11,8 +11,9 @@ end
 
 
 
-figure(1)
+figure(f)
 axis equal;
+axis([-50 50 -50 50])
 hold on;
 closedellipse = [ellipse ellipse(1)];
 closeddispxy = [dispxy dispxy(1)];
@@ -32,7 +33,6 @@ plot(deformed,'r')
 % plot(deformed,'r')
 % plot(closedellipse, 'b', 'Linewidth', 2);
 % plot(deformed,'r')
-% %title('Deformation of ellipse under far-field loading: N1=10, N2=5, omega=pi/3')
 % legend('Undeformed shape', 'Deformed shape','Location', 'NorthWest')
 % xlabel('x')
 % ylabel('y')
