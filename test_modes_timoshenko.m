@@ -100,7 +100,7 @@ for theta0 = theta0list
     psi_error = -psi_tim + psi;
     disp_error = -disp_tim + disp;
 
-    plotflag = true;
+    plotflag = false;
     
     if plotflag       
       figure(1)
