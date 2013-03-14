@@ -1,6 +1,6 @@
-function [cohesive, displacement, loads, macro_var, potential, soln]= ...
+function [cohesive, displacement, loads, macro_var, potential, percentage, soln]= ...
     loadstep_loop(geom, material, loads, macro_var, soln, displacement, ...
-                  cohesive, potential, inputname)
+                  cohesive, potential, percentage, inputname)
 
 
 % Allocate step structures 
@@ -74,9 +74,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
       end  
     end
     
-
-    
-    
+  
   end
   % end convergence loop
   
@@ -97,12 +95,8 @@ for tt=1:loads.timesteps  % Loop through loading steps
   
   % Write final step values to global values
   [cohesive, displacement, macro_var, potential, percentage] = ...
-      finalize_timestep(step, cohesive, displacement, macro_var, potential...
-                        percentage, loads, tt);
-
- 
-              
-              
+      finalize_timestep(step, cohesive, displacement, macro_var, ...
+                        potential, percentage, loads, tt); 
 
   % Write output data for JSON
   

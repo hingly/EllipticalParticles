@@ -52,7 +52,7 @@ end
 
 
 % Calculate percentages
-step.percentage = calculate_percentages(geom, material, step.cohesive, step.displacement)
+step.percentage = calculate_percentages(geom, material, step.cohesive, step.displacement);
 
 
 warningflag = true;

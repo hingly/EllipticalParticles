@@ -5,7 +5,7 @@ if ~exist('inputname', 'var')
 end
 
 if regexp(inputname, '\.json$')
-  inputname = inputname(1:end-5)
+  inputname = inputname(1:end-5);
 end
 
 filename = strcat([inputname '.json']);
@@ -39,7 +39,7 @@ geom = calculate_geometry(geom);
 % Initialize global variables
 %==================================================================
 
-[loads, macro_var, displacement, cohesive, potential, soln] = ...
+[loads, macro_var, displacement, cohesive, potential, percentage, soln] = ...
     initialize_global_variables(loads, geom, material);   
 
 % Calculate stress ratios for imposed stress
@@ -51,9 +51,9 @@ soln = first_guess_soln(loads, material, geom, soln);
 
 
 % Loop through loadsteps
-[cohesive, displacement, loads, macro_var, potential, soln]= ...
+[cohesive, displacement, loads, macro_var, potential, percentage, soln]= ...
     loadstep_loop(geom, material, loads, macro_var, soln, displacement, cohesive, ...
-                  potential, inputname);
+                  potential, percentage, inputname);
 
 
 % Write output data for JSON
@@ -64,6 +64,7 @@ output.loads = loads;
 output.macro_var = macro_var;
 output.displacement = displacement;
 output.potential = potential;
+output.percentage = percentage;
 output.soln = soln;
 output.material = material;
 output.geom = geom;
