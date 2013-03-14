@@ -28,8 +28,8 @@ for c1 = c1list
       
       geom.f = f;
 
-      loads.timesteps = 10;
-      loads.MinimumStrain = 0.001;
+      loads.timesteps = 1;
+      loads.MinimumStrain = 0.003;
       
       % Proportional parameters
       R = c1*material.delopen;
