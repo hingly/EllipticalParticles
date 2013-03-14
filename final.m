@@ -40,18 +40,19 @@ step = reset_step(step, loads, tt, cohesive);
 
 
 for kk=1:geom.NumPoints
-  if real(step.displacement.total(kk))<0
-    step.cohesive.lambda(kk)=0;
-% CHECK : This is for display purposes - not sure it's right to be doing
-  end
+  % Calculate a vector lambda_xy with magnitude lambda in the
+  % direction of the normal vector
   step.cohesive.lambda_xy(kk)=step.cohesive.lambda(kk)*geom.normal(kk);
   
   % Write lambda_max_temp and loading_temp to lambda_max and
   % loading at end of convergence loop
   step.cohesive.lambda_max=step.cohesive.lambda_max_temp;
   step.cohesive.loading=step.cohesive.loading_temp;
-  
 end
+
+
+% Calculate percentages
+step.percentage = calculate_percentages(geom, material, step.cohesive, step.displacement)
 
 
 warningflag = true;

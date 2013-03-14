@@ -5,6 +5,7 @@ function [step] = initialize_step_variables(loads, geom, tt)
   % constants
   nan_matrix = nan(1, 3);
   nan_intpoints = nan(1, geom.NumPoints);
+  nan_2vector = nan(1,2);
   false_intpoints = false(1, geom.NumPoints);
     
   % Initialise loading data for timesteps
@@ -39,6 +40,8 @@ function [step] = initialize_step_variables(loads, geom, tt)
   step.potential.phicoh = nan_intpoints;
   step.potential.phiprimecoh = nan_intpoints;
   step.potential.psicoh = nan_intpoints;
+  
+
 
   
   
