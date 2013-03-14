@@ -1,5 +1,7 @@
 function makefigures_2
 
+% makes figures by opening dat files
+
 close all;
 setenv("GNUTERM","x11")
 

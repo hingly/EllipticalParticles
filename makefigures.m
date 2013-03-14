@@ -1,5 +1,7 @@
 function makefigures
 
+% makes figures by opening original step data files
+
 close all;
 setenv("GNUTERM","x11")
 
