@@ -8,8 +8,13 @@ if regexp(inputname, '\.json$')
   inputname = inputname(1:end-5);
 end
 
-filename = strcat([inputname '.json']);
-outputname = strcat([inputname '_output.json']);
+filename = [inputname '.json'];
+
+if ~exist(inputname, 'dir')
+  mkdir(inputname);
+end
+
+outputname = [inputname '/output.json'];
 
 datestring = clock;
 disp([num2str(datestring(4)) ':' num2str(datestring(5)) ' on ' ...

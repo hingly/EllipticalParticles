@@ -107,8 +107,8 @@ for tt=1:loads.timesteps  % Loop through loading steps
   output.step = step;
               
     
-  outputname = strcat([inputname '_strain_' num2str(loads.DriverStrain(tt)*10000) ...
-                      '.json']);
+  outputname = [inputname '/strain_' num2str(loads.DriverStrain(tt)*10000) ...
+                      '.json'];
   
   json = savejson('',output,outputname);
   
