@@ -3,6 +3,11 @@ function ellipse2011(inputname)
 if ~exist('inputname', 'var')
   inputname=input('Enter the input filename including path (excluding .json): ','s');
 end
+
+if regexp(inputname, '\.json$')
+  inputname = inputname(1:end-5)
+end
+
 filename = strcat([inputname '.json']);
 outputname = strcat([inputname '_output.json']);
 
