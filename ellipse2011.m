@@ -26,19 +26,7 @@ disp([num2str(datestring(4)) ':' num2str(datestring(5)) ' on ' ...
 % Read input data and create structures for main variables
 %==================================================================
 
-[material, geom, loads, post] = read_input(filename);
-
-%---------------------------------------------------------
-% Calculate additional material parameters
-%---------------------------------------------------------
-
-material = calculate_material(material);
-
-%------------------------------------------------------------------
-% Calculate positions and angles at each point around the ellipse
-%==================================================================
-
-geom = calculate_geometry(geom);
+[material, geom, loads] = read_input(filename);
 
 %------------------------------------------------------------------
 % Initialize global variables

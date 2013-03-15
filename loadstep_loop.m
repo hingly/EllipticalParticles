@@ -100,17 +100,17 @@ for tt=1:loads.timesteps  % Loop through loading steps
 
   % Write output data for JSON
   
-  output.loads = loads;
-  output.material = material;
-  output.geom = geom;
-  output.converge = converge;
-  output.step = step;
+  outputdata.loads = loads;
+  outputdata.material = material;
+  outputdata.geom = geom;
+  outputdata.converge = converge;
+  outputdata.step = step;
               
     
   outputname = [inputname '/strain_' num2str(loads.DriverStrain(tt)*10000) ...
                       '.json'];
   
-  json = savejson('',output,outputname);
+  json = savejson('', outputdata, outputname);
   
   
 end      % end loop through loading steps
