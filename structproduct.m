@@ -1,6 +1,6 @@
-function s = structproduct(varargin)
+function s = structproduct(base, varargin)
 % STRUCTPRODUCT return a structure array with varying elements
-% arguments are field1, values1, field2, values2, etc
+% arguments are base, field1, values1, field2, values2, etc
 % Result is outer product of all values assigned to combination of fields.
 
 % Author: Carl Sandrock 
@@ -14,7 +14,7 @@ names = varargin(1, 1:2:end);
 valuecombinations = product(varargin{1, 2:2:end});
 
 s = [];
-smallstruct = struct();
+smallstruct = base;
 
 for values = valuecombinations'
     for i = 1:N/2

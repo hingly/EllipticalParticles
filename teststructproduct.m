@@ -1,6 +1,6 @@
 function teststructproduct()
 
-s = structproduct('a.b', [1, 2], 'b', [4, 5]);
+s = structproduct(struct(), 'a.b', [1, 2], 'b', [4, 5]);
 
 assert(length(s) == 4);
 assert(s(1).a.b = 1);
