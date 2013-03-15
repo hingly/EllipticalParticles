@@ -28,8 +28,8 @@ for c1 = c1list
       
       geom.f = f;
 
-      loads.timesteps = 1;
-      loads.MinimumStrain = 0.003;
+      loads.timesteps = 10;
+      loads.MinimumStrain = 0.001;
       
       % Proportional parameters
       R = c1*material.delopen;
@@ -41,8 +41,6 @@ for c1 = c1list
       % Required parameters
       material.plstrain = 1;
       material.cohscale = 1;
-
-      post.scale = 1;
 
       loads.SigmaBarRatio = 1;
       loads.AppliedLoadAngle = 0;
@@ -56,7 +54,6 @@ for c1 = c1list
       data.material = material;
       data.loads = loads;
       data.geom = geom;
-      data.post = post;
 
       % Write input file for testing
       json = savejson('',data,'ellipse_circle_test.json');
@@ -101,7 +98,7 @@ for c1 = c1list
       %=============================
 
 
-      output = loadjson('ellipse_circle_test_output.json');
+      output = loadjson('ellipse_circle_test/output.json');
       
       cohesive = output.cohesive;
       loads = output.loads;
