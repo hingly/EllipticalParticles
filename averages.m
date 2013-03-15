@@ -46,7 +46,7 @@ volume = pi*a*b;
 dtheta=2*pi/NumPoints;          
 
 %conversion from incremental angle to incremental length on circumference
-dS = R*dtheta*sqrt(1 - 2*m*cos(2*theta)+m^2);    
+dS = R*dtheta*sqrt(1 - 2*m*cos(2*theta)+m^2); 
 
 epsint(1)=sum(real(dispxy).*real(normal).*dS);
 epsint(2)=sum(imag(dispxy).*imag(normal).*dS);

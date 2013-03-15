@@ -34,8 +34,10 @@ material.kappa_m = 3 + 4*material.nu_m;
 loads.NumModes = 100;
 
 % Problem-specific data
-theta0list = [pi/2 pi/4 pi/6 pi/9 ]; 
-pressurelist = [100 -100];
+%theta0list = [pi/2 pi/4 pi/6 pi/9 ]; 
+%pressurelist = [100 -100];
+theta0list = [pi/5]; 
+pressurelist = [-100];
 scale=10;
 
 for theta0 = theta0list
@@ -102,51 +104,74 @@ for theta0 = theta0list
     
     if plotflag       
       figure(1)
-      plot(geom.theta, real(phi_tim),'r-',geom.theta, real(phi),'rx', ...
-           geom.theta, imag(phi_tim),'b-',geom.theta, imag(phi),'bx');
+      plot(geom.theta/pi, real(phi_tim),'r-','Linewidth', 2, geom.theta/pi, real(phi), ...
+           'rx', 'markersize', 2, geom.theta/pi, imag(phi_tim),'b-', 'Linewidth', 2,...
+           geom.theta/pi, imag(phi),'bx', 'markersize', 2);
+      xlabel('Angle \theta/\pi');
+      ylabel('Potential function \phi(\theta)')
+      print('-dpdf','Figures/tim_phi.pdf');
+      print('-dfig','Figures/tim_phi.fig');     
       
-      figure(2)
-      plot(geom.theta, real(phi_error),'r', geom.theta, imag(phi_error),'b');
+    %   figure(2)
+%       plot(geom.theta, real(phi_error),'r', geom.theta, imag(phi_error),'b');
       
       
-      figure(3)
-      plot(geom.theta, real(phiprime_tim),'r-',geom.theta, real(phiprime),'rx', ...
-           geom.theta, imag(phiprime_tim),'b-',geom.theta, imag(phiprime),'bx');
+%       figure(3)
+%       plot(geom.theta, real(phiprime_tim),'r-',geom.theta, real(phiprime),'rx', ...
+%            geom.theta, imag(phiprime_tim),'b-',geom.theta, imag(phiprime),'bx');
       
-      figure(4)
-      plot(geom.theta, real(phiprime_error),'r', geom.theta, imag(phiprime_error),'b')
+%       figure(4)
+%       plot(geom.theta, real(phiprime_error),'r', geom.theta, imag(phiprime_error),'b')
       
       figure(5)
-      plot(geom.theta, real(psi_tim),'r-',geom.theta, real(psi),'rx', ...
-           geom.theta, imag(psi_tim),'b-',geom.theta, imag(psi),'bx');
+      plot(geom.theta/pi, real(psi_tim),'r-','Linewidth', 2, geom.theta/pi, real(psi), ...
+           'rx', 'markersize', 2, geom.theta/pi, imag(psi_tim),'b-', 'Linewidth', 2, ...
+           geom.theta/pi, imag(psi),'bx', 'markersize', 2);
+      xlabel('Angle \theta/\pi');
+      ylabel('Potential function \psi(\theta)')
+      print('-dpdf','Figures/tim_psi.pdf');
+      print('-dfig','Figures/tim_psi.fig');
       
-      figure(6)
-      plot(geom.theta, real(psi_error),'r', geom.theta, imag(psi_error),'b');
+      
+%       figure(6)
+%       plot(geom.theta, real(psi_error),'r', geom.theta, imag(psi_error),'b');
       
       
       figure(7)
-      plot(geom.theta, real(disp_tim),'r-', geom.theta, real(disp), 'rx',...
-           geom.theta, imag(disp_tim),'b-', geom.theta, imag(disp), 'bx');
+      plot(geom.theta/pi, real(disp_tim),'r-','Linewidth', 2, geom.theta/pi, real(disp), ...
+           'rx', 'markersize', 2, geom.theta/pi, imag(disp_tim),'b-','Linewidth', 2, ...
+           geom.theta/pi, imag(disp),'bx', 'markersize', 2);
+      xlabel('Angle \theta/\pi');
+      ylabel('Displacement')
+      print('-dpdf','Figures/tim_disp.pdf');
+      print('-dfig','Figures/tim_disp.fig');
       
-      figure(8)
-      plot(geom.theta, real(disp_error),'r', geom.theta, imag(disp_error),'b');
+      
+      
+      
+      
+%       figure(8)
+%       plot(geom.theta, real(disp_error),'r', geom.theta, imag(disp_error),'b');
       
       figure(9)
       axis equal;
+      axis([-15 15 -10 10]);
       hold on;
       plot(real(geom.ellipse),imag(geom.ellipse), 'LineWidth', 2);
-      plot(real(geom.ellipse)+scale*real(dispxy), ...
-           imag(geom.ellipse)+scale*imag(dispxy),'rx-', 'Linewidth', 2)
       plot(real(geom.ellipse)+scale*real(dispxy_tim), ...
-           imag(geom.ellipse)+scale*imag(dispxy_tim),'k:', 'Linewidth', 2)
-      title('Deformation of ellipse: Timoshenko test problem')
+           imag(geom.ellipse)+scale*imag(dispxy_tim),'k', 'Linewidth', ...
+           2)
+      plot(real(geom.ellipse)+scale*real(dispxy), ...
+           imag(geom.ellipse)+scale*imag(dispxy),'rx-', 'markersize', ...
+           2, 'Linewidth',1)
+
       legend('Undeformed shape', 'Deformed shape due to internal pressure - Fourier',...
              'Deformed shape due to internal pressure - Timoshenko','Location', 'NorthWest')
-      xlabel('x')
-      ylabel('y') 
+      print('-dpdf','Figures/tim_displaced.pdf');
+      print('-dfig','Figures/tim_displaced.fig');
       
-      figure(10)
-      plot(geom.theta, abs(phiprime));
+ %      figure(10)
+%       plot(geom.theta, abs(phiprime));
     end
     
     assert(allequal(disp, disp_tim, epsilon), ...

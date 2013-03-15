@@ -1,13 +1,25 @@
-function plot_deformed(struct)
+function plot_deformed(struct, f, scale)
 
 ellipse = struct.geom.ellipse;
 dispxy = struct.step.displacement.total_xy;
-scale = struct.post.scale;
 
-figure(1);
+if ~exist('scale', 'var')
+  scale = 1;
+end
+
+ffxy = struct.step.displacement.farfield_xy;
+
+
+figure(f);
 closedellipse = [ellipse ellipse(1)];
 closeddispxy = [dispxy dispxy(1)];
 deformed = closedellipse + scale*closeddispxy;
 plot(deformed,'r')
-%title('Deformation of ellipse under far-field loading: N1=10, N2=5, omega=pi/3')
 
+
+
+%figure(2);
+%closedellipse = [ellipse ellipse(1)];
+%closedffxy = [ffxy ffxy(1)];
+%deformed = closedellipse + scale*closedffxy;
+%plot(deformed,'r')

@@ -93,14 +93,27 @@ for c1 = c1list
       %-----------------------------
       %      RUN CODE
       %=============================
-      [loads, macro_var, displacement,cohesive, soln] =  ...
-          ellipse2011('ellipse_circle_test.json');
+
+      ellipse2011('ellipse_circle_test.json');
 
       %-----------------------------
       %    POST-PROCESSING
       %=============================
 
 
+      output = loadjson('ellipse_circle_test_output.json');
+      
+      cohesive = output.cohesive;
+      loads = output.loads;
+      macro_var = output.macro_var;
+      displacement = output.displacement;
+      potential = output.potential;
+      percentage = output.percentage;
+      soln = output.soln;
+      material = output.material;
+      geom = output.geom;
+      
+      
 
       xs = zeros(1,loads.timesteps);
       ys = zeros(1,loads.timesteps);

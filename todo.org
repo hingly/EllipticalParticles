@@ -204,19 +204,24 @@ can't update anything inside residual.m
 
 
 
-* TODO Implement Optimisation Algorithms for Non-linear solver problem
-** TODO Optimisation Technique that doesn't rely on gradients 
-   -- Weeks 36-38 (September 3-21)
-   -- [Weeks 40-42 (October 1 - October 19)]
-   
-* TODO Get Results against test cases 
+  
+* DONE Get Results against test cases 
   -- Weeks 41 (October 8-12)
   -- [Weeks 43 (October 22 - 26)]
 
-* TODO Write results into Dissertation (including conclusions) 
+* DONE Write results into Dissertation (including conclusions) 
   -- Weeks 42-43 (October 15-26)
   -- [Weeks 44 (October 29 - November 2)]
   
+
+* TODO Problem of loading at an angle
+** TODO Fix problem with compression
+** TODO Output percentage of interface in (a) undamaged (b) damaged (c) failed (d) compression
+** TODO Run some cases of loading at an angle and see how the output has changed
+
+
+* TODO Derivation for equibiaxial loading of a circle - complete
+
 * TODO Distribute to the committee for approval 
   -- Weeks 44-45 (October 29-November9) 
   -- [Weeks 45-46 (November 5 - November 16)]
@@ -226,6 +231,10 @@ can't update anything inside residual.m
 
 
 
+* TODO Implement Optimisation Algorithms for Non-linear solver problem
+** TODO Optimisation Technique that doesn't rely on gradients 
+   -- Weeks 36-38 (September 3-21)
+   -- [Weeks 40-42 (October 1 - October 19)]
 
 
 * Documentation

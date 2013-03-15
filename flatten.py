@@ -3,6 +3,9 @@
 #Start: Wed Oct 17 14:53:51 SAST 2012
 #Finish: Wed Oct 17 15:37:55 SAST 2012
 
+# python flatten.py guess_test/exitflag,guess_test/output Guess/ellipse/uniaxial/guess*strain_10_*ar_5* | tr "," "\t" > Guess/ellipse/uniaxial/strain_10_ar_5.tab.csv
+
+
 
 import csv
 import json
@@ -24,6 +27,14 @@ try:
 except ImportError:
     simpleargs = True
 
+def flattenlist(l):
+    if type(l) is not list:
+        yield l
+    else:
+        for item in l:
+            for elem in flattenlist(item):
+                yield elem
+                
 
 if __name__=="__main__":
     if simpleargs:
@@ -45,8 +56,11 @@ if __name__=="__main__":
             current = contents
             for pathitem in item.split('/'):
                 current = current[pathitem]
+                if type(current) is dict and '_ArrayData_' in current:
+                    current = current['_ArrayData_']
+                    break
             if type(current) is list:
-                outrow += current
+                outrow += list(flattenlist(current))
             else:
                 outrow.append(current)
         out.writerow(outrow)

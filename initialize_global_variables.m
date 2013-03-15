@@ -1,4 +1,4 @@
-function [loads, macro_var, displacement, cohesive, potential, soln] = ...
+function [loads, macro_var, displacement, cohesive, potential, percentage, soln] = ...
     initialize_global_variables(loads, geom, material)
 
   % This subroutine initializes all the loading, stress and strain arrays, and computes the 
@@ -10,6 +10,7 @@ function [loads, macro_var, displacement, cohesive, potential, soln] = ...
   % constants
   nan_matrix = nan(1,3);
   nan_timestep_matrix = nan(loads.timesteps,3);
+  nan_timestep_2vector = nan(loads.timesteps,2);
   nan_timestep_modes=nan(loads.timesteps, loads.NumModes+1);
   nan_timestep_intpoints=nan(loads.timesteps,geom.NumPoints);
   nan_intpoints=nan(1,geom.NumPoints);
@@ -85,6 +86,16 @@ potential.phicoh=nan_timestep_intpoints;
 potential.phiprimecoh=nan_timestep_intpoints;
 potential.psicoh=nan_timestep_intpoints;
 
+
+%---------------------------------------------
+% Initialize damage percentages
+%=============================================  
+
+percentage.undamaged = nan_timestep_2vector;
+percentage.damaged = nan_timestep_2vector;
+percentage.failed = nan_timestep_2vector;
+percentage.unloading = nan_timestep_2vector;
+percentage.compression = nan_timestep_2vector;
 
 
 

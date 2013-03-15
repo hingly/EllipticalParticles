@@ -24,9 +24,9 @@ loads.NumRestarts = 0;
 
 geom.NumPoints = 20;
 
-NumGuesses = 1000;
+NumGuesses = 10;
 
-rand("seed", 00);
+
 % Generate random numbers between -10 and 10 to use as input guesses
 % (sigmax is 1 for comparison)
 random_guess = (rand(NumGuesses, 2*loads.NumModes + 8) - 0.5)*20; 
@@ -140,7 +140,7 @@ for ii = 1:NumGuesses
         output.geom = geom;
         output.guess_test = guess_test;
         output.soln = soln;
-
+        output.post = post;
         
         % FIXME : use string concatenation to make appropriate output file names
 
