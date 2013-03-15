@@ -23,5 +23,9 @@ for values = valuecombinations'
                                struct('type', '.', 'subs', field_cell),...
                                values(i));
     end
-    s = [s smallstruct];
+    if length(s) == 0
+      s = smallstruct;
+    else
+      s = [s smallstruct];
+    end
 end

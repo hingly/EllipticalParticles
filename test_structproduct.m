@@ -1,4 +1,4 @@
-function teststructproduct()
+function test_structproduct()
 
 s = structproduct(struct(), 'a.b', [1, 2], 'b', [4, 5]);
 
