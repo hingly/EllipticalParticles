@@ -167,14 +167,14 @@ can't update anything inside residual.m
 
 ** DONE Problem with circle under equibiaxial loading, including theoretical derivation 
 ** DONE Write tests based on this derivation
-** TODO Test ellipse2011.m
+** DONE Test ellipse2011.m
   --- clear that sk should have only zero mode, everything should stay real
    --- something is going wrong in going from step 1 to step 2 - everything is fine on step 1.
    --- characterise u_rho-N1 behaviour in dissertation - critical 
    --- is there a way to use variables in json file? - I suppose we could write a json file?
    --- 3-stage test (1) write json file (2) run code (3) run tests
    --- This is a test case, not a unit test.
-*** TODO Check behaviour of first loadstep
+*** DONE Check behaviour of first loadstep
 
 
 
@@ -215,8 +215,16 @@ can't update anything inside residual.m
   
 
 * TODO Problem of loading at an angle
-** TODO Fix problem with compression
-** TODO Output percentage of interface in (a) undamaged (b) damaged (c) failed (d) compression
+** DONE Fix problem with compression
+   --- there was no problem in cohesive law, just a problem in overwriting data in loadsteploop
+** DONE Output percentage of interface in (a) undamaged (b) damaged (c) failed (d) compression
+** TODO Eliminate post.scale
+** TODO Write an option for cohesive law handling of compression
+** TODO All calculations based on input file should be called in read_input
+** TODO Make routine to generate filename
+** TODO Include options for different input specifications - i.e. specify a and b OR specify a and aspect ratio, etc
+** TODO separate file called by read_input which takes a partially filled structure and produces a full structure
+** TODO ellipse2011 should accept a structure instead of a file
 ** TODO Run some cases of loading at an angle and see how the output has changed
 
 
@@ -270,6 +278,9 @@ can't update anything inside residual.m
 ** TODO Exploit periodicity and only integrate etc over half the ellipse
 ** TODO consider replacing fourier transform with fft or dft function
 ** TODO refactor test_macrostress to remove duplication
+** TODO Cohesive behaviour under compression as a flag in input file and as a test variable in test routine
+   --- see Denel notebook p 58
+** TODO Cohesive formulation for frictional shear behaviour under compression
 
 
 
