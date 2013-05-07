@@ -40,7 +40,9 @@ for tt=1:loads.timesteps  % Loop through loading steps
   scale = @(x) (x - default_values)./variance;
   unscale = @(x) x.*variance + default_values;
 
-  while exitflag<=0                    
+  scaled_previous_solution = scale(input_guess);
+  magnification = 1; % sphere radius magnifier
+  while exitflag<=0        
     % Convergence loop
     tic;
     counter=counter+1
@@ -65,10 +67,25 @@ for tt=1:loads.timesteps  % Loop through loading steps
     converge.time = toc;
     
     
-    if exitflag ~= 1 
+    
+    if tt == 1
+      scaled_previous_solution(:) = 0;
+      delta_strain = loads.DriverStrain(tt);
+    else
+      delta_strain = loads.DriverStrain(tt) - loads.DriverStrain(tt-1);
+    end
+    
+    sphere_radius = magnification*sqrt(loads.NumModes + 7)
+    
+    distance_from_previous = norm(scaled_output - scaled_previous_solution)
+    outsidesphere = distance_from_previous > sphere_radius
+    
+    if exitflag ~= 1 || (exitflag == 1 && outsidesphere)
       if counter < loads.NumRestarts
+        exitflag = 0;
         input_guess = (rand(size(input_guess)) ...
                        - 0.5)*material.sigmax*10;
+        magnification = magnification*(1 + 0.2*outsidesphere);
       else
         break
       end  
