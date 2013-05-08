@@ -18,6 +18,10 @@ assert(geom.f <= 1, 'Cannot have volume fraction bigger than 1');
 
 assert(geom.f >= 0, 'Cannot have volume fraction smaller than 0');
 
+assert(loads.MinimumStrain >=0.0001, ['Minimum Strain smaller than ' ...
+                    '0.0001 will break the output structure --- may ' ...
+                    'need some recoding']);
+
 
 
 % FIXME : move NumPoints from geom to loads and have a separate
