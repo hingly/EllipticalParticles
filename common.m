@@ -7,56 +7,43 @@ function [step] = common(N1, N2, omega, geom, material, loads, sk, step)
 %disp('Entering common...');
 
 
-%----------------------------------------
-% Begin loop over integration points
-%========================================
+%------------------------------------------------------
+% Compute potential functions from far-field loading 
+%======================================================
 
-for kk=1:geom.NumPoints   
-  % loop over all integration points
-    
-  %------------------------------------------------------
-  % Compute potential functions from far-field loading 
-  %======================================================
- 
-  [step.potential.phi(kk),step.potential.phiprime(kk),step.potential.psi(kk)]=farfieldpotential(geom.theta(kk),geom.rho,geom.R, geom.m, N1, N2, omega);
+[step.potential.phi,step.potential.phiprime,step.potential.psi]=farfieldpotential(geom.theta,geom.rho,geom.R, geom.m, N1, N2, omega);
         
-  %-----------------------------------------------------
-  % Compute displacements from far-field loading 
-  %=====================================================
+%-----------------------------------------------------
+% Compute displacements from far-field loading 
+%=====================================================
  
-  step.displacement.farfield(kk) = ...
-      calculatedisplacement(step.potential.phi(kk), step.potential.phiprime(kk),...
-                            step.potential.psi(kk), geom.theta(kk), geom.m, material);
+step.displacement.farfield = ...
+    calculatedisplacement(step.potential.phi, step.potential.phiprime,...
+                          step.potential.psi, geom.theta, geom.m, material);
   
-  step.displacement.farfield_xy(kk) = ...
-      step.displacement.farfield(kk)*exp(i*geom.beta(kk));    
+step.displacement.farfield_xy = step.displacement.farfield.*exp(i*geom.beta);    
  
-  %-------------------------------------------------------
-  % Compute potential functions due to cohesive tractions
-  %=======================================================
+%-------------------------------------------------------
+% Compute potential functions due to cohesive tractions
+%=======================================================
+for kk = 1:length(geom.theta)
+    [step.potential.phicoh(kk), step.potential.phiprimecoh(kk), ...
+     step.potential.psicoh(kk)] = modes(geom.theta(kk), geom.rho, geom.R, geom.m, loads.NumModes, sk);
+end  
 
-  [step.potential.phicoh(kk), step.potential.phiprimecoh(kk), ...
-   step.potential.psicoh(kk)] = modes(geom.theta(kk),geom.rho, geom.R, geom.m, loads.NumModes, sk);
+%-------------------------------------------------------
+% Compute displacements due to cohesive tractions
+%=======================================================
   
-
-  %-------------------------------------------------------
-  % Compute displacements due to cohesive tractions
-  %=======================================================
-  
-  step.displacement.coh(kk) = ...
-      calculatedisplacement(step.potential.phicoh(kk), step.potential.phiprimecoh(kk), ...
-                            step.potential.psicoh(kk), geom.theta(kk), geom.m, material);
-  step.displacement.coh_xy(kk) = step.displacement.coh(kk)*exp(i*geom.beta(kk));
-  
-end         
-% end loop over integration points
-
+step.displacement.coh = ...
+    calculatedisplacement(step.potential.phicoh, step.potential.phiprimecoh, ...
+                          step.potential.psicoh, geom.theta, geom.m, material);
+step.displacement.coh_xy = step.displacement.coh.*exp(i*geom.beta);
 
 
 %----------------------------------------------
 % Compute total displacement
 %==============================================
-
 
 step.displacement.total = step.displacement.farfield + step.displacement.coh;
 step.displacement.total_xy = step.displacement.farfield_xy + step.displacement.coh_xy;
