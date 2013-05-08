@@ -23,14 +23,17 @@ for tt=1:loads.timesteps  % Loop through loading steps
   if tt>1
     input_guess = stack(soln.sk(tt-1,:), soln.Sigma_p(tt-1,:), ...
                         soln.Eps_int(tt-1,:));
+    previous_radius = converge.radius(counter);
   else
     assert(tt == 1, 'Something funny happening here');
     input_guess = stack(soln.sk(tt,:), soln.Sigma_p(tt,:), ...
                         soln.Eps_int(tt,:));    
   end
   
-  exitflag=0;
-  counter=0;
+  converge.radius = 0;
+  converge.sphere_radius = 0;
+  exitflag = 0;
+  counter = 0;
   
 %   %TODO: Figure out proper scaling values
 %   default_values = zeros(size(input_guess));
@@ -41,7 +44,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   unscale = @(x) x.*variance + default_values;
 
   scaled_previous_solution = scale(input_guess);
-  magnification = 1; % sphere radius magnifier
+
   while exitflag<=0        
     % Convergence loop
     tic;
@@ -70,22 +73,21 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     if tt == 1
       scaled_previous_solution(:) = 0;
-      delta_strain = loads.DriverStrain(tt);
+      sphere_radius = sqrt(2*(loads.NumModes + 7))
     else
-      delta_strain = loads.DriverStrain(tt) - loads.DriverStrain(tt-1);
+      sphere_radius = previous_radius*2
     end
-    
-    sphere_radius = magnification*sqrt(loads.NumModes + 7)
-    
+        
     distance_from_previous = norm(scaled_output - scaled_previous_solution)
     outsidesphere = distance_from_previous > sphere_radius
+    converge.radius(counter) = distance_from_previous;
+    converge.sphere_radius(counter) = sphere_radius;
     
     if exitflag ~= 1 || (exitflag == 1 && outsidesphere)
       if counter < loads.NumRestarts
         exitflag = 0;
         input_guess = (rand(size(input_guess)) ...
                        - 0.5)*material.sigmax*10;
-        magnification = magnification*(1 + 0.2*outsidesphere);
       else
         break
       end  
