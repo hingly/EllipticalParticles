@@ -83,13 +83,11 @@ for theta0 = theta0list
     % Calculate fourier coefficients to represent force
     forcecoeff = fouriertransform(force, geom.theta, loads.NumModes);
     
-    for jj=1:geom.NumPoints
-      [phi(jj), phiprime(jj),psi(jj)] = modes(geom.theta(jj), geom.rho, geom.R, ...
+    [phi, phiprime, psi] = modes(geom.theta, geom.rho, geom.R, ...
                                               geom.m, loads.NumModes, forcecoeff);
-      disp(jj) = calculatedisplacement(phi(jj), phiprime(jj), psi(jj), ...
-                                       geom.theta(jj), geom.m, material);
-      dispxy(jj)=disp(jj)*exp(i*geom.beta(jj));
-    end
+    disp = calculatedisplacement(phi, phiprime, psi, ...
+                                       geom.theta, geom.m, material);
+    dispxy = disp.*exp(i*geom.beta);
     
     %-----------------------------------------------------------------
     % Compare solutions
