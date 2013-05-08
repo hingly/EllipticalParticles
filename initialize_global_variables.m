@@ -49,7 +49,8 @@ function [loads, macro_var, displacement, cohesive, potential, percentage, soln]
   macro_var.MacroStrain=nan_timestep_matrix;              % Initialise macroscopic strain matrix
   macro_var.MacroStress=nan_timestep_matrix;              % Initialise macroscopic stress matrix
   macro_var.Sigma_m=nan_timestep_matrix;                  % Initialise Mori-Tanaka matrix stress matrix
-
+  macro_var.MacroStrain_trans = nan_timestep_matrix;      % Initialise transformed macroscopic strain matrix
+  macro_var.MacroStress_trans = nan_timestep_matrix;      % Initialise transformed macroscopic stress matrix
   
 %---------------------------------------------
 % Initialize displacement array

@@ -12,7 +12,9 @@ function [step] = initialize_step_variables(loads, geom, tt)
   step.macro_var.MacroStrain = nan_matrix;
   step.macro_var.MacroStress = nan_matrix;
   step.macro_var.Sigma_m = nan_matrix;
-
+  step.macro_var.MacroStrain_trans = nan_matrix;
+  step.macro_var.MacroStress_trans = nan_matrix;
+  
   % Initialise cohesive structure  
   step.cohesive.lambda_max = nan_intpoints;
   step.cohesive.traction_xy = nan_intpoints;

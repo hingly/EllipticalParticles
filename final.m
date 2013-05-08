@@ -23,6 +23,9 @@ step = reset_step(step, loads, tt, cohesive);
     macrostress(step.macro_var.MacroStrain, soln.Sigma_p(tt,:), soln.Eps_int(tt,:), loads, geom, material);
 
 
+step.macro_var.MacroStrain_trans = stress_transformation(step.macro_var.MacroStrain,loads.AppliedLoadAngle);
+step.macro_var.MacroStress_trans = stress_transformation(step.macro_var.MacroStress,loads.AppliedLoadAngle);
+
 %-----------------------------------------------
 % Compute farfield loading
 %===============================================
