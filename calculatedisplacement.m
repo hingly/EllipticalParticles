@@ -1,4 +1,4 @@
-function disp=calculatedisplacement(phi, phiprime, psi, theta, m, material)
+function disp = calculatedisplacement(phi, phiprime, psi, theta, m, material)
 
 mu = material.mu_m;
 kappa = material.kappa_m;
@@ -10,8 +10,8 @@ kappa = material.kappa_m;
 
 [A1, A2] = Afunc(m, theta);
 
-disp1=kappa*phi - A2*conj(phiprime) - conj(psi);
-disp2=A1*exp(-i*theta)/(2*mu);
-disp=disp1*disp2;
+disp1 = kappa*phi - A2.*conj(phiprime) - conj(psi);
+disp2 = A1.*exp(-i*theta)/(2*mu);
+disp = disp1.*disp2;
 
 

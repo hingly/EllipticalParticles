@@ -1,18 +1,18 @@
-function [phi, phiprime,psi]=modes(theta, rho, R, m, NumModes, forcecoeff)
+function [phi, phiprime, psi] = modes(theta, rho, R, m, NumModes, forcecoeff)
 
 % Calculates potentials due to Fourier force coefficients on the
 % surface of the ellipse.  --- equations 4.53, 4.54 and 4.55
 
-sigma=exp(i*theta);
-zeta=rho*sigma;
+sigma = exp(i*theta);
+zeta = rho*sigma;
 
-phi_k=zeros(1,NumModes+1);
-phiprime_k=zeros(1,NumModes+1);
-psi_k=zeros(1,NumModes+1);
+phi_k = zeros(1, NumModes+1);
+phiprime_k = zeros(1, NumModes+1);
+psi_k = zeros(1, NumModes+1);
 
-phi=0;
-phiprime=0;
-psi=0;
+phi = 0;
+phiprime = 0;
+psi = 0;
 
 jj = -NumModes:2:-2;
 jindex = jj/2 + NumModes/2 + 1;
