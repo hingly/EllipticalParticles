@@ -123,9 +123,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   outputdata.converge = converge;
   outputdata.step = step;
               
-    
-  outputname = [inputname '/strain_' num2str(loads.DriverStrain(tt)*10000) ...
-                      '.json'];
+  outputname = sprintf('%s/strain_%04i.json', inputname, round(loads.DriverStrain(tt)*10000));
   
   json = savejson('', outputdata, outputname);
   
