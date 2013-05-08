@@ -26,10 +26,8 @@ step.displacement.farfield_xy = step.displacement.farfield.*exp(i*geom.beta);
 %-------------------------------------------------------
 % Compute potential functions due to cohesive tractions
 %=======================================================
-for kk = 1:length(geom.theta)
-    [step.potential.phicoh(kk), step.potential.phiprimecoh(kk), ...
-     step.potential.psicoh(kk)] = modes(geom.theta(kk), geom.rho, geom.R, geom.m, loads.NumModes, sk);
-end  
+[step.potential.phicoh(:), step.potential.phiprimecoh(:), ...
+     step.potential.psicoh(:)] = modes(geom.theta, geom.rho, geom.R, geom.m, loads.NumModes, sk);
 
 %-------------------------------------------------------
 % Compute displacements due to cohesive tractions
