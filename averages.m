@@ -60,8 +60,7 @@ symm_error = norm(sigmap(3)-sigmaptest);
 if symm_error > epsilon
   if warningflag
     warning(['Sigmap is not symmetric ... error of ' num2str(symm_error) ...
-             ' on ' num2str(sigmap(3)) '. This might be an indication ' ...
-             'that mesh refinement is required.'])
+             ' on ' num2str(sigmap(3)) '. Angular momentum is not conserved.'])
   end
 end
 
