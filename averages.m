@@ -52,11 +52,12 @@ epsint(1)=sum(real(dispxy).*real(normal).*dS);
 epsint(2)=sum(imag(dispxy).*imag(normal).*dS);
 epsint(3)=sum((real(dispxy).*imag(normal) + imag(dispxy).*real(normal))/2.*dS); 
 
-sigmap(1)=sum(real(Tcohxy).*real(ellipse).*dS);
-sigmap(2)=sum(imag(Tcohxy).*imag(ellipse).*dS);
-sigmap(3)=sum((real(Tcohxy).*imag(ellipse) + imag(Tcohxy).*real(ellipse))/2.*dS);
-sigmaptest=sum(imag(Tcohxy).*real(ellipse).*dS);
-symm_error = norm(sigmap(3)-sigmaptest);
+sigmap(1) = sum(real(Tcohxy).*real(ellipse).*dS);
+sigmap(2) = sum(imag(Tcohxy).*imag(ellipse).*dS);
+sigmap(3) = sum(real(Tcohxy).*imag(ellipse).*dS);
+sigmap(4) = sum(imag(Tcohxy).*real(ellipse).*dS);
+
+symm_error = norm(sigmap(3)-sigmap(4));
 if symm_error > epsilon
   if warningflag
     warning(['Sigmap is not symmetric ... error of ' num2str(symm_error) ...

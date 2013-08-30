@@ -16,10 +16,12 @@ if loads.SigBar_xy(1) < stress_epsilon
   
   % Sigma_p has the same shape as the imposed macroscopic stress,
   % sigma_p_22 is scaled by the imposed macroscopic strain
+  % sigma_p_21 = sigma_p_12
   
   soln.Sigma_p(tt,1) = 0;
   soln.Sigma_p(tt,2) = - loads.DriverStrain(tt)*material.E_m/((1+material.nu_m)*material.nu_m);
   soln.Sigma_p(tt,3) = soln.Sigma_p(tt,2)*loads.StressRatio_12_22;
+  soln.Sigma_p(tt,4) = soln.Sigma_p(tt,3);
 
   % Eps_int_11 is the same as the imposed macroscopic strain
   % Eps_int_22 is scaled by Poisson effect
@@ -38,7 +40,9 @@ else
   soln.Sigma_p(tt,1) = loads.DriverStrain(tt)*material.E_m;
   soln.Sigma_p(tt,2) = soln.Sigma_p(tt,1)*loads.StressRatio_22;
   soln.Sigma_p(tt,3) = soln.Sigma_p(tt,1)*loads.StressRatio_12;
+  soln.Sigma_p(tt,4) = soln.Sigma_p(tt,3);
 
+  
   %First guess for soln.Eps_int
   % Eps_int has the same shape as the imposed macroscopic stress,
   % eps_int_11  is the same as the imposed macroscopic strain

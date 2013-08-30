@@ -23,7 +23,7 @@ step = reset_step(step, loads, tt, cohesive);
 %==================================
 
 
-dummy.Sigma_p=zeros(1,3);
+dummy.Sigma_p=zeros(1,4);
 dummy.Eps_int=zeros(1,3);
 dummy.sk=zeros(1,loads.NumModes+1);
 
@@ -73,7 +73,9 @@ skc = fouriertransform(step.cohesive.traction, geom.theta, loads.NumModes);
 error.sk=skc-sk;
 
 % error in Sigma_p 
-error.Sigma_p=Sigma_p_new - Sigma_p;      
+error.Sigma_p=Sigma_p_new - Sigma_p;   
+% enforce symmetry of Sigma_p
+error.Sigma_p(4)  = Sigma_p_new(3) - Sigma_p(4);
 
 % error in Eps_int 
 error.Eps_int=Eps_int_new - Eps_int;      
