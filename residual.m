@@ -68,6 +68,8 @@ skc = fouriertransform(step.cohesive.traction, geom.theta, loads.NumModes);
 [Sigma_p_new, Eps_int_new] = averages(step.displacement.total_xy, ...
                                       step.cohesive.traction_xy, geom);
 
+%Sigma_p_new
+%Sigma_p
 
 % error in sk
 error.sk=skc-sk;
@@ -76,6 +78,8 @@ error.sk=skc-sk;
 error.Sigma_p=Sigma_p_new - Sigma_p;   
 % enforce symmetry of Sigma_p
 error.Sigma_p(4)  = Sigma_p_new(3) - Sigma_p(4);
+
+%error.Sigma_p
 
 % error in Eps_int 
 error.Eps_int=Eps_int_new - Eps_int;      

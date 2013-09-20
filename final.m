@@ -21,6 +21,7 @@ step = reset_step(step, loads, tt, cohesive);
 
 [step.macro_var.MacroStress, step.macro_var.MacroStrain, step.macro_var.Sigma_m]= ...
     macrostress(step.macro_var.MacroStrain, soln.Sigma_p(tt,:), soln.Eps_int(tt,:), loads, geom, material);
+soln.Sigma_p(tt,:)
 
 
 step.macro_var.MacroStrain_trans = stress_transformation(step.macro_var.MacroStrain,loads.AppliedLoadAngle);
@@ -41,6 +42,9 @@ step.macro_var.MacroStress_trans = stress_transformation(step.macro_var.MacroStr
 
 [step] = common(N1, N2, omega, geom, material, loads, soln.sk(tt,:), step);
 
+% Compute Fourier modes corresponding to cohesive tractions
+skc = fouriertransform(step.cohesive.traction, geom.theta, ...
+                       loads.NumModes);
 
 for kk=1:geom.NumPoints
   % Calculate a vector lambda_xy with magnitude lambda in the
@@ -62,8 +66,10 @@ warningflag = true;
 %Check averages for error in Sigma_p
 [Sigma_p_new, Eps_int_new, Symm_error] = averages(step.displacement.total_xy, ...
                                       step.cohesive.traction_xy, geom, warningflag);
+Sigma_p_new
 
 
+pause
 step.symm_error = Symm_error;
 
 

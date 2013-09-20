@@ -57,17 +57,17 @@ sigmap(2) = sum(imag(Tcohxy).*imag(ellipse).*dS);
 sigmap(3) = sum(real(Tcohxy).*imag(ellipse).*dS);
 sigmap(4) = sum(imag(Tcohxy).*real(ellipse).*dS);
 
+epsint = epsint/volume;
+sigmap = sigmap/volume;
+
 symm_error = norm(sigmap(3)-sigmap(4));
+symm_error_pct = symm_error/sigmap(3)*100;
 if symm_error > epsilon
   if warningflag
-    warning(['Sigmap is not symmetric ... error of ' num2str(symm_error) ...
-             ' on ' num2str(sigmap(3)) '. Angular momentum is not conserved.'])
+    warning(['Sigmap is not symmetric ... error of ' num2str(symm_error_pct) ...
+             '% on ' num2str(sigmap(3)) '. Angular momentum is not conserved.'])
   end
 end
-
-
-epsint=epsint/volume;
-sigmap=sigmap/volume;
 
 
 if nargout > 2

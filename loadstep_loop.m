@@ -83,8 +83,9 @@ for tt=1:loads.timesteps  % Loop through loading steps
     converge.radius(counter) = distance_from_previous;
     converge.sphere_radius(counter) = sphere_radius;
     
-    if exitflag ~= 1 || (exitflag == 1 && outsidesphere)
+    if exitflag ~= 1 %|| (exitflag == 1 && outsidesphere)
       if counter < loads.NumRestarts
+        exitflag
         exitflag = 0;
         input_guess = (rand(size(input_guess)) ...
                        - 0.5)*material.sigmax*10;
