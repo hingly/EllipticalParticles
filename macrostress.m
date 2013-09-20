@@ -7,7 +7,11 @@ function [MacroStress, MacroStrain,Sigma_m] = macrostress(MacroStrain,Sigma_p, E
 
 stress_epsilon=1e-5;
 
-Sigma_p_reduced = Sigma_p(1:3);
+Sigma_p_reduced(1) = Sigma_p(1);
+Sigma_p_reduced(2) = Sigma_p(2);
+Sigma_p_reduced(3) = (Sigma_p(3) + Sigma_p(4))/2;
+
+
 
 %Define mu and nu for convenience
 mu=material.mu_m;
