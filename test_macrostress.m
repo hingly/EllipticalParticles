@@ -22,7 +22,7 @@ loads.StressRatio_12 = 0;
 
 % Test materialterm 
 Eps_int = [0 0 0];
-Sigma_p = [1 1 1];
+Sigma_p = [1 1 1 1];
 geom.f=0;
 [MacroStress, MacroStrain,Sigma_m] = macrostress(MacroStrain,Sigma_p, Eps_int, loads, geom, material);
 materialterm_check = 2/(1-0.3*2);
@@ -60,7 +60,7 @@ assert(allequal(Sigma_m, Sigma_m_check, epsilon), ...
 
 % Test with non-zero Eps_int and zero Sigma_p
 Eps_int = [1 1 1];
-Sigma_p = [0 0 0];
+Sigma_p = [0 0 0 0];
 geom.f=0.5;
 [MacroStress, MacroStrain,Sigma_m]= macrostress(MacroStrain,Sigma_p, Eps_int, loads, geom, material);
 MacroStress_check=[2.5 2.5 0];
@@ -85,7 +85,7 @@ loads.StressRatio_12 = 1;
 
 % Test with zero Eps_int and non-zero Sigma_p
 Eps_int = [0 0 0];
-Sigma_p = [1 1 1];
+Sigma_p = [1 1 1 1];
 
 [MacroStress, MacroStrain,Sigma_m] = ...
     macrostress(MacroStrain,Sigma_p, Eps_int, loads, geom, material);
@@ -103,7 +103,7 @@ assert(allequal(Sigma_m, Sigma_m_check, epsilon), ...
 
 % Test with non-zero Eps_int and zero Sigma_p
 Eps_int = [1 1 1];
-Sigma_p = [0 0 0];
+Sigma_p = [0 0 0 0];
 
 [MacroStress, MacroStrain,Sigma_m] = ...
     macrostress(MacroStrain,Sigma_p, Eps_int, loads, geom, material);
@@ -129,7 +129,7 @@ loads.StressRatio_12_22 = 1;
 
 % Test materialterm 
 Eps_int = [0 0 0];
-Sigma_p = [1 1 1];
+Sigma_p = [1 1 1 1];
 geom.f=0;
 
 [MacroStress, MacroStrain,Sigma_m]= macrostress(MacroStrain,Sigma_p, Eps_int, loads, geom, material);
