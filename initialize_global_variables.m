@@ -10,7 +10,6 @@ function [loads, macro_var, displacement, cohesive, potential, percentage, soln]
   % constants
   nan_matrix = nan(1,3);
   nan_timestep_matrix = nan(loads.timesteps,3);
-  nan_timestep_matrix4 = nan(loads.timesteps,4);
   nan_timestep_2vector = nan(loads.timesteps,2);
   nan_timestep_modes=nan(loads.timesteps, loads.NumModes+1);
   nan_timestep_intpoints=nan(loads.timesteps,geom.NumPoints);
@@ -36,7 +35,7 @@ function [loads, macro_var, displacement, cohesive, potential, percentage, soln]
   % Fourier coefficients --- Even numbers only from -NumModes to NumModes
   soln.sk = nan_timestep_modes;          
   % Initialise average particle stress matrix
-  soln.Sigma_p = nan_timestep_matrix4;         
+  soln.Sigma_p = nan_timestep_matrix;         
   % Initialise interfacial strain matrix
   soln.Eps_int = nan_timestep_matrix;     
   % Initialise exit flags

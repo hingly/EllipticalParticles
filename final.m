@@ -77,9 +77,9 @@ Eps_int_new
 error.sk=skc-soln.sk(tt,:);
 
 % error in Sigma_p 
-error.Sigma_p=Sigma_p_new - soln.Sigma_p(tt,:);  
+error.Sigma_p=Sigma_p_new(1:3) - soln.Sigma_p(tt,:);  
 % Extra equation to enforce symmetry of Sigma_p
-error.Sigma_p(5) =  soln.Sigma_p(tt,3) - soln.Sigma_p(tt,4);
+error.Sigma_p(4) =  Sigma_p_new(3) - Sigma_p_new(4);
 
 %error.Sigma_p
 

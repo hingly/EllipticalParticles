@@ -61,7 +61,11 @@ epsint = epsint/volume;
 sigmap = sigmap/volume;
 
 symm_error = norm(sigmap(3)-sigmap(4));
-symm_error_pct = symm_error/sigmap(3)*100;
+if sigmap(3) > epsilon
+  symm_error_pct = symm_error/sigmap(3)*100;
+else
+  symm_error_pct = symm_error;
+end
 if symm_error > epsilon
   if warningflag
     warning(['Sigmap is not symmetric ... error of ' num2str(symm_error_pct) ...

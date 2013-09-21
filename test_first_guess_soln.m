@@ -14,11 +14,10 @@ material.sigmax = 1;
 geom.a = 1;
 
 zero_timestep_matrix = zeros(loads.timesteps,3);
-zero_timestep_matrix4 = zeros(loads.timesteps,4);
 zero_timestep_modes=zeros(loads.timesteps, loads.NumModes+1);
 
 soln.sk=zero_timestep_modes;          
-soln.Sigma_p=zero_timestep_matrix4;         
+soln.Sigma_p=zero_timestep_matrix;         
 soln.Eps_int=zero_timestep_matrix;  
 
 tt = 1;
@@ -32,7 +31,7 @@ loads.StressRatio_12 = loads.SigBar_xy(3)/loads.SigBar_xy(1);
 
 soln = first_guess_soln(loads, material, geom, soln);
 
-sigmapcheck = [100 0 0 0];
+sigmapcheck = [100 0 0];
 epsintcheck = [1 0 0];
 
 %assert(allequal(soln.sk(1,loads.NumModes/2+1),material.sigmax/10, epsilon),...
@@ -54,7 +53,7 @@ loads.StressRatio_12_22 = loads.SigBar_xy(3)/ ...
 
 soln = first_guess_soln(loads, material, geom, soln);
 
-sigmapcheck = [0 -1000/3.9 0 0];
+sigmapcheck = [0 -1000/3.9 0];
 epsintcheck = [1 -7/3 0];
 
 assert(allequal(sigmapcheck, soln.Sigma_p(tt,:), epsilon),...
@@ -75,7 +74,7 @@ loads.StressRatio_12 = loads.SigBar_xy(3)/loads.SigBar_xy(1);
 
 soln = first_guess_soln(loads, material, geom, soln);
 
-sigmapcheck = [100 50 0 0];
+sigmapcheck = [100 50 0];
 epsintcheck = [1 0.5 0];
 
 assert(allequal(sigmapcheck, soln.Sigma_p(tt,:), epsilon),...
@@ -95,7 +94,7 @@ loads.StressRatio_12 = loads.SigBar_xy(3)/loads.SigBar_xy(1);
 
 soln = first_guess_soln(loads, material, geom, soln);
 
-sigmapcheck = [100 -50 100 100];
+sigmapcheck = [100 -50 100];
 epsintcheck = [1 -0.5 1];
 
 assert(allequal(sigmapcheck, soln.Sigma_p(tt,:), epsilon),...
@@ -114,7 +113,7 @@ loads.StressRatio_12_22 = loads.SigBar_xy(3)/ ...
 
 soln = first_guess_soln(loads, material, geom, soln);
 
-sigmapcheck = [0 -1000/3.9 1000/3.9 1000/3.9];
+sigmapcheck = [0 -1000/3.9 1000/3.9];
 epsintcheck = [1 -7/3 7/3];
 
 assert(allequal(sigmapcheck, soln.Sigma_p(tt,:), epsilon),...
