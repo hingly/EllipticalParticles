@@ -75,9 +75,9 @@ skc = fouriertransform(step.cohesive.traction, geom.theta, loads.NumModes);
 error.sk=skc-sk;
 
 % error in Sigma_p 
-error.Sigma_p=Sigma_p_new - Sigma_p;   
-% enforce symmetry of Sigma_p
-error.Sigma_p(4)  = Sigma_p_new(3) - Sigma_p(4);
+error.Sigma_p=Sigma_p_new - Sigma_p;  
+% Extra equation to enforce symmetry of Sigma_p
+error.Sigma_p(5) =  Sigma_p_new(3) - Sigma_p_new(4);
 
 %error.Sigma_p
 
@@ -85,6 +85,7 @@ error.Sigma_p(4)  = Sigma_p_new(3) - Sigma_p(4);
 error.Eps_int=Eps_int_new - Eps_int;      
 
 Rk=stack(error.sk, error.Sigma_p, error.Eps_int);
+
 
 assert(isreal(Rk), 'Rk has complex components');
 

@@ -22,6 +22,7 @@ step = reset_step(step, loads, tt, cohesive);
 [step.macro_var.MacroStress, step.macro_var.MacroStrain, step.macro_var.Sigma_m]= ...
     macrostress(step.macro_var.MacroStrain, soln.Sigma_p(tt,:), soln.Eps_int(tt,:), loads, geom, material);
 soln.Sigma_p(tt,:)
+soln.Eps_int(tt,:)
 
 
 step.macro_var.MacroStrain_trans = stress_transformation(step.macro_var.MacroStrain,loads.AppliedLoadAngle);
@@ -66,10 +67,34 @@ warningflag = true;
 %Check averages for error in Sigma_p
 [Sigma_p_new, Eps_int_new, Symm_error] = averages(step.displacement.total_xy, ...
                                       step.cohesive.traction_xy, geom, warningflag);
+
+
 Sigma_p_new
+Eps_int_new
+
+% Calculate residual to check that there is no error
+% error in sk
+error.sk=skc-soln.sk(tt,:);
+
+% error in Sigma_p 
+error.Sigma_p=Sigma_p_new - soln.Sigma_p(tt,:);  
+% Extra equation to enforce symmetry of Sigma_p
+error.Sigma_p(5) =  soln.Sigma_p(tt,3) - soln.Sigma_p(tt,4);
+
+%error.Sigma_p
+
+% error in Eps_int 
+error.Eps_int=Eps_int_new - soln.Eps_int(tt,:);      
 
 
-pause
+Rk=stack(error.sk, error.Sigma_p, error.Eps_int);
+norm(Rk);
+check_Rk=zeros(size(Rk));
+epsilon = 1e-8;
+assert(allequal(Rk, check_Rk, epsilon), ['Residual is not zero.  Convergence ' ...
+                    ' not achieved '])
+
+
 step.symm_error = Symm_error;
 
 

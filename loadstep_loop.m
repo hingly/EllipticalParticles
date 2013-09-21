@@ -40,8 +40,14 @@ for tt=1:loads.timesteps  % Loop through loading steps
 %   variance = ones(size(input_guess));
 
   [default_values, variance] = scaling_values(loads, material);
+  [default_values_extra, variance_extra] = scaling_values_extra(loads, material);
+ 
   scale = @(x) (x - default_values)./variance;
   unscale = @(x) x.*variance + default_values;
+  
+  scale_extra = @(x) (x - default_values_extra)./variance_extra;
+  unscale_extra = @(x) x.*variance_extra + default_values_extra;
+ 
 
   scaled_previous_solution = scale(input_guess);
 
@@ -53,12 +59,12 @@ for tt=1:loads.timesteps  % Loop through loading steps
     scaled_input_guess = scale(input_guess);
     % Solve for sk, Sigma_p, Eps_int    
     scaled_residuals = @(x) residual(unscale(x), loads, material, ...
-                                     geom, step, tt, cohesive)./variance;
+                                     geom, step, tt, cohesive)./variance_extra;
     
     guess_fval = scaled_residuals(scaled_input_guess);
     [scaled_output, scaled_fval, exitflag, optim_output] = fsolve(scaled_residuals, scaled_input_guess);
     output = unscale(scaled_output);
-    fval = scaled_fval.*variance;
+    fval = scaled_fval.*variance_extra;
    
     converge.fval = fval;
     converge.guess_fval = guess_fval;
