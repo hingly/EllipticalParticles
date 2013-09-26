@@ -84,6 +84,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
 %    converge.sphere_radius(counter) = sphere_radius;
     
     if exitflag ~= 1 %|| (exitflag == 1 && outsidesphere)
+      exitflag
       if counter < loads.NumRestarts
         exitflag = 0;
         input_guess = (rand(size(input_guess)) ...
