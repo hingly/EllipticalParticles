@@ -2,6 +2,7 @@ function [cohesive, displacement, loads, macro_var, potential, percentage, soln]
     loadstep_loop(geom, material, loads, macro_var, soln, displacement, ...
                   cohesive, potential, percentage, inputname)
 
+direct_solve = true;
 
 % Allocate step structures 
 
@@ -58,11 +59,16 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     scaled_input_guess = scale(input_guess);
     % Solve for sk, Sigma_p, Eps_int    
-    scaled_residuals = @(x) residual(unscale(x), loads, material, ...
-                                     geom, step, tt, cohesive)./variance_extra;
-    
+    scaled_residuals = @(x) residual(unscale(x), loads, material, geom, step, tt, cohesive)./variance_extra;
     guess_fval = scaled_residuals(scaled_input_guess);
-    [scaled_output, scaled_fval, exitflag, optim_output] = fsolve(scaled_residuals, scaled_input_guess);
+    if direct_solve
+      [scaled_output, scaled_fval, exitflag, optim_output] = fsolve(scaled_residuals, scaled_input_guess);
+    else
+      minimize_objective = @(x) sum(scaled_residuals(x).^2);
+
+      [scaled_output, fval, exitflag, optim_output] = fminunc(minimize_objective, scaled_input_guess);
+      scaled_fval = scaled_residuals(scaled_output);
+    end
     output = unscale(scaled_output);
     fval = scaled_fval.*variance_extra;
    
@@ -108,7 +114,8 @@ for tt=1:loads.timesteps  % Loop through loading steps
   
   
   if exitflag ~= 1 
-    output = output*0;
+    break
+    %output = output*0;
   end
 
   soln = unstack(output,loads.NumModes,tt,soln);

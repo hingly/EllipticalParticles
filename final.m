@@ -72,27 +72,27 @@ warningflag = true;
 Sigma_p_new
 Eps_int_new
 
-% Calculate residual to check that there is no error
-% error in sk
-error.sk=skc-soln.sk(tt,:);
-
-% error in Sigma_p 
-error.Sigma_p=Sigma_p_new(1:3) - soln.Sigma_p(tt,:);  
-% Extra equation to enforce symmetry of Sigma_p
-error.Sigma_p(4) =  Sigma_p_new(3) - Sigma_p_new(4);
-
-%error.Sigma_p
-
-% error in Eps_int 
-error.Eps_int=Eps_int_new - soln.Eps_int(tt,:);      
-
-
-Rk=stack(error.sk, error.Sigma_p, error.Eps_int);
-norm(Rk);
-check_Rk=zeros(size(Rk));
-epsilon = 1e-8;
-assert(allequal(Rk, check_Rk, epsilon), ['Residual is not zero.  Convergence ' ...
-                    ' not achieved '])
+% $$$ % Calculate residual to check that there is no error
+% $$$ % error in sk
+% $$$ error.sk=skc-soln.sk(tt,:);
+% $$$ 
+% $$$ % error in Sigma_p 
+% $$$ error.Sigma_p=Sigma_p_new(1:3) - soln.Sigma_p(tt,:);  
+% $$$ % Extra equation to enforce symmetry of Sigma_p
+% $$$ error.Sigma_p(4) =  Sigma_p_new(3) - Sigma_p_new(4);
+% $$$ 
+% $$$ %error.Sigma_p
+% $$$ 
+% $$$ % error in Eps_int 
+% $$$ error.Eps_int=Eps_int_new - soln.Eps_int(tt,:);      
+% $$$ 
+% $$$ 
+% $$$ Rk=stack(error.sk, error.Sigma_p, error.Eps_int);
+% $$$ norm(Rk);
+% $$$ check_Rk=zeros(size(Rk));
+% $$$ epsilon = 1e-8;
+% $$$ assert(allequal(Rk, check_Rk, epsilon), ['Residual is not zero.  Convergence ' ...
+% $$$                     ' not achieved '])
 
 
 step.symm_error = Symm_error;
