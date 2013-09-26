@@ -8,8 +8,8 @@ plotflag = true;
 %==========================
 
 % Chosen parameters for testing
-c1list = [50]
-%c1list = [20 50 100];
+%c1list = [50]
+c1list = [20 50 100];
 c2list = [100];
 flist = [0.4];
 
