@@ -54,7 +54,8 @@ epsint(3)=sum((real(dispxy).*imag(normal) + imag(dispxy).*real(normal))/2.*dS);
 
 sigmap(1)=sum(real(Tcohxy).*real(ellipse).*dS);
 sigmap(2)=sum(imag(Tcohxy).*imag(ellipse).*dS);
-sigmap(3)=sum((real(Tcohxy).*imag(ellipse) + imag(Tcohxy).*real(ellipse))/2.*dS);
+%sigmap(3)=sum((real(Tcohxy).*imag(ellipse) + imag(Tcohxy).*real(ellipse))/2.*dS);
+sigmap(3)=sum(real(Tcohxy).*imag(ellipse).*dS);
 sigmaptest=sum(imag(Tcohxy).*real(ellipse).*dS);
 
 epsint=epsint/volume;
