@@ -19,6 +19,8 @@ step = reset_step(step, loads, tt, cohesive);
 % from the given macroscopic strain eps_11.  Note that these depend on Sigma_p 
 % and Eps_int, so must be re-calculated after convergence
 
+soln.Sigma_p(tt,:)
+soln.Eps_int(tt,:)
 [step.macro_var.MacroStress, step.macro_var.MacroStrain, step.macro_var.Sigma_m]= ...
     macrostress(step.macro_var.MacroStrain, soln.Sigma_p(tt,:), soln.Eps_int(tt,:), loads, geom, material);
 
@@ -63,6 +65,9 @@ warningflag = true;
 [Sigma_p_new, Eps_int_new, Symm_error] = averages(step.displacement.total_xy, ...
                                       step.cohesive.traction_xy, geom, warningflag);
 
+Sigma_p_new
+Eps_int_new
+Symm_error
 
 step.symm_error = Symm_error;
 
