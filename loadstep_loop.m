@@ -99,9 +99,10 @@ for tt=1:loads.timesteps  % Loop through loading steps
   
   soln.exitflag(tt) = exitflag;
   
-  
+
   if exitflag ~= 1 
     output = output*0;
+    break
   end
 
   soln = unstack(output,loads.NumModes,tt,soln);
@@ -128,6 +129,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   outputname = sprintf('%s/strain_%04i.json', inputname, round(loads.DriverStrain(tt)*10000));
   
   json = savejson('', outputdata, outputname);
+  
   
   
 end      % end loop through loading steps
