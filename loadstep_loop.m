@@ -23,15 +23,15 @@ for tt=1:loads.timesteps  % Loop through loading steps
   if tt>1
     input_guess = stack(soln.sk(tt-1,:), soln.Sigma_p(tt-1,:), ...
                         soln.Eps_int(tt-1,:));
-    previous_radius = converge.radius(counter);
+ %   previous_radius = converge.radius(counter);
   else
     assert(tt == 1, 'Something funny happening here');
     input_guess = stack(soln.sk(tt,:), soln.Sigma_p(tt,:), ...
                         soln.Eps_int(tt,:));    
   end
   
-  converge.radius = 0;
-  converge.sphere_radius = 0;
+%  converge.radius = 0;
+%  converge.sphere_radius = 0;
   exitflag = 0;
   counter = 0;
   
@@ -43,7 +43,7 @@ for tt=1:loads.timesteps  % Loop through loading steps
   scale = @(x) (x - default_values)./variance;
   unscale = @(x) x.*variance + default_values;
 
-  scaled_previous_solution = scale(input_guess);
+%  scaled_previous_solution = scale(input_guess);
 
   while exitflag<=0        
     % Convergence loop
@@ -71,19 +71,19 @@ for tt=1:loads.timesteps  % Loop through loading steps
     
     
     
-    if tt == 1
-      scaled_previous_solution(:) = 0;
-      sphere_radius = sqrt(2*(loads.NumModes + 7))
-    else
-      sphere_radius = previous_radius*2
-    end
+%    if tt == 1
+%      scaled_previous_solution(:) = 0;
+%      sphere_radius = sqrt(2*(loads.NumModes + 7))
+%    else
+%      sphere_radius = previous_radius*2
+%    end
         
-    distance_from_previous = norm(scaled_output - scaled_previous_solution)
-    outsidesphere = distance_from_previous > sphere_radius
-    converge.radius(counter) = distance_from_previous;
-    converge.sphere_radius(counter) = sphere_radius;
+%    distance_from_previous = norm(scaled_output - scaled_previous_solution)
+%    outsidesphere = distance_from_previous > sphere_radius
+%    converge.radius(counter) = distance_from_previous;
+%    converge.sphere_radius(counter) = sphere_radius;
     
-    if exitflag ~= 1 || (exitflag == 1 && outsidesphere)
+    if exitflag ~= 1 %|| (exitflag == 1 && outsidesphere)
       if counter < loads.NumRestarts
         exitflag = 0;
         input_guess = (rand(size(input_guess)) ...
