@@ -56,6 +56,11 @@ sigmap(1)=sum(real(Tcohxy).*real(ellipse).*dS);
 sigmap(2)=sum(imag(Tcohxy).*imag(ellipse).*dS);
 sigmap(3)=sum((real(Tcohxy).*imag(ellipse) + imag(Tcohxy).*real(ellipse))/2.*dS);
 sigmaptest=sum(imag(Tcohxy).*real(ellipse).*dS);
+
+epsint=epsint/volume;
+sigmap=sigmap/volume;
+
+
 symm_error = norm(sigmap(3)-sigmaptest);
 if symm_error > epsilon
   if warningflag
@@ -65,8 +70,6 @@ if symm_error > epsilon
 end
 
 
-epsint=epsint/volume;
-sigmap=sigmap/volume;
 
 
 if nargout > 2
