@@ -56,13 +56,13 @@ sigmap(1)=sum(real(Tcohxy).*real(ellipse).*dS);
 sigmap(2)=sum(imag(Tcohxy).*imag(ellipse).*dS);
 %sigmap(3)=sum((real(Tcohxy).*imag(ellipse) + imag(Tcohxy).*real(ellipse))/2.*dS);
 sigmap(3)=sum(real(Tcohxy).*imag(ellipse).*dS);
-sigmaptest=sum(imag(Tcohxy).*real(ellipse).*dS);
+sigmap(4)=sum(imag(Tcohxy).*real(ellipse).*dS);
 
 epsint=epsint/volume;
 sigmap=sigmap/volume;
 
 
-symm_error = norm(sigmap(3)-sigmaptest);
+symm_error = norm(sigmap(3)-sigmap(4));
 if symm_error > epsilon
   if warningflag
     warning(['Sigmap is not symmetric ... error of ' num2str(symm_error) ...

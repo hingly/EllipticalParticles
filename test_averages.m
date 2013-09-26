@@ -36,7 +36,7 @@ for numpoints = numpointslist
       assert(almostequal(epsint,epsintcheck,epsilon),'failed at epsint');
 
       % With Tcohxy=normal, sigmap must return identity
-      sigmapcheck=[1 1 0];
+      sigmapcheck=[1 1 0 0];
       assert(almostequal(sigmap,sigmapcheck,epsilon),'failed at sigmap');
       
       %----------------------
@@ -55,7 +55,7 @@ for numpoints = numpointslist
       assert(almostequal(epsint,epsintcheck,epsilon),'failed at epsint');
        
       % With Tcohxy=1, sigmap must return zero
-      sigmapcheck=[0 0 0];
+      sigmapcheck=[0 0 0 0];
       %assert(almostequal(sigmap,sigmapcheck,epsilon),'failed at sigmap');
      
       

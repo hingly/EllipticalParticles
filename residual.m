@@ -73,7 +73,7 @@ skc = fouriertransform(step.cohesive.traction, geom.theta, loads.NumModes);
 error.sk=skc-sk;
 
 % error in Sigma_p 
-error.Sigma_p=Sigma_p_new - Sigma_p;      
+error.Sigma_p=Sigma_p_new(1:3) - Sigma_p;      
 
 % error in Eps_int 
 error.Eps_int=Eps_int_new - Eps_int;      
